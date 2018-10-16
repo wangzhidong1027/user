@@ -36,11 +36,19 @@ const router = new Router({
         title: "个人中心"
       },
       component: () => import("../views/me.vue")
+    },
+    {
+      path: "/idea",
+      name: "idea",
+      meta: {
+        title: "意见反馈"
+      },
+      component: () => import("../views/me-page/idea.vue")
     }
   ]
 });
 
-router.beforeEach((to,from, next) => {
+router.beforeEach((to, from, next) => {
   document.title = to.meta.title;
   next()
 });

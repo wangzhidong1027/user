@@ -27,6 +27,30 @@
             </grid>
         </div>
         <div class="center">
+            <group :gutter="0">
+                <cell-box  is-link>
+                    实名认证
+                </cell-box>
+                <cell-box  is-link>
+                    绑定邮箱
+                </cell-box>
+                <cell-box is-link>
+                    车辆绑定
+                </cell-box>
+            </group>
+        </div>
+        <div class="center">
+            <group :gutter="0">
+                <cell-box  is-link>
+                    设置
+                </cell-box>
+                <cell-box is-link>
+                    邀请好友
+                </cell-box>
+                <cell-box  is-link>
+                    意见反馈
+                </cell-box>
+            </group>
         </div>
         <tabbar>
             <tabbar-item link="home">
@@ -42,20 +66,29 @@
 </template>
 
 <script>
-	import {Tabbar, TabbarItem, Grid, GridItem} from 'vux'
-
+	import {Tabbar, TabbarItem, Grid, GridItem, CellBox, Cell, Group } from 'vux'
 	export default {
 		name: "me",
 		components: {
 			Tabbar,
 			TabbarItem,
 			Grid,
-			GridItem
+            GridItem,
+            CellBox,
+            Cell,
+            Group            
 		}
 	}
 </script>
 
 <style scoped lang="less">
+    .weui-bar__item_on{
+        p{
+            span{
+            color: #ff9900;
+            }
+        }
+    }
     #me {
         height: 100%;
         width: 100%;
@@ -123,6 +156,7 @@
         }
         .center {
             background: #fff;
+            margin-bottom: 0.2rem;
         }
     }
 </style>
