@@ -1,45 +1,43 @@
 <template>
-    <div class="home">
-        <div>
-            <swiper :list="demo01_index" :auto="true" :loop="true"></swiper>
-        </div>
-        <grid style="background: #fff; margin-top: 15px">
-          <grid-item label="会员特权">
-          </grid-item>
-            <grid-item label="积分兑换" >
-          </grid-item>
-            <grid-item label="邀请拿礼" >
-          </grid-item>
-            <grid-item label="限时领券" >
-          </grid-item>
-        </grid>
-
-        <div style="width: 100%;margin-top: 10px">
-            <img style="width: 100%; display: block" src="../assets/images/jbanner.jpg" alt="">
-        </div>
-        <group title="今日油价" style="background: #fff;line-height: 30px">
-            <v-chart :data="data" prevent-default>
-                <v-scale x :tick-count="3"/>
-                <v-tooltip :show-item-marker="false" show-x-value/>
-                <v-line/>
-            </v-chart>
-        </group>
-        <tabbar>
-            <tabbar-item selected link="home">
-                <span slot="icon" class="icon-shouye1 iconfont" style=" color: #ff9900;font-size: 22px;"></span>
-                <span slot="label">首页</span>
-            </tabbar-item>
-            <tabbar-item link="me">
-                <span slot="icon" class="icon-wode iconfont" style=" font-size: 20px;"></span>
-                <span slot="label">我的</span>
-            </tabbar-item>
-        </tabbar>
-    </div>
+  <div class="home">
+      <div>
+          <swiper :list="demo01_index" :auto="true" :loop="true"></swiper>
+      </div>
+      <grid style="background: #fff; margin-top: 15px">
+        <grid-item label="会员特权">
+        </grid-item>
+          <grid-item label="积分兑换" >
+        </grid-item>
+          <grid-item label="邀请拿礼" >
+        </grid-item>
+          <grid-item label="限时领券" >
+        </grid-item>
+      </grid>
+      <div style="width: 100%;margin-top: 10px">
+          <img style="width: 100%; display: block" src="../assets/images/jbanner.jpg" alt="">
+      </div>
+      <group title="今日油价" style="background: #fff;line-height: 30px">
+          <v-chart :data="data" prevent-default>
+              <v-scale x :tick-count="3"/>
+              <v-tooltip :show-item-marker="false" show-x-value/>
+              <v-line/>
+          </v-chart>
+      </group>
+      <tabbar>
+          <tabbar-item selected link="home">
+              <span slot="icon" class="icon-shouye1 iconfont" style=" color: #ff9900;font-size: 22px;"></span>
+              <span slot="label">首页</span>
+          </tabbar-item>
+          <tabbar-item link="me">
+              <span slot="icon" class="icon-wode iconfont" style=" font-size: 20px;"></span>
+              <span slot="label">我的</span>
+          </tabbar-item>
+      </tabbar>
+  </div>
 </template>
 
 <script>
-import { Tabbar, TabbarItem, Swiper, Group, VChart, VTooltip, VLine, VScale, Grid, GridItem } from 'vux'
-
+import { Tabbar, TabbarItem, Swiper, Group, VChart, VTooltip, VLine, VScale, Grid, GridItem } from "vux"
 export default {
   name: "home",
   components: {
@@ -51,29 +49,34 @@ export default {
     VTooltip,
     VLine,
     VScale,
-    GridItem,
-    Grid
+    Grid,
+    GridItem
   },
   data() {
     return {
-      demo01_index: [{
-        url: '/vip',
-        img: 'http://pic.qiantucdn.com/58pic/28/25/77/60A58PICdx5_1024.jpg!/fw/1024/watermark/url/L2ltYWdlcy93YXRlcm1hcmsveGlhb3R1LnBuZw==/align/center',
-        title: '开通个会员吧'
-      }, {
-        url: 'javascript:',
-        img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vvsr72j20p00gogo2.jpg',
-        title: '送你一朵fua'
-      }, {
-        url: 'javascript:',
-        img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg',
-        title: '送你一辆车'
-      }, {
-        url: 'javascript:',
-        img: 'https://static.vux.li/demo/5.jpg', // 404
-        title: '送你一次旅行',
-        fallbackImg: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg'
-      }],
+      demo01_index: [
+        {
+          url: "/vip",
+          img: "http://pic.qiantucdn.com/58pic/28/25/77/60A58PICdx5_1024.jpg!/fw/1024/watermark/url/L2ltYWdlcy93YXRlcm1hcmsveGlhb3R1LnBuZw==/align/center",
+          title: "开通个会员吧"
+        },
+        {
+          url: "javascript:",
+          img: "https://ww1.sinaimg.cn/large/663d3650gy1fq66vvsr72j20p00gogo2.jpg",
+          title: "送你一朵fua"
+        },
+        {
+          url: "javascript:",
+          img: "https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg",
+          title: "送你一辆车"
+        },
+        {
+          url: "javascript:",
+          img: "https://static.vux.li/demo/5.jpg",
+          title: "送你一次旅行",
+          fallbackImg: "https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg"
+        }
+      ],
       data: [
         { date: "2017-06-05", value: 116 },
         { date: "2017-06-06", value: 129 },
@@ -136,9 +139,6 @@ export default {
   p {
     span {
       color: #ff9900;
-    }
-    .iconfont{
-      font-size: 27px;
     }
   }
 }
