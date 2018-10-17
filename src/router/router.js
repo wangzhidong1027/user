@@ -44,6 +44,30 @@ const router = new Router({
         title: "意见反馈"
       },
       component: () => import("../views/me-page/idea.vue")
+    },
+     {
+      path: "/edit/:type",
+      name: "edit",
+      meta: {
+        title: "意见反馈"
+      },
+      component: () => import("../views/me-page/components/edit.vue")
+    },
+    {
+      path: "/vip",
+      name: "vip",
+      meta: {
+        title: "会员中心"
+      },
+      component: () => import("../views/viplist.vue")
+    },
+    {
+      path: "/dredgevip",
+      name: "dredgevip",
+      meta: {
+        title: "会员权益"
+      },
+      component: () => import("../views/dredge-vip.vue")
     }
   ]
 });

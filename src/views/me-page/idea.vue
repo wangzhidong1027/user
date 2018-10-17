@@ -4,7 +4,7 @@
             <x-textarea :max="60" placeholder="" :rows='6'></x-textarea>
         </group>
         <group :gutter="20" class="btn-box">
-                <x-button plain type="primary" class="custom-primary-red"  >提交</x-button>
+                <x-button  type="primary" class="custom-primary-red"  @click.native="submit">提交</x-button>
         </group>
     </div>
 </template>
@@ -17,6 +17,13 @@ export default {
         Group,
         XTextarea,
         XButton
+    },
+    methods: {
+    	submit () {
+    		this.$router.push({
+                path: 'me'
+            })
+        }
     }
 }
 </script>

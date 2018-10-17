@@ -12,7 +12,7 @@
             <div class="button-box">
                 <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="login">登录</x-button>
                 <div class="link">
-                    <router-link name="li" to="/home">注册</router-link>
+                    <router-link name="li" to="/reigster">注册</router-link>
                     <router-link name="li" to="/home">忘记密码</router-link>
                 </div>
             </div>
@@ -27,7 +27,7 @@
             <div class="button-box">
                 <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="login">登录</x-button>
                 <div class="link">
-                    <router-link name="li" to="/home">注册</router-link>
+                    <router-link name="li" to="/reigster">注册</router-link>
                     <router-link name="li" to="/home">忘记密码</router-link>
                 </div>
             </div>
@@ -60,7 +60,11 @@
 				this.showIndex = index
 			},
 			login() {
-				alert(1)
+				console.log(this.$axios.post)
+                this.$axios.post(  'http://10.10.18.12:8082/per/getintromember')
+                // this.$router.push({
+                //     path: 'me'
+                // })
 			}
 		}
 	};

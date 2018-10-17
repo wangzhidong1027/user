@@ -7,7 +7,7 @@
             </x-input>
         </group>
           <div class="button-box">
-                <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="login">完成</x-button>
+                <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="register">完成</x-button>
           </div>
     </div>
 </template>
@@ -26,7 +26,13 @@
 				phone: "",
                 code: ""
             }
+        },
+        methods: {
+			register () {
+
+            }
         }
+
 	}
 </script>
 

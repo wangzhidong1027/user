@@ -6,10 +6,10 @@
                     <img src="https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png" alt="">
                 </div>
             </div>
-            <a class="header-right" href="#/home">
-                <div class='name'><span>昵称</span></div>
+            <a class="header-right">
+                <div class='name'><a href="#/edit/name"><span>昵称</span></a></div>
                 <div class="vip">
-                    <a href="#me">会员</a>
+                    <a href="#/vip">会员</a>
                 </div>
             </a>
         </header>
@@ -27,31 +27,29 @@
             </grid>
         </div>
         <div class="center">
-            <group :gutter="0">
-                <cell-box  is-link>
-                    实名认证
-                </cell-box>
-                <cell-box  is-link>
-                    绑定邮箱
-                </cell-box>
-                <cell-box is-link>
-                    车辆绑定
-                </cell-box>
+            <group :gutter="0"  >
+                <cell is-link title="实名认证" value="未认证" link="edit/car">
+                </cell>
+                <cell is-link link="edit/car" title="邮箱绑定" value="未认证">
+                </cell>
+                <cell is-link link="edit/car" title="车辆绑定" value="未认证">
+                </cell>
             </group>
         </div>
         <div class="center">
             <group :gutter="0">
-                <cell-box  is-link>
+                <cell-box is-link>
                     设置
                 </cell-box>
-                <cell-box is-link>
+                <cell-box is-link @click.native="show">
                     邀请好友
                 </cell-box>
-                <cell-box  is-link>
+                <cell-box is-link link="idea">
                     意见反馈
                 </cell-box>
             </group>
         </div>
+        <actionsheet v-model="showShare" :menus="menus1" theme="ios" :show-cancel="true"></actionsheet>
         <tabbar>
             <tabbar-item link="home">
                 <img slot="icon" src="">
@@ -66,35 +64,54 @@
 </template>
 
 <script>
-	import {Tabbar, TabbarItem, Grid, GridItem, CellBox, Cell, Group } from 'vux'
+	import {Tabbar, TabbarItem, Grid, GridItem, CellBox, Cell, Group, Actionsheet} from 'vux'
+
 	export default {
 		name: "me",
 		components: {
 			Tabbar,
 			TabbarItem,
 			Grid,
-            GridItem,
-            CellBox,
-            Cell,
-            Group            
-		}
+			GridItem,
+			CellBox,
+			Cell,
+			Group,
+			Actionsheet
+		},
+		data() {
+			return {
+                showShare: false,
+				menus1: {
+					menu1: "邀请好友",
+					menu2: "分享到朋友圈"
+				}
+			}
+		},
+        methods: {
+			show () {
+                this.showShare = true
+            }
+        }
 	}
 </script>
 
 <style scoped lang="less">
-    .weui-bar__item_on{
-        p{
-            span{
-            color: #ff9900;
+    .weui-bar__item_on {
+        p {
+            span {
+                color: #ff9900;
             }
         }
     }
+
     #me {
         height: 100%;
         width: 100%;
         background: #f5f5f5;
         overflow: scroll;
         -webkit-overflow-scrolling: touch;
+        padding-bottom: 1.2rem;
+        box-sizing: border-box;
         header {
             height: 2rem;
             background: #fff;
@@ -128,11 +145,12 @@
                 }
                 .name {
                     position: relative;
-                    span {
+                    a span {
                         position: absolute;
                         left: 0;
                         bottom: 0;
                         font-size: 0.4rem;
+                        color: #444;
                     }
                 }
                 .vip {
@@ -150,7 +168,7 @@
                 }
             }
         }
-        .nav{
+        .nav {
             background: #fff;
             margin-bottom: 0.2rem;
         }

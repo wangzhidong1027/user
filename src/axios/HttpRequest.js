@@ -1,8 +1,8 @@
 import axios from "axios";
-import router from "../router/router.js"
+// import router from "../router/router.js"
 
 const HttpRequest = axios.create({
-  timeout: 20000
+  timeout: 200000,
 });
 // 添加请求拦截器
 HttpRequest.interceptors.request.use(config => {
@@ -16,10 +16,9 @@ HttpRequest.interceptors.response.use(
     if(response){
       switch (response.status){
         case 401 :  sessionStorage.clear();
-          router.replace({
-            path:'./login',
-            // query:{rediect:router.currentRoute.fullPath}//登录成功后跳入浏览器当前页面
-          })
+          // router.replace({
+          //   // query:{rediect:router.currentRoute.fullPath}//登录成功后跳入浏览器当前页面
+          // })
       }
     }
     return response;
@@ -27,9 +26,9 @@ HttpRequest.interceptors.response.use(
   error => {
     if (error.response) {
       sessionStorage.clear();
-      router.replace({
-        path: './login'
-      });
+      // router.replace({
+      //   path: './login'
+      // });
     }
     return Promise.reject(error.response.data)
   }
