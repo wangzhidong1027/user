@@ -10,42 +10,41 @@
 </template>
 
 <script>
-    import { XButton } from "vux"
-    export default {
-    	name: "dredgeVIP",
-        components: {
-    		XButton
-        },
-        methods: {
-    		dredge () {
+import { XButton } from "vux"
+export default {
+  name: "dredgeVIP",
+    components: {
+    XButton
+    },
+    methods: {
+    dredge () {
 
-            }
         }
     }
+}
 </script>
 
 <style lang="less" scoped>
 .vip{
-    height: 100%;
-    width: 100%;
-    background: #f5f5f5;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 45px;
-    box-sizing: border-box;
-    .imgbox{
-        width: 100%;
-        img{
-            display: block;
-            width: 100%;
-        }
-
-    }
-    .bottom{
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-    }
+  height: 100%;
+  width: 100%;
+  background: #f5f5f5;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 45px;
+  box-sizing: border-box;
+  .imgbox{
+      width: 100%;
+      img{
+          display: block;
+          width: 100%;
+      }
+  }
+  .bottom{
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+  }
 }
 </style>

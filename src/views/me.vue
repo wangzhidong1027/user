@@ -39,24 +39,24 @@
         <div class="center">
             <group :gutter="0">
                 <cell-box is-link>
-                    设置
+                     <b class="iconfont icon-shezhi cell-icon"></b>设置
                 </cell-box>
                 <cell-box is-link @click.native="show">
-                    邀请好友
+                     <b class="iconfont icon-yaoqing cell-icon" style="font-size: 18px"></b>邀请好友
                 </cell-box>
                 <cell-box is-link link="idea">
-                    意见反馈
+                    <b class="iconfont icon-yijianfankui cell-icon"></b>意见反馈
                 </cell-box>
             </group>
         </div>
         <actionsheet v-model="showShare" :menus="menus1" theme="ios" :show-cancel="true"></actionsheet>
         <tabbar>
             <tabbar-item link="home">
-                <img slot="icon" src="">
+                <span slot="icon" class="icon-shouye1 iconfont" style="font-size: 22px;"></span>
                 <span slot="label">首页</span>
             </tabbar-item>
             <tabbar-item link="me" selected>
-                <img slot="icon" src="">
+                <span slot="icon" class="icon-wode iconfont" style="color: #ff9900;font-size: 20px;"></span>
                 <span slot="label">我的</span>
             </tabbar-item>
         </tabbar>
@@ -64,117 +64,119 @@
 </template>
 
 <script>
-	import {Tabbar, TabbarItem, Grid, GridItem, CellBox, Cell, Group, Actionsheet} from 'vux'
+import {Tabbar, TabbarItem, Grid, GridItem, CellBox, Cell, Group, Actionsheet} from 'vux'
 
-	export default {
-		name: "me",
-		components: {
-			Tabbar,
-			TabbarItem,
-			Grid,
-			GridItem,
-			CellBox,
-			Cell,
-			Group,
-			Actionsheet
-		},
-		data() {
-			return {
-                showShare: false,
-				menus1: {
-					menu1: "邀请好友",
-					menu2: "分享到朋友圈"
-				}
-			}
-		},
-        methods: {
-			show () {
-                this.showShare = true
-            }
-        }
-	}
+export default {
+  name: "me",
+  components: {
+    Tabbar,
+    TabbarItem,
+    Grid,
+    GridItem,
+    CellBox,
+    Cell,
+    Group,
+    Actionsheet
+  },
+  data() {
+    return {
+      showShare: false,
+      menus1: {
+        menu1: "邀请好友",
+        menu2: "分享到朋友圈"
+      }
+    }
+  },
+  methods: {
+    show () {
+      this.showShare = true;
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">
-    .weui-bar__item_on {
-        p {
-            span {
-                color: #ff9900;
-            }
-        }
+.weui-bar__item_on {
+  p {
+      span {
+          color: #ff9900;
+      }
+  }
+}
+.cell-icon{
+  padding-right: 5px;
+}
+#me {
+  height: 100%;
+  width: 100%;
+  background: #f5f5f5;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 1.2rem;
+  box-sizing: border-box;
+  header {
+  height: 2rem;
+  background: #fff;
+  margin-bottom: 0.2rem;
+  display: flex;
+  justify-content: flex-start;
+  .header-left {
+    width: 25%;
+    height: 100%;
+    box-sizing: border-box;
+    .user-img {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-
-    #me {
-        height: 100%;
-        width: 100%;
-        background: #f5f5f5;
-        overflow: scroll;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 1.2rem;
-        box-sizing: border-box;
-        header {
-            height: 2rem;
-            background: #fff;
-            margin-bottom: 0.2rem;
-            display: flex;
-            justify-content: flex-start;
-            .header-left {
-                width: 25%;
-                height: 100%;
-                box-sizing: border-box;
-                .user-img {
-                    width: 100%;
-                    height: 100%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-                img {
-                    display: block;
-                    width: 60%;
-                    border-radius: 50%;
-                }
-            }
-            .header-right {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                div {
-                    flex: 1;
-                    font-size: 20px;
-                }
-                .name {
-                    position: relative;
-                    a span {
-                        position: absolute;
-                        left: 0;
-                        bottom: 0;
-                        font-size: 0.4rem;
-                        color: #444;
-                    }
-                }
-                .vip {
-                    position: relative;
-                    a {
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        background: #eee;
-                        padding: 0 0.2rem;
-                        border-radius: 0.2rem;
-                        font-size: 0.3rem;
-                        color: #fff;
-                    }
-                }
-            }
-        }
-        .nav {
-            background: #fff;
-            margin-bottom: 0.2rem;
-        }
-        .center {
-            background: #fff;
-            margin-bottom: 0.2rem;
-        }
+    img {
+      display: block;
+      width: 60%;
+      border-radius: 50%;
     }
+  }
+  .header-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      div {
+          flex: 1;
+          font-size: 20px;
+      }
+      .name {
+          position: relative;
+          a span {
+              position: absolute;
+              left: 0;
+              bottom: 0;
+              font-size: 0.4rem;
+              color: #444;
+          }
+      }
+      .vip {
+          position: relative;
+          a {
+              position: absolute;
+              top: 0;
+              left: 0;
+              background: #eee;
+              padding: 0 0.2rem;
+              border-radius: 0.2rem;
+              font-size: 0.3rem;
+              color: #fff;
+          }
+      }
+    }
+  }
+  .nav {
+    background: #fff;
+    margin-bottom: 0.2rem;
+  }
+  .center {
+    background: #fff;
+    margin-bottom: 0.2rem;
+  }
+}
 </style>

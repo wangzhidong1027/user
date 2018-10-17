@@ -6,7 +6,6 @@ import util from "./util/util";
 import axios from './axios/index'
 import qs from 'qs'
 import base64 from 'js-base64'
-
 util.getFontSize(750);
 
 const FastClick = require("fastclick");

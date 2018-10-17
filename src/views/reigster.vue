@@ -13,35 +13,34 @@
 </template>
 
 <script>
-    import {Group, XInput, XButton} from 'vux'
-	export default {
-		name: "reigster",
-        components: {
-			Group,
-            XInput,
-            XButton
-        },
-        data () {
-			return {
-				phone: "",
-                code: ""
-            }
-        },
-        methods: {
-			register () {
+import {Group, XInput, XButton} from 'vux'
+export default {
+  name: "reigster",
+  components: {
+    Group,
+    XInput,
+    XButton
+  },
+  data () {
+    return {
+      phone: "",
+      code: ""
+    }
+  },
+  methods: {
+    register () {
+      }
+  }
 
-            }
-        }
-
-	}
+}
 </script>
 
 <style scoped lang="less">
-    .weui-btn_plain-primary {
-        border-color: #ff9900;
-        color: #ff9900;
-    }
-    .button-box{
-        padding: 0.5rem 0.4rem;
-    }
+.weui-btn_plain-primary {
+  border-color: #ff9900;
+  color: #ff9900;
+}
+.button-box{
+  padding: 0.5rem 0.4rem;
+}
 </style>

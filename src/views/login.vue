@@ -36,58 +36,56 @@
 </template>
 
 <script>
-	import {Tab, TabItem, XInput, XButton, Group} from 'vux'
+import {Tab, TabItem, XInput, XButton, Group} from 'vux'
 
-	export default {
-		name: "Login",
-		components: {
-			Tab,
-			TabItem,
-			XButton,
-			XInput,
-			Group,
-		},
-		data() {
-			return {
-				showIndex: 0,
-				phone: '',
-				password: '',
-				code: ''
-			}
-		},
-		methods: {
-			onItemClick(index) {
-				this.showIndex = index
-			},
-			login() {
-				console.log(this.$axios.post)
-                this.$axios.post(  'http://10.10.18.12:8082/per/getintromember')
-                // this.$router.push({
-                //     path: 'me'
-                // })
-			}
-		}
-	};
+export default {
+  name: "Login",
+  components: {
+    Tab,
+    TabItem,
+    XButton,
+    XInput,
+    Group,
+  },
+  data() {
+    return {
+      showIndex: 0,
+      phone: '',
+      password: '',
+      code: ''
+    }
+  },
+  methods: {
+    onItemClick(index) {
+      this.showIndex = index
+    },
+    login() {
+      this.$axios.post(  '/per/getintromember')
+      // this.$router.push({
+      //     path: 'me'
+      // })
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>
-    @import '~vux/src/styles/center.less';
-    .button-box {
-        padding: 0.3rem;
-        padding-top: 0.5rem;
-    }
-
-    .link {
-        padding-top: 0.3rem;
-        display: flex;
-        justify-content: space-between;
-        font-size: 16px;
-        a {
-            color: rgb(255, 153, 0);
-        }
-    }
-    .weui-btn_plain-primary{
-        border-color:#ff9900;
-        color: #ff9900;
-    }
+@import '~vux/src/styles/center.less';
+.button-box {
+  padding: 0.3rem;
+  padding-top: 0.5rem;
+}
+.link {
+  padding-top: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  a {
+      color: rgb(255, 153, 0);
+  }
+}
+.weui-btn_plain-primary{
+  border-color:#ff9900;
+  color: #ff9900;
+}
 </style>

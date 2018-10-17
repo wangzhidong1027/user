@@ -2,30 +2,33 @@ import axios from "axios";
 // import router from "../router/router.js"
 
 const HttpRequest = axios.create({
-  timeout: 200000,
+  timeout: 20000,
 });
 // 添加请求拦截器
 HttpRequest.interceptors.request.use(config => {
   // 请求发送前
-  config.header['Token'] = sessionStorage.getItem('token')
+  var Token =  sessionStorage.getItem('token')
+  if (Token) {
+    config.header['Token'] = Token
+  }
   return config
 });
 // 相应拦截器
 HttpRequest.interceptors.response.use(
   response=>{
     if(response){
-      switch (response.status){
-        case 401 :  sessionStorage.clear();
-          // router.replace({
-          //   // query:{rediect:router.currentRoute.fullPath}//登录成功后跳入浏览器当前页面
-          // })
-      }
+      // switch (response.status){
+      //   case 401 :  sessionStorage.clear();
+      //     // router.replace({
+      //     //   // query:{rediect:router.currentRoute.fullPath}//登录成功后跳入浏览器当前页面
+      //     // })
+      // }
     }
     return response;
   },
   error => {
     if (error.response) {
-      sessionStorage.clear();
+      // sessionStorage.clear();
       // router.replace({
       //   path: './login'
       // });

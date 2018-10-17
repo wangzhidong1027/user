@@ -11,31 +11,31 @@
 </template>
 
 <script>
-    import { XButton, XHeader, XInput, Group } from "vux"
+import { XButton, XHeader, XInput, Group } from "vux"
 export  default {
-    name: "edit",
-    components: {
-    	XButton,
-        XHeader,
-        XInput,
-        Group
-    },
-    data () {
-    	return {
-    		value: ''
-        }
-    }
+  name: "edit",
+  components: {
+    XButton,
+      XHeader,
+      XInput,
+      Group
+  },
+  data () {
+    return {
+      value: ''
+      }
+  }
 }
 </script>
 
 <style lang="less" scoped>
 #edit{
-    height: 100%;
-    width: 100%;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
-    .btn-box{
-        padding: 1rem 0.6rem;
-    }
+  height: 100%;
+  width: 100%;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  .btn-box{
+      padding: 1rem 0.6rem;
+  }
 }
 </style>
