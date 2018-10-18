@@ -123,7 +123,7 @@ let util = {
         return /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/.test(str);
       },
       mobile(str) {
-        return /^1[3|4|5|7|8][0-9]{9}$/.test(str);
+        return /^1[3|4|5|6|7|8][0-9]{9}$/.test(str);
       },
       tel(str) {
         return /^(0\d{2,3}-\d{7,8})(-\d{1,4})?$/.test(str);
@@ -145,18 +145,22 @@ let util = {
       },
       upper(str) {
         return /^[A-Z]+$/.test(str);
+      },
+      code(str) {
+        return /^\d{6}$/.test(str);
       }
     };
     return {
       check(str, type) {
-        return new Promise(function (resolve, reject) {
-          if (rules[type]) {
-            resolve(rules[type](str));
-          }
-          else {
-            reject(false);
-          }
-        });
+        return rules[type](str)
+        // new Promise(function (resolve, reject) {
+        //   if (rules[type]) {
+        //     resolve(rules[type](str));
+        //   }
+        //   else {
+        //     reject(false);
+        //   }
+        // });
       },
       addRule(type, fn) {
         rules[type] = fn;

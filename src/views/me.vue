@@ -1,70 +1,85 @@
 <template>
-    <div id="me">
-        <header>
-            <div class="header-left">
-                <div class="user-img">
-                    <img src="https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png" alt="">
-                </div>
-            </div>
-            <a class="header-right">
-                <div class='name'><a href="#/edit/name"><span>昵称</span></a></div>
-                <div class="vip">
-                    <a href="#/vip">会员</a>
-                </div>
-            </a>
-        </header>
-        <div class="nav">
-            <grid>
-                <grid-item label="订单">
-                    <!--<img slot="icon" src="">-->
-                </grid-item>
-                <grid-item label="已购">
-                    <!--<img slot="icon" src="">-->
-                </grid-item>
-                <grid-item label="优惠券">
-                    <!--<img slot="icon" src="">-->
-                </grid-item>
-            </grid>
+  <div id="me">
+    <header>
+      <div class="header-left">
+        <div class="user-img">
+          <img src="https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png" alt="">
         </div>
-        <div class="center">
-            <group :gutter="0"  >
-                <cell is-link title="实名认证" value="未认证" link="edit/car">
-                </cell>
-                <cell is-link link="edit/car" title="邮箱绑定" value="未认证">
-                </cell>
-                <cell is-link link="edit/car" title="车辆绑定" value="未认证">
-                </cell>
-            </group>
+      </div>
+      <a class="header-right">
+        <div class='name'><a href="#/edit/name"><span>昵称</span></a></div>
+        <div class="vip">
+          <a href="#/vip">会员</a>
         </div>
-        <div class="center">
-            <group :gutter="0">
-                <cell-box is-link>
-                     <b class="iconfont icon-shezhi cell-icon"></b>设置
-                </cell-box>
-                <cell-box is-link @click.native="show">
-                     <b class="iconfont icon-yaoqing cell-icon" style="font-size: 18px"></b>邀请好友
-                </cell-box>
-                <cell-box is-link link="idea">
-                    <b class="iconfont icon-yijianfankui cell-icon"></b>意见反馈
-                </cell-box>
-            </group>
-        </div>
-        <actionsheet v-model="showShare" :menus="menus1" theme="ios" :show-cancel="true"></actionsheet>
-        <tabbar>
-            <tabbar-item link="home">
-                <span slot="icon" class="icon-shouye1 iconfont" style="font-size: 22px;"></span>
-                <span slot="label">首页</span>
-            </tabbar-item>
-            <tabbar-item link="me" selected>
-                <span slot="icon" class="icon-wode iconfont" style="color: #ff9900;font-size: 20px;"></span>
-                <span slot="label">我的</span>
-            </tabbar-item>
-        </tabbar>
+      </a>
+    </header>
+    <div class="nav">
+      <grid>
+        <grid-item label="订单">
+          <b slot="icon" class="iconfont icon-dingdan" style="display: block;font-size: 26px;color: #999"></b>
+        </grid-item>
+        <grid-item label="已购">
+           <b slot="icon" class="iconfont icon-gouwuchekong" style="display: block;font-size: 26px;color: #999"></b>
+        </grid-item>
+        <grid-item label="优惠券">
+           <b slot="icon" class="iconfont icon-youhuiquan" style="display: block;font-size: 24px;color: #999"></b>
+        </grid-item>
+      </grid>
     </div>
+    <div class="center">
+      <group :gutter="0">
+        <cell is-link title="实名认证" value="未认证" link="edit/car">
+          <b class="iconfont icon-shiming cell2-icon" slot="icon"></b>
+        </cell>
+        <cell is-link link="edit/car" title="邮箱绑定" value="未认证">
+          <b class="iconfont icon-youxiang cell2-icon" slot="icon"></b>
+        </cell>
+        <cell is-link link="edit/car" title="车辆绑定" value="未认证">
+          <b class="iconfont icon-cheliangguanli cell2-icon" slot="icon"></b>
+        </cell>
+      </group>
+    </div>
+    <div class="center">
+      <group :gutter="0">
+        <cell-box is-link>
+          <b class="iconfont icon-shezhi cell-icon"></b>设置
+        </cell-box>
+        <cell-box is-link @click.native="show">
+          <b class="iconfont icon-yaoqing cell-icon" style="font-size: 18px"></b>邀请好友
+        </cell-box>
+        <cell-box is-link link="idea">
+          <b class="iconfont icon-yijianfankui cell-icon"></b>意见反馈
+        </cell-box>
+        <cell-box is-link>
+          <b class="iconfont icon-wode cell-icon"></b>退出登录
+        </cell-box>
+      </group>
+    </div>
+    <actionsheet v-model="showShare" :menus="menus1" theme="ios" :show-cancel="true"></actionsheet>
+    <tabbar>
+      <tabbar-item link="home">
+        <span slot="icon" class="icon-shouye1 iconfont" style="font-size: 22px;"></span>
+        <span slot="label">首页</span>
+      </tabbar-item>
+      <tabbar-item link="me" selected>
+        <span slot="icon" class="icon-wode iconfont" style="color: #ff9900;font-size: 20px;"></span>
+        <span slot="label">我的</span>
+      </tabbar-item>
+    </tabbar>
+  </div>
 </template>
 
 <script>
-import {Tabbar, TabbarItem, Grid, GridItem, CellBox, Cell, Group, Actionsheet} from 'vux'
+import {
+  Tabbar,
+  TabbarItem,
+  Grid,
+  GridItem,
+  CellBox,
+  Cell,
+  Group,
+  Actionsheet
+} from "vux";
 
 export default {
   name: "me",
@@ -85,26 +100,43 @@ export default {
         menu1: "邀请好友",
         menu2: "分享到朋友圈"
       }
-    }
+    };
   },
   methods: {
-    show () {
+    show() {
       this.showShare = true;
+    },
+    getinfo() {
+      this.$axios.post(this.$baseUrl + "/oil/oilinfo", this.$qs.stringify({
+      })).then(
+      	result => {
+          var res = JSON.parse(this.$base64.decode(result.data));
+        });
     }
+  },
+  mounted() {
+    this.getinfo();
   }
-}
+};
 </script>
 
 <style scoped lang="less">
 .weui-bar__item_on {
   p {
-      span {
-          color: #ff9900;
-      }
+    span {
+      color: #ff9900;
+    }
   }
 }
-.cell-icon{
-  padding-right: 5px;
+
+.cell-icon {
+  padding-right: 10px;
+  color: #0bb2e0;
+}
+
+.cell2-icon {
+  padding-right: 10px;
+  color: #ff9900;
 }
 #me {
   height: 100%;
@@ -115,58 +147,58 @@ export default {
   padding-bottom: 1.2rem;
   box-sizing: border-box;
   header {
-  height: 2rem;
-  background: #fff;
-  margin-bottom: 0.2rem;
-  display: flex;
-  justify-content: flex-start;
-  .header-left {
-    width: 25%;
-    height: 100%;
-    box-sizing: border-box;
-    .user-img {
-      width: 100%;
+    height: 2rem;
+    background: #fff;
+    margin-bottom: 0.2rem;
+    display: flex;
+    justify-content: flex-start;
+    .header-left {
+      width: 25%;
       height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      box-sizing: border-box;
+      .user-img {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      img {
+        display: block;
+        width: 60%;
+        border-radius: 50%;
+      }
     }
-    img {
-      display: block;
-      width: 60%;
-      border-radius: 50%;
-    }
-  }
-  .header-right {
+    .header-right {
       flex: 1;
       display: flex;
       flex-direction: column;
       div {
-          flex: 1;
-          font-size: 20px;
+        flex: 1;
+        font-size: 20px;
       }
       .name {
-          position: relative;
-          a span {
-              position: absolute;
-              left: 0;
-              bottom: 0;
-              font-size: 0.4rem;
-              color: #444;
-          }
+        position: relative;
+        a span {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          font-size: 0.4rem;
+          color: #444;
+        }
       }
       .vip {
-          position: relative;
-          a {
-              position: absolute;
-              top: 0;
-              left: 0;
-              background: #eee;
-              padding: 0 0.2rem;
-              border-radius: 0.2rem;
-              font-size: 0.3rem;
-              color: #fff;
-          }
+        position: relative;
+        a {
+          position: absolute;
+          top: 0;
+          left: 0;
+          background: #eee;
+          padding: 0 0.2rem;
+          border-radius: 0.2rem;
+          font-size: 0.3rem;
+          color: #fff;
+        }
       }
     }
   }
