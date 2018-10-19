@@ -49,9 +49,17 @@ const router = new Router({
       path: "/edit/:type",
       name: "edit",
       meta: {
-        title: "意见反馈"
+        title: "个人信息"
       },
       component: () => import("../views/me-page/components/edit.vue")
+    },
+    {
+      path: "/setting",
+      name: "setting",
+      meta: {
+        title: "设置"
+      },
+      component: () => import("../views/me-page/setting.vue")
     },
     {
       path: "/vip",

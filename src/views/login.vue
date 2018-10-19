@@ -45,8 +45,13 @@
 </template>
 
 <script>
-import {Tab, TabItem, XInput, XButton, Group} from 'vux'
-
+import {
+	Tab,
+  TabItem,
+  XInput,
+  XButton,
+  Group
+} from "vux"
 export default {
   name: "Login",
   components: {
@@ -64,11 +69,10 @@ export default {
       code: '',
       msg: '发送验证码',
       time: 60
-    }
+    };
   },
   methods: {
     getcode() {
-    	console.log()
       if( !this.$refs.phone.valid){
         this.$vux.toast.show({
           type: 'cancel',
@@ -76,11 +80,11 @@ export default {
           width: '3em',
           position: 'middle',
           isShowMask: true
-        })
+        });
         return false
       }
-      if (this.time != 60){
-        return
+      if ( this.time != 60 ){
+        return false;
       } else {
         // this.$axios.post(this.$baseUrl + '/per/login', this.$qs.stringify({
         // 	data: this.phone
@@ -93,8 +97,8 @@ export default {
               width: '3em',
               position: 'top',
               isShowMask: true
-            })
-            this.count()
+            });
+            this.count();
         // 	} else {
         // 		this.$vux.toast.show({
         // 			type: 'cancel',
@@ -108,18 +112,18 @@ export default {
       }
     },
     count () {
-      var timer = null;
+      let timer = null;
       timer = setInterval(() => {
-        if(this.time != 0) {
-          this.time--
-          this.msg = this.time + "s再次获取"
+        if( this.time != 0 ) {
+          this.time--;
+          this.msg = this.time + "s再次获取";
         }else{
-          clearInterval(timer)
-          timer = null
-          this.time = 60
-          this.msg = "发送验证码"
+          clearInterval(timer);
+          timer = null;
+          this.time = 60;
+          this.msg = "发送验证码";
         }
-      },1000)
+      },1000);
     },
     onItemClick(index) {
       this.showIndex = index;
@@ -128,38 +132,40 @@ export default {
       this.$axios.post(this.$baseUrl + '/per/login', this.$qs.stringify({
         data: data
       })).then(result => {
-        var res = JSON.parse(this.$base64.decode(result.data))
+        const res = JSON.parse(this.$base64.decode(result.data))
         if (res.code == 10000) {
         	localStorage.setItem('Token', res.data)
           this.$vux.toast.show({
-            text: '登录成功',
-            width: '3em',
-            position: 'middle',
+            text: "登录成功",
+            width: "3em",
+            position: "middle",
             isShowMask: true
-          })
+          });
           setTimeout(() => {
             this.$router.push({
               path: 'me'
-            })
-          }, 3000)
+            });
+          }, 3000);
         } else {
           this.$vux.toast.show({
-            type: 'cancel',
+            type: "cancel",
             text: res.message,
-            width: '3em',
-            position: 'middle',
+            width: "3em",
+            position: "middle",
             isShowMask: true
-          })
+          });
         }
       })
     },
     login() {
       if (this.showIndex === 0) {
         if (this.$refs.phone.valid && this.$refs.password.valid) {
-          var formdata = this.$base64.encode(JSON.stringify({
-            mobile: this.phone,
-            password: this.password
-          }))
+          let formdata = this.$base64.encode(
+          	JSON.stringify({
+              mobile: this.phone,
+              password: this.password
+            })
+          );
           // this.submit(formdata)
         } else {
           this.$vux.toast.show({
@@ -168,23 +174,20 @@ export default {
             width: '3em',
             position: 'middle',
             isShowMask: true
-          })
+          });
         }
       } else {
         if (this.$refs.phone.valid && this.$refs.code.valid) {
-          var formdata = this.$base64.encode(JSON.stringify({
-            mobile: this.phone,
-            code: this.code
-          }))
-          this.submit(formdata)
+          let formdata = this.$base64.encode(JSON.stringify({mobile: this.phone,code: this.code}));
+          this.submit(formdata);
         } else {
           this.$vux.toast.show({
-            type: 'cancel',
+            type: "cancel",
             text: "请填写正确信息",
-            width: '3em',
-            position: 'middle',
+            width: "3em",
+            position: "middle",
             isShowMask: true
-          })
+          });
         }
       }
     }
@@ -193,25 +196,24 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import '~vux/src/styles/center.less';
+@import "~vux/src/styles/center.less";
+.button-box {
+  padding: 0.3rem;
+  padding-top: 0.5rem;
+}
 
-  .button-box {
-    padding: 0.3rem;
-    padding-top: 0.5rem;
+.link {
+  padding-top: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  a {
+    color: rgb(255, 153, 0);
   }
+}
 
-  .link {
-    padding-top: 0.3rem;
-    display: flex;
-    justify-content: space-between;
-    font-size: 16px;
-    a {
-      color: rgb(255, 153, 0);
-    }
-  }
-
-  .weui-btn_plain-primary {
-    border-color: #ff9900;
-    color: #ff9900;
-  }
+.weui-btn_plain-primary {
+  border-color: #ff9900;
+  color: #ff9900;
+}
 </style>

@@ -7,12 +7,20 @@
         </div>
       </div>
       <a class="header-right">
-        <div class='name'><a href="#/edit/name"><span>昵称</span></a></div>
+        <div class='name'><a href="#/edit/name"><span>昵称</span><b class="iconfont icon-bianji" style="margin-left: 30px;"></b></a></div>
         <div class="vip">
-          <a href="#/vip">会员</a>
+          <a href="#/vip" class="isVIP"><b class="iconfont icon-huiyuan" style="font-size:0.3rem "></b>黑金会员</a>
         </div>
       </a>
+      <div class="sign-box" @click="sign" v-if="isLogin">
+          <div class="sign active">
+              <div class="sign-icon"><i class="iconfont icon-qiandao"></i></div>
+              <div class="sign-title" v-if="isSign">已签到</div>
+              <div class="sign-title" v-else>点击签到</div>
+          </div>
+      </div>
     </header>
+
     <div class="nav">
       <grid>
         <grid-item label="订单">
@@ -26,7 +34,7 @@
         </grid-item>
       </grid>
     </div>
-    <div class="center">
+    <div class="center" v-if="isLogin">
       <group :gutter="0">
         <cell is-link title="实名认证" value="未认证" link="edit/car">
           <b class="iconfont icon-shiming cell2-icon" slot="icon"></b>
@@ -41,7 +49,7 @@
     </div>
     <div class="center">
       <group :gutter="0">
-        <cell-box is-link>
+        <cell-box is-link link="setting">
           <b class="iconfont icon-shezhi cell-icon"></b>设置
         </cell-box>
         <cell-box is-link @click.native="show">
@@ -49,9 +57,6 @@
         </cell-box>
         <cell-box is-link link="idea">
           <b class="iconfont icon-yijianfankui cell-icon"></b>意见反馈
-        </cell-box>
-        <cell-box is-link>
-          <b class="iconfont icon-wode cell-icon"></b>退出登录
         </cell-box>
       </group>
     </div>
@@ -99,12 +104,62 @@ export default {
       menus1: {
         menu1: "邀请好友",
         menu2: "分享到朋友圈"
-      }
+      },
+      isSign: false
     };
   },
+  computed: {
+  	isLogin: () => {
+  		return localStorage.getItem('Token') ? true : false;
+    },
+  },
   methods: {
-    show() {
-      this.showShare = true;
+  	getsign () {
+  		let signTime = localStorage.getItem("sign");
+  		if ( signTime ){
+        var Otime = JSON.parse(this.$base64.decode(signTime))
+        var date = new Date()
+        if( Otime.year < date.getFullYear()){
+            this.isSign =  true;
+        }else if( Otime.month < date.getMonth() + 1 ){
+             this.isSign =  true;
+        }else if ( Otime.strDate <= date.getDate() ) {
+           this.isSign =  true;
+        }else{
+        	 this.isSign =  false
+        }
+      }else{
+  			 this.isSign =  false;
+      }
+    },
+  	sign () {
+  		if ( !this.isLogin || this.isSign) {
+        return false;
+      }
+      var date = new Date()
+      var currentdate = {
+      	  year: date.getFullYear(),
+          month: date.getMonth() + 1,
+          strDate: date.getDate()
+      }
+      var base = this.$base64.encode(JSON.stringify(currentdate))
+      localStorage.setItem("sign",base)
+       this.isSign = true
+       this.$vux.toast.show({
+          text: "签到成功 积分+1",
+          width: "3em",
+          position: "middle",
+          isShowMask: true
+        });
+    },
+    show () {
+      if(this.isLogin){
+        this.showShare = true;
+      }else{
+      	this.$router.push({
+          path: 'login'
+        })
+      }
     },
     getinfo() {
       this.$axios.post(this.$baseUrl + "/oil/oilinfo", this.$qs.stringify({
@@ -116,6 +171,9 @@ export default {
   },
   mounted() {
     this.getinfo();
+    if( this.isLogin) {
+      this.getsign()
+    }
   }
 };
 </script>
@@ -128,12 +186,10 @@ export default {
     }
   }
 }
-
 .cell-icon {
   padding-right: 10px;
   color: #0bb2e0;
 }
-
 .cell2-icon {
   padding-right: 10px;
   color: #ff9900;
@@ -179,12 +235,18 @@ export default {
       }
       .name {
         position: relative;
-        a span {
+        a{
           position: absolute;
           left: 0;
           bottom: 0;
-          font-size: 0.4rem;
-          color: #444;
+          display: block;
+          span {
+            font-size: 0.4rem;
+            color: #444;
+          }
+          b{
+            color: #999;
+          }
         }
       }
       .vip {
@@ -196,8 +258,39 @@ export default {
           background: #eee;
           padding: 0 0.2rem;
           border-radius: 0.2rem;
-          font-size: 0.3rem;
+          font-size: 0.2rem;
           color: #fff;
+        }
+       .isVIP{
+          background: #000;
+         color: #f8e51c;
+        }
+      }
+    }
+    .sign-box{
+      display: flex;
+      align-items: center;
+      .active{
+        color: #f71d62;
+      }
+      .sign{
+        margin-right: 0.2rem;
+        width: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .sign-icon{
+          display: inline-block;
+          line-height: 0.5rem;
+          margin: 0 auto;
+          i{
+            display: block;
+            font-size: 0.4rem;
+          }
+        }
+        .sign-title{
+          text-align: center;
+          font-size: 0.25rem;
         }
       }
     }

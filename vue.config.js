@@ -5,17 +5,18 @@ module.exports = {
 			plugins: ["vux-ui"]
 		});
 	},
+	// 打包时不生成.map文件
+	productionSourceMap: false,
 	devServer: {
-		open: true,
-		https: false,
-		hotOnly: false,
-		proxy: { // 配置跨域
-			'*': {
-				//要访问的跨域的api的域名
-				target: 'http://10.10.18.12:8082',
-				// ws: true,
-				changOrigin: true,
+		proxy: {
+			"/per": {
+			  type: 'proxy',
+			  target: 'http://10.10.18.12:8082/',
+			},
+			"/oil": {
+			  type: 'proxy',
+			  target: 'http://10.10.18.12:8082/',
 			}
-		},
+		}
 	}
 };

@@ -5,25 +5,37 @@
              <x-input  v-model="value" placeholder="请输入昵称"></x-input>
         </group>
         <div class="idcard">
-
+            <upload-img accept="image/*" :post="upload">aaa</upload-img>
         </div>
     </div>
 </template>
 
 <script>
 import { XButton, XHeader, XInput, Group } from "vux"
+import UploadImg from "../../../components/upload/upload-img"
 export  default {
   name: "edit",
   components: {
     XButton,
-      XHeader,
-      XInput,
-      Group
+    XHeader,
+    XInput,
+    Group,
+    UploadImg
   },
   data () {
     return {
       value: ''
-      }
+    }
+  },
+  methods: {
+  	upload (file) {
+      let config = {
+      	headers:{'Content-Type':'multipart/form-data'}
+      };
+      this.$axios.post( this.$baseUrl + '/per/login', file, config).then(response=>{
+        console.log(response.data);
+      })
+    }
   }
 }
 </script>

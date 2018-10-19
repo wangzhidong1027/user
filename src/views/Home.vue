@@ -14,9 +14,11 @@
         </grid-item>
       </grid>
       <div style="width: 100%;margin-top: 10px">
-          <img style="width: 100%; display: block" src="../assets/images/jbanner.jpg" alt="">
+        <a href="#/vip">
+           <img style="width: 100%; display: block" src="../assets/images/jbanner.jpg" alt="">
+        </a>
       </div>
-      <group title="今日油价" style="background: #fff;line-height: 30px">
+      <group title="今日油价" style="background: #fff;line-height: 30px; padding-left:20px; padding-right: 20px; ">
           <v-chart :data="data" prevent-default>
               <v-scale x :tick-count="3"/>
               <v-tooltip :show-item-marker="false" show-x-value/>
