@@ -70,12 +70,20 @@ const router = new Router({
       component: () => import("../views/viplist.vue")
     },
     {
-      path: "/dredgevip",
+      path: "/dredgevip/:id",
       name: "dredgevip",
       meta: {
         title: "会员权益"
       },
       component: () => import("../views/dredge-vip.vue")
+    },
+    {
+      path: "/invite/:gid/:no/:type",
+      name: "invite",
+      meta: {
+        title: "开通会员"
+      },
+      component: () => import("../views/invite-page.vue")
     }
   ]
 });

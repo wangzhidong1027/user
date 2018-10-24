@@ -1,50 +1,97 @@
-<template >
-    <div class="vip">
-        <div class="imgbox">
-            <img src="../assets/images/vip.jpg" alt="">
-        </div>
-        <div class="bottom">
-            <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="dredge">开通</x-button>
-        </div>
+<template>
+  <div class="vip">
+    <div class="imgbox">
+      <img :src="goodinfo.images" alt="">
     </div>
+    <div class="bottom">
+      <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="dredge">开通</x-button>
+    </div>
+  </div>
 </template>
 
 <script>
-import { XButton } from "vux"
+import {XButton} from "vux"
+
 export default {
   name: "dredgeVIP",
-    components: {
+  components: {
     XButton
-    },
-    methods: {
-    dredge () {
-
-        }
+  },
+  data () {
+  	return {
+      goodinfo: {}
     }
+  },
+  methods: {
+    dredge() {
+    	var data = {
+    		gid: this.$route.params.id
+      }
+      data = this.$base64.encode(JSON.stringify(data))
+      this.$axios.post(this.$baseUrl + '/per/createorder', this.$qs.stringify({
+        data: data
+      })).then(result => {
+      	var res = JSON.parse(this.$base64.decode(result.data))
+        if(res.code == 10000){
+      		this.$vux.confirm.show({
+			      content: '恭喜您，已成为会员，赶快享受优惠吧！',
+			      showCancelButton: false,
+			      onConfirm: () => {
+				      this.$router.push({
+					      path: '/me'
+				      })
+			      }
+		      })
+        }
+      })
+    }
+  },
+  created () {
+    var data = {
+    	id: this.$route.params.id
+    }
+  	this.$axios.post(this.$baseUrl + 'per/goodinfo',this.$qs.stringify({
+      data: this.$base64.encode(JSON.stringify(data))
+    })).then(result => {
+    	var res = JSON.parse(this.$base64.decode(result.data))
+      if(res.code == 10000){
+        this.goodinfo = res.data
+      }else{
+    		this.$vux.toast.show({
+            type: "cancel",
+            text: res.message,
+            width: "3em",
+            position: "middle",
+            isShowMask: true
+          });
+      }
+      console.log(res)
+    })
+  }
 }
 </script>
 
 <style lang="less" scoped>
-.vip{
-  height: 100%;
-  width: 100%;
-  background: #f5f5f5;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 45px;
-  box-sizing: border-box;
-  .imgbox{
+  .vip {
+    height: 100%;
+    width: 100%;
+    background: #f5f5f5;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 45px;
+    box-sizing: border-box;
+    .imgbox {
       width: 100%;
-      img{
-          display: block;
-          width: 100%;
+      img {
+        display: block;
+        width: 100%;
       }
-  }
-  .bottom{
+    }
+    .bottom {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
+    }
   }
-}
 </style>

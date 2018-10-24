@@ -159,14 +159,16 @@ export default {
     },
     login() {
       if (this.showIndex === 0) {
-        if (this.$refs.phone.valid && this.$refs.password.valid) {
-          let formdata = this.$base64.encode(
-          	JSON.stringify({
-              mobile: this.phone,
-              password: this.password
-            })
-          );
+        if (this.$refs.phone.valid ) {
+          // let formdata = this.$base64.encode(
+          // 	JSON.stringify({
+          //     mobile: this.phone,
+          //     password: this.password
+          //   })
+          // );
           // this.submit(formdata)
+          let formdata = this.$base64.encode(JSON.stringify({mobile: this.phone,code: this.password}));
+          this.submit(formdata);
         } else {
           this.$vux.toast.show({
             type: 'cancel',
@@ -176,6 +178,7 @@ export default {
             isShowMask: true
           });
         }
+
       } else {
         if (this.$refs.phone.valid && this.$refs.code.valid) {
           let formdata = this.$base64.encode(JSON.stringify({mobile: this.phone,code: this.code}));

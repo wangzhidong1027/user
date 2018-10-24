@@ -7,9 +7,12 @@
         </div>
       </div>
       <a class="header-right">
-        <div class='name'><a href="#/edit/name"><span>昵称</span><b class="iconfont icon-bianji" style="margin-left: 30px;"></b></a></div>
+        <div class='name'>
+          <a href="#/edit/username" v-if="isLogin"><span>{{name}}</span><b class="iconfont icon-bianji" style="margin-left: 30px;"></b></a>
+         <a href="#/login" v-else><span>未登录</span></a>
+        </div>
         <div class="vip">
-          <a href="#/vip" class="isVIP"><b class="iconfont icon-huiyuan" style="font-size:0.3rem "></b>黑金会员</a>
+          <a href="#/vip" :class="userinfo.level_name ? 'isVIP' : ''"><b class="iconfont icon-huiyuan" style="font-size:0.3rem "></b>{{userinfo.level_name}}</a>
         </div>
       </a>
       <div class="sign-box" @click="sign" v-if="isLogin">
@@ -36,13 +39,22 @@
     </div>
     <div class="center" v-if="isLogin">
       <group :gutter="0">
-        <cell is-link title="实名认证" value="未认证" link="edit/car">
+        <cell is-link title="实名认证" value="未认证" link="edit/realname" v-if="!userinfo.realname">
           <b class="iconfont icon-shiming cell2-icon" slot="icon"></b>
         </cell>
-        <cell is-link link="edit/car" title="邮箱绑定" value="未认证">
+        <cell  title="实名认证" :value="userinfo.realname" v-else>
+          <b class="iconfont icon-shiming cell2-icon" slot="icon"></b>
+        </cell>
+        <cell is-link link="edit/email" title="邮箱绑定" value="未设置" v-if="!userinfo.email">
           <b class="iconfont icon-youxiang cell2-icon" slot="icon"></b>
         </cell>
-        <cell is-link link="edit/car" title="车辆绑定" value="未认证">
+         <cell is-link link="edit/email" title="邮箱绑定" :value="userinfo.email" v-else>
+          <b class="iconfont icon-youxiang cell2-icon" slot="icon"></b>
+        </cell>
+        <cell is-link link="edit/car_num" title="车辆绑定" value="未绑定" v-if="!userinfo.car_num">
+          <b class="iconfont icon-cheliangguanli cell2-icon" slot="icon"></b>
+        </cell>
+         <cell is-link link="edit/car_num" title="车辆绑定" :value="userinfo.car_num" v-else>
           <b class="iconfont icon-cheliangguanli cell2-icon" slot="icon"></b>
         </cell>
       </group>
@@ -105,7 +117,12 @@ export default {
         menu1: "邀请好友",
         menu2: "分享到朋友圈"
       },
-      isSign: false
+      isSign: false,
+      name: '',
+      userinfo: '',
+      realname: '',
+      email: '',
+      car: ''
     };
   },
   computed: {
@@ -162,10 +179,21 @@ export default {
       }
     },
     getinfo() {
-      this.$axios.post(this.$baseUrl + "/oil/oilinfo", this.$qs.stringify({
+      this.$axios.post(this.$baseUrl + "/per/getuser", this.$qs.stringify({
       })).then(
       	result => {
           var res = JSON.parse(this.$base64.decode(result.data));
+          if(res.code == 10000){
+          	this.userinfo = res.data
+            if(res.data.username){
+          		this.name = res.data.username
+            }else{
+          		this.name = res.data.mobile
+            }
+          }else{
+          	localStorage.clear()
+          }
+          console.log(res)
         });
     }
   },

@@ -8,7 +8,11 @@ import qs from 'qs'
 import { Base64 } from 'js-base64'
 util.getFontSize(750);
 import ToastPlugin from 'vux/src/plugins/toast';
+import   ConfirmPlugin   from 'vux/src/plugins/confirm';
+import  LoadingPlugin  from 'vux/src/plugins/loading';
 
+Vue.use(LoadingPlugin);
+Vue.use(ConfirmPlugin);
 Vue.use(ToastPlugin);
 
 const FastClick = require("fastclick");
@@ -20,7 +24,7 @@ Vue.prototype.$axios = axios
 Vue.prototype.$base64= Base64
 Vue.prototype.$qs = qs
 Vue.prototype.$methods =  util
-Vue.prototype.$baseUrl = '8082' //'http://10.10.18.12:8082'
+Vue.prototype.$baseUrl = '' //'http://10.10.18.12:8082'
 
 new Vue({
   router,
