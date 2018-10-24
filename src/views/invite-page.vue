@@ -47,6 +47,18 @@
         });
       },
 			buy() {
+				if(!localStorage.getItem("Token")){
+          this.$vux.confirm.show({
+            content: '您还未登录',
+            showCancelButton: false,
+            onConfirm: () => {
+              this.$router.push({
+                path: '/login'
+              })
+            }
+          })
+          return
+        }
 				if (!this.$refs.mobile.valid) {
 					return false
 				}

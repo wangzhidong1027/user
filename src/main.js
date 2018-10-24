@@ -24,7 +24,7 @@ Vue.prototype.$axios = axios
 Vue.prototype.$base64= Base64
 Vue.prototype.$qs = qs
 Vue.prototype.$methods =  util
-Vue.prototype.$baseUrl = '' //'http://10.10.18.12:8082'
+Vue.prototype.$baseUrl = 'http://api.zhenxiangfuwu.com' //'http://10.10.18.12:8082'
 
 new Vue({
   router,
