@@ -5,6 +5,14 @@ Vue.use(Router);
 
 const router = new Router({
   routes: [
+     {
+      path: "/",
+      name: "me",
+      meta: {
+        title: "主页"
+      },
+      component: () => import("../views/me.vue")
+    },
     {
       path: "/home",
       name: "home",

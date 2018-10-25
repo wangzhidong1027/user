@@ -6,14 +6,14 @@
     </group>
     <div class="idcard" v-if="type == 'realname'">
       <div class="upload">
-        <p>请上传法人身份证正面照片</p>
+        <p>请上传身份证正面照片</p>
         <div class="dimg just" @click="clickInput('faceIdcard')">
           <a v-if='!faceIdcard'></a>
           <img v-if='faceIdcard' :src="faceIdcard" alt="">
           <input type="file" id="faceIdcard" ref="faceIdcard" accept="image/*"
                  @change="ImgBase64($event,'faceIdcard')" name="bslicense">
         </div>
-        <p>请上传法人身份证反面照片</p>
+        <p>请上传身份证反面照片</p>
         <div class="dimg just" @click="clickInput('backIdcard')">
           <a v-if='!backIdcard'></a>
           <img v-if='backIdcard' :src="backIdcard" alt="">
