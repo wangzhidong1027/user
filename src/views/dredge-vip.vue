@@ -62,7 +62,7 @@ export default {
     var data = {
     	id: this.$route.params.id
     }
-  	this.$axios.post(this.$baseUrl + 'per/goodinfo',this.$qs.stringify({
+  	this.$axios.post(this.$baseUrl + '/per/goodinfo',this.$qs.stringify({
       data: this.$base64.encode(JSON.stringify(data))
     })).then(result => {
     	var res = JSON.parse(this.$base64.decode(result.data))

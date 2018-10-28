@@ -92,6 +92,14 @@ const router = new Router({
         title: "开通会员"
       },
       component: () => import("../views/invite-page.vue")
+    },
+    {
+      path: "/goodslist",
+      name: "goodslist",
+      meta: {
+        title: "商品列表"
+      },
+      component: () => import("../views/goods-list.vue")
     }
   ]
 });

@@ -1,6 +1,6 @@
 <template>
   <div class="invite">
-    <img src="../assets/images/vip.jpg" alt="">
+    <img :src="goodinfo.images" alt="">
     <div class="box">
       <group>
         <x-input v-model="mobile" placeholder="请输入手机号或会员账号" type="tel" is-type="china-mobile" required
@@ -25,7 +25,8 @@
 		name: "invitePage",
 		data() {
 			return {
-				mobile: ''
+				mobile: '',
+        goodinfo: ''
 			}
 		},
 		methods: {
@@ -47,18 +48,6 @@
         });
       },
 			buy() {
-				if(!localStorage.getItem("Token")){
-          this.$vux.confirm.show({
-            content: '您还未登录',
-            showCancelButton: false,
-            onConfirm: () => {
-              this.$router.push({
-                path: '/login'
-              })
-            }
-          })
-          return
-        }
 				if (!this.$refs.mobile.valid) {
 					return false
 				}
@@ -73,9 +62,18 @@
 					data: data
 				})).then(result => {
 					// this.$vux.loading.hide()
-					var res = JSON.parse(this.$base64.encode(result.data))
+					var res = JSON.parse(this.$base64.decode(result.data))
 					if (res.code == 10000) {
-            this.wxpay()
+            // this.wxpay()
+             this.$vux.confirm.show({
+	             content: '恭喜您，已成为会员，赶快登录享受优惠吧！',
+	             showCancelButton: false,
+	             onConfirm: () => {
+		             this.$router.push({
+			             path: '/login'
+		             })
+	             }
+             })
 					} else {
 						this.$vux.confirm.show({
 							content: res.message,
@@ -84,7 +82,29 @@
 					}
 				})
 			}
-		}
+		},
+    created () {
+     var data = {
+    	id: this.$route.params.gid
+    }
+  	this.$axios.post(this.$baseUrl + '/per/goodinfo',this.$qs.stringify({
+      data: this.$base64.encode(JSON.stringify(data))
+    })).then(result => {
+    	var res = JSON.parse(this.$base64.decode(result.data))
+      if(res.code == 10000){
+        this.goodinfo = res.data
+      }else{
+    		this.$vux.toast.show({
+            type: "cancel",
+            text: res.message,
+            width: "3em",
+            position: "middle",
+            isShowMask: true
+          });
+      }
+      console.log(res)
+    })
+    }
 	}
 </script>
 

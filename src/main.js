@@ -26,10 +26,9 @@ HTTP_request.interceptors.request.use(
   config => {
   //请求发送前
   //   config.headers['withCredentials'] = true
-    config.headers['Content-Type'] = 'application/x-www-form-urlencoded'/**/
+  //   config.headers['Content-Type'] = 'application/x-www-form-urlencoded'/**/
     config.headers['Token'] = localStorage.getItem('Token')
         return config
-
     })
 //HTTP request响应拦截器
 HTTP_request.interceptors.response.use(
@@ -65,7 +64,7 @@ Vue.prototype.$axios = HTTP_request
 Vue.prototype.$base64= Base64
 Vue.prototype.$qs = qs
 Vue.prototype.$methods =  util
-Vue.prototype.$baseUrl = '' //'http://10.10.18.12:8082' http://api.zhenxiangfuwu.com
+Vue.prototype.$baseUrl = 'http://api.zhenxiangfuwu.com' //'http://10.10.18.12:8082' http://api.zhenxiangfuwu.com
 
 new Vue({
   router,
