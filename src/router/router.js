@@ -7,11 +7,7 @@ const router = new Router({
   routes: [
      {
       path: "/",
-      name: "me",
-      meta: {
-        title: "主页"
-      },
-      component: () => import("../views/me.vue")
+      redirect: '/me'
     },
     {
       path: "/home",
@@ -100,6 +96,14 @@ const router = new Router({
         title: "商品列表"
       },
       component: () => import("../views/goods-list.vue")
+    },
+    {
+      path: "/maplist",
+      name: "maplist",
+      meta: {
+        title: "油站地图"
+      },
+      component: () => import("../views/maplist/maplist.vue")
     }
   ]
 });

@@ -38,7 +38,16 @@ export default {
       })
     },
     loginout () {
-     localStorage.clear()
+     localStorage.clear();
+      this.$vux.toast.show({
+        text: '已退出',
+        width: '3em',
+        position: 'top',
+        isShowMask: true
+      })
+      this.$router.push({
+        path: 'me'
+      })
     }
   }
 };
