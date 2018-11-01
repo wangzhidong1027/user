@@ -22,28 +22,20 @@ export default {
       state.car.push( Obj );
       localStorage.setItem("car",JSON.stringify( state.car));
     },
-    DEL_CAR (state,Obj) {
-      for( let i = 0;i <  state.car.length; i++){
-        if ( state.car[i].id === Obj.id ) {
-          if( Obj.number === 0 ){
-            state.car.splice(i, 1);
-            return
-          }else{
-            state.car[i].number = Obj.number;
-            localStorage.setItem("car",JSON.stringify( state.car));
-            return
-          }
-        }
-      }
-    },
     batch_DEL (state , Arr) {
       for(let i = 0;i <  Arr.length; i++){
         for(let k = 0;k <  state.car.length; k++){
-          if ( state.car[k].id === Arr[i].id ) {
-            state.car.splice(k, 1);
+          if ( state.car[k].id === Arr[i] ) {
+            state.car.splice( k, 1);
             break
           }
         }
+      }
+      localStorage.setItem("car",JSON.stringify( state.car));
+    },
+    carInit (state) {
+      if ( localStorage.getItem('car') ) {
+        state.car = JSON.parse(localStorage.getItem('car'))
       }
     }
   },

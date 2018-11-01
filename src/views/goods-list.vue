@@ -9,7 +9,9 @@
         <p>抱歉，没有找到商品额</p>
       </div>
       <div class="goods-item" v-for="item,index in goods" :key="item.id">
-        <img :src="item.image" alt="">
+        <a :href="'#/detail/' + item.id">
+          <img :src="item.image" alt="" />
+        </a>
         <div class="text">
           <div class="name">{{item.name}}</div>
           <div class="buy">
@@ -54,7 +56,7 @@ export default {
     ]),
     add (index) {
       this.goods[index].number ++
-      this.ADD_CAR(this.goods[index])
+      this.ADD_CAR({id: this.goods[index].id, number: this.goods[index].number})
     }
   },
   created () {
@@ -64,7 +66,7 @@ export default {
         this.goods = res.data.filter(item => {
           for (let i = 0; i < this.carlist.length; i++) {
             if( this.carlist[i].id === item.id) {
-              item.number = i.numbers
+              item.number = this.carlist[i].number
               return item
             }
           }

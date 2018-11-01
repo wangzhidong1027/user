@@ -72,7 +72,7 @@
         </cell-box>
       </group>
     </div>
-    <actionsheet v-model="showShare" :menus="menus1" theme="ios" :show-cancel="true"></actionsheet>
+    <actionsheet v-model="showShare" :menus="menus1" theme="ios" :show-cancel="true" @on-click-menu="ShareData"></actionsheet>
     <tabbar>
       <tabbar-item link="home">
         <span slot="icon" class="icon-shouye1 iconfont" style="font-size: 22px;"></span>
@@ -193,14 +193,77 @@ export default {
           }else{
           	localStorage.clear()
           }
-          console.log(res)
         });
+    },
+    ShareData (menuKey, menuItem) {
+  	  console.log(menuItem)
+      wx.updateAppMessageShareData({
+        title: '购买会员拿大礼包', // 分享标题
+        desc: '购买会员拿大礼包', // 分享描述
+        link:  location.href.split("#")[0] + '/#/home', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png', // 分享图标
+        success: function () {
+          // 设置成功
+          alert(2)
+        }
+      })
+    },
+    updateTime () {
+          wx.updateTimelineShareData({
+            title: '购买会员拿大礼包', // 分享标题
+            link: location.href.split("#")[0] + '/#home', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png', // 分享图标
+            success: function () {
+              // 用户点击了分享后执行的回调函数
+              alert(3)
+            },
+          })
+    },
+
+    getWX () {
+      this.$axios.post(this.$baseUrl + '/weixin/wxshare').then(
+        result => {
+          var res = JSON.parse(this.$base64.decode(result.data))
+          console.log(res)
+          if (res.code == 10000) {
+            var b = res.data
+            wx.config({
+              debug: true,////生产环境需要关闭debug模式
+              appId: b.appId,//appId通过微信服务号后台查看
+              timestamp: b.timestamp,//生成签名的时间戳
+              nonceStr: b.nonceStr,//生成签名的随机字符串
+              signature: b.signature,//签名
+              jsApiList: [//需要调用的JS接口列表
+                'onMenuShareTimeline',//分享给好友
+                'onMenuShareAppMessage'//分享到朋友圈
+              ]
+            });
+            wx.ready(function () {      //需在用户可能点击分享按钮前就先调用
+              wx.updateTimelineShareData({
+                title: '购买会员拿大礼包', // 分享标题
+                link: location.href.split("#")[0] + '/#home', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png', // 分享图标
+                success: function () {
+                  // 用户点击了分享后执行的回调函数
+                  alert(3)
+                },
+              })
+            })
+            wx.error(function(res){
+              alert(res.errMsg);
+            });
+
+
+          }
+        }
+       )
     }
   },
   mounted() {
     this.getinfo();
     if( this.isLogin) {
       this.getsign()
+      this.getWX()
     }
   }
 };

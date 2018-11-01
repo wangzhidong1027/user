@@ -98,6 +98,38 @@ const router = new Router({
       component: () => import("../views/goods-list.vue")
     },
     {
+      path: "/detail/:id",
+      name: "detail",
+      meta: {
+        title: "商品详情"
+      },
+      component: () => import("../views/goods/detail.vue")
+    },
+    {
+      path: "/car",
+      name: "car",
+      meta: {
+        title: "购物车"
+      },
+      component: () => import("../views/car/car.vue")
+    },
+    {
+      path: "/coupon",
+      name: "coupon",
+      meta: {
+        title: "购物车"
+      },
+      component: () => import("../views/coupon/coupon.vue")
+    },
+    {
+      path: "/order",
+      name: "order",
+      meta: {
+        title: "订单列表"
+      },
+      component: () => import("../views/order/order-list.vue")
+    },
+    {
       path: "/maplist",
       name: "maplist",
       meta: {

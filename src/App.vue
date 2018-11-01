@@ -4,6 +4,20 @@
   </div>
 </template>
 
+<script>
+  import { mapMutations } from "vuex"
+  export default {
+    methods: {
+      ...mapMutations([
+        "carInit"
+      ])
+    },
+    created () {
+      this.carInit()
+    }
+  }
+</script>
+
 <style lang="less">
 @import "~vux/src/styles/reset.less";
 @import "~vux/src/styles/1px.less";
