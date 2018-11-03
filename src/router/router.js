@@ -5,7 +5,7 @@ Vue.use(Router);
 
 const router = new Router({
   routes: [
-     {
+    {
       path: "/",
       redirect: '/me'
     },
@@ -88,6 +88,14 @@ const router = new Router({
         title: "开通会员"
       },
       component: () => import("../views/invite-page.vue")
+    },
+    {
+      path: "/nearby",
+      name: "nearby",
+      meta: {
+        title: "附近油站"
+      },
+      component: () => import("../views/nearby/nearby.vue")
     },
     {
       path: "/goodslist",

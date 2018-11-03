@@ -9,11 +9,13 @@
   export default {
     methods: {
       ...mapMutations([
-        "carInit"
+        "carInit",
+        "getAddress"
       ])
     },
     created () {
-      this.carInit()
+      this.carInit();
+      this.getAddress();
     }
   }
 </script>

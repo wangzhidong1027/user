@@ -204,7 +204,6 @@ export default {
         imgUrl: 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png', // 分享图标
         success: function () {
           // 设置成功
-          alert(2)
         }
       })
     },
@@ -215,7 +214,6 @@ export default {
             imgUrl: 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png', // 分享图标
             success: function () {
               // 用户点击了分享后执行的回调函数
-              alert(3)
             },
           })
     },
@@ -245,15 +243,11 @@ export default {
                 imgUrl: 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png', // 分享图标
                 success: function () {
                   // 用户点击了分享后执行的回调函数
-                  alert(3)
                 },
               })
             })
             wx.error(function(res){
-              alert(res.errMsg);
             });
-
-
           }
         }
        )

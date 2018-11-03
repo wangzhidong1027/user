@@ -6,8 +6,9 @@ export default {
     carNum:  state => {
       var number = 0
       for( let i of state.car){
-        number += state.car[i].number
+        number += i.number
       }
+      return number
     }
   },
   mutations: {

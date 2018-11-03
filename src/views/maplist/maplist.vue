@@ -8,13 +8,18 @@
         </div>
         <p class="addres">北京市朝阳区山水广场</p>
       </div>
+      <divider>没有更多数据了</divider>
     </div>
   </div>
 </template>
 
 <script>
+  import { Divider  } from "vux"
   export default {
     name: "mapList",
+    components: {
+      Divider
+    },
     mounted () {
       var map = new AMap.Map('container', {
         resizeEnable: true,

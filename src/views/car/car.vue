@@ -34,7 +34,7 @@
 
 <script>
   import { Swipeout, SwipeoutItem, SwipeoutButton, XHeader, Checklist, InlineXNumber  } from 'vux'
-  import { mapMutations } from "vuex";
+  import { mapMutations, mapGetters  } from "vuex";
   import CarTab from "./components/car--tab"
 export default {
   name: "car",
@@ -138,6 +138,18 @@ export default {
     },
     // 提交订单
     submitFrom () {
+      if( !localStorage.getItem("Token")){
+        this.$vux.confirm.show({
+          content: '您还未选择油站',
+          showCancelButton: false,
+          onConfirm: () => {
+            this.$router.push({
+              path: 'login'
+            })
+          }
+        })
+        return false
+      }
       if (!this.checklist.length) {
         this.$vux.toast.show({
           type: 'cancel',
@@ -148,6 +160,28 @@ export default {
         });
         return
       }
+      this.$axios.post(this.$baseUrl + "",this.$qs.stringify({
+
+      })).then(result => {
+        var res = JSON.parse(this.$base64.decode(result))
+        if(res.code == 10000){
+
+
+
+          this.batch_DEL( this.checklist);
+          this.$router.push({
+            path: ''
+          })
+        }else{
+          this.$vux.toast.show({
+            type: "cancel",
+            text: res.message,
+            width: "3em",
+            position: "middle",
+            isShowMask: true
+          });
+        }
+      })
     }
   }
 }
