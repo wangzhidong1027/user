@@ -4,7 +4,7 @@
       <b slot="right" style="font-weight: normal" @click="alldel">删除选中</b>
     </x-header>
     <swipeout>
-      <swipeout-item  ref="swipeoutItem" :right-menu-width="210" :sensitivity="15" v-for="item,index in carlist" class="car-cunt">
+      <swipeout-item  ref="swipeoutItem" :right-menu-width="210" :sensitivity="15" v-for="item,index in goodsinfo" class="car-cunt">
         <div slot="content" class="car-item  vux-1px-b">
             <div class="left"  >
               <checklist  :options="[{key: item.id,id:item.id, }]" v-model="checklist"  class="car-check"></checklist>
@@ -51,7 +51,8 @@ export default {
     return {
       checklist: [],
       vipmoney: '0.00',
-      allcount: 0
+      allcount: 0,
+      goodsinfo: []
     }
   },
   computed: {
@@ -68,11 +69,11 @@ export default {
         return "0.00"
       }
       for (let i = 0; i < this.checklist.length; i++) {
-        for (let k = 0;k < this.carlist.length; k++) {
-          if (this.checklist[i]=== this.carlist[k].id) {
-            vip += this.carlist[k].vipprice;
-            all += this.carlist[k].price;
-            count += this.carlist[k].number;
+        for (let k = 0;k < this.goodsinfo.length; k++) {
+          if (this.checklist[i]=== this.goodsinfo[k].id) {
+            vip += this.goodsinfo[k].vipprice;
+            all += this.goodsinfo[k].price;
+            count += this.goodsinfo[k].number;
             break
           }
         }
@@ -90,6 +91,32 @@ export default {
       "ADD_CAR",
       "batch_DEL"
     ]),
+    getgoodsInfo () {
+      var ids = ""
+      for(var i = 0; i < this.carlist.length; i++){
+        ids = ids + "," + this.carlist[i].id
+      }
+      var data = {
+        merchNo: JSON.parse(localStorage.getItem("station")).merchNo,
+        ids: ids
+      };
+      this.$axios.post(this.$baseUrl + '/per/getbatchgoodsinfo',this.$qs.stringify({
+        data: this.$base64.encode(JSON.stringify(data))
+      })).then( result => {
+        var res = JSON.parse(this.$base64.decode(result))
+        console.log(res)
+        if(res.code == 10000 ){
+          this.goodsinfo = res.data
+          for (var i = 0; i < this.carlist.length; i++){
+            for (var k = 0; k < this.goodsinfo.length; k++){
+              if(this.carlist[i].id == this.goodsinfo[k].id ){
+                this.goodsinfo[k].number = this.carlist[i].number
+              }
+            }
+          }
+        }
+      })
+    },
     // 批量删除
     alldel () {
       if (!this.checklist.length) {
@@ -114,10 +141,10 @@ export default {
     },
     // 修改购物车
     changeNumber (index) {
-      if(this.carlist[index].number === 1) {
+      if(this.goodsinfo[index].number === 1) {
         return
       }
-      this.ADD_CAR({id: this.carlist[index].id, number: this.carlist[index].number+1})
+      this.ADD_CAR({id: this.carlist[index].id, number: this.goodsinfo[index].number})
     },
     goHome () {
       this.$router.push({
@@ -140,7 +167,7 @@ export default {
     submitFrom () {
       if( !localStorage.getItem("Token")){
         this.$vux.confirm.show({
-          content: '您还未选择油站',
+          content: '您还未登陆',
           showCancelButton: false,
           onConfirm: () => {
             this.$router.push({
@@ -158,10 +185,16 @@ export default {
           position: "middle",
           isShowMask: true
         });
-        return
+        return false
+      }
+      var datafrom = {
+        merchNo: JSON.parse(localStorage.getItem("station")).merchNo,
+        goods: this.carlist,
+        totalAmt: this.allmoney,
+        totalVipAmt: this.vipmoney
       }
       this.$axios.post(this.$baseUrl + "",this.$qs.stringify({
-
+        data: this.$base64.encode(JSON.stringify(datafrom))
       })).then(result => {
         var res = JSON.parse(this.$base64.decode(result))
         if(res.code == 10000){
@@ -183,6 +216,9 @@ export default {
         }
       })
     }
+  },
+  mounted () {
+    this.getgoodsInfo()
   }
 }
 </script>
@@ -224,7 +260,7 @@ export default {
     .number-input{
       position: absolute;
       bottom: 0.2rem;
-      right: 0;
+      right: 0.2rem;
       z-index: 999;
       line-height: 0;
     }
@@ -233,6 +269,7 @@ export default {
       display: flex;
       justify-content: space-between;
       padding: 0.3rem 0;
+      padding-right: 0.2rem;
       img{
         width: 1.7rem;
         height: 1.7rem;

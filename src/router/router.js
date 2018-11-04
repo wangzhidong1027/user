@@ -114,6 +114,14 @@ const router = new Router({
       component: () => import("../views/goods/detail.vue")
     },
     {
+      path: "/pay",
+      name: "pay",
+      meta: {
+        title: "订单支付"
+      },
+      component: () => import("../views/pay/pay.vue")
+    },
+    {
       path: "/car",
       name: "car",
       meta: {
@@ -125,7 +133,7 @@ const router = new Router({
       path: "/coupon",
       name: "coupon",
       meta: {
-        title: "购物车"
+        title: "优惠券"
       },
       component: () => import("../views/coupon/coupon.vue")
     },

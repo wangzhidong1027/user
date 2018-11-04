@@ -14,8 +14,8 @@
       ])
     },
     created () {
-      this.carInit();
       this.getAddress();
+      this.carInit();
     }
   }
 </script>

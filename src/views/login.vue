@@ -115,9 +115,10 @@
               isShowMask: true
             });
             setTimeout(() => {
-              this.$router.push({
-                path: 'me'
-              });
+              this.$router.go(-1)
+              // this.$router.push({
+              //   path: 'me'
+              // });
             }, 3000);
           } else {
             this.$vux.toast.show({

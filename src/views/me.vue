@@ -26,13 +26,13 @@
 
     <div class="nav">
       <grid>
-        <grid-item label="订单">
+        <grid-item label="订单" link="order">
           <b slot="icon" class="iconfont icon-dingdan" style="display: block;font-size: 26px;color: #999"></b>
         </grid-item>
-        <grid-item label="已购">
+        <grid-item label="已购" link="car">
            <b slot="icon" class="iconfont icon-gouwuchekong" style="display: block;font-size: 26px;color: #999"></b>
         </grid-item>
-        <grid-item label="优惠券">
+        <grid-item label="优惠券" link="coupon">
            <b slot="icon" class="iconfont icon-youhuiquan" style="display: block;font-size: 24px;color: #999"></b>
         </grid-item>
       </grid>
@@ -225,29 +225,29 @@ export default {
           console.log(res)
           if (res.code == 10000) {
             var b = res.data
-            wx.config({
-              debug: true,////生产环境需要关闭debug模式
-              appId: b.appId,//appId通过微信服务号后台查看
-              timestamp: b.timestamp,//生成签名的时间戳
-              nonceStr: b.nonceStr,//生成签名的随机字符串
-              signature: b.signature,//签名
-              jsApiList: [//需要调用的JS接口列表
-                'onMenuShareTimeline',//分享给好友
-                'onMenuShareAppMessage'//分享到朋友圈
-              ]
-            });
-            wx.ready(function () {      //需在用户可能点击分享按钮前就先调用
-              wx.updateTimelineShareData({
-                title: '购买会员拿大礼包', // 分享标题
-                link: location.href.split("#")[0] + '/#home', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                imgUrl: 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png', // 分享图标
-                success: function () {
-                  // 用户点击了分享后执行的回调函数
-                },
-              })
-            })
-            wx.error(function(res){
-            });
+            // wx.config({
+            //   debug: true,////生产环境需要关闭debug模式
+            //   appId: b.appId,//appId通过微信服务号后台查看
+            //   timestamp: b.timestamp,//生成签名的时间戳
+            //   nonceStr: b.nonceStr,//生成签名的随机字符串
+            //   signature: b.signature,//签名
+            //   jsApiList: [//需要调用的JS接口列表
+            //     'onMenuShareTimeline',//分享给好友
+            //     'onMenuShareAppMessage'//分享到朋友圈
+            //   ]
+            // });
+            // wx.ready(function () {      //需在用户可能点击分享按钮前就先调用
+            //   wx.updateTimelineShareData({
+            //     title: '购买会员拿大礼包', // 分享标题
+            //     link: location.href.split("#")[0] + '/#home', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            //     imgUrl: 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png', // 分享图标
+            //     success: function () {
+            //       // 用户点击了分享后执行的回调函数
+            //     },
+            //   })
+            // })
+            // wx.error(function(res){
+            // });
           }
         }
        )

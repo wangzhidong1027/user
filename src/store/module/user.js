@@ -32,9 +32,25 @@ export default {
       }else{
         localStorage.setItem("openid",location.href.split("?openid=")[1])
       }
+    },
+    getUserInfo (state, info) {
+      state.userinfo = info
     }
   },
   action: {
-
+    getUserInfo ({ commit }) {
+        return new Promise((resolve, reject) => {
+          login({
+            userName,
+            password
+          }).then(res => {
+            const data = res.data
+            commit('getUserInfo', data.token)
+            resolve()
+          }).catch(err => {
+            reject(err)
+          })
+        })
+      },
   }
 }

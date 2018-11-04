@@ -5,9 +5,9 @@
     </div>
     <div class="order-box">
         <div class="oredr-item" >
-          <div class="count"><span class="orderid"><b>订单号:</b>123213123</span><span class="addtime">123213123</span></div>
-          <scroller lock-y :scrollbar-x=false height="130px" class="goods">
-            <p class="order-ads"><span><i class="iconfont icon-qiandao1"></i> 啊打发士大夫</span></p>
+          <div class="count"><span class="orderid"><b>订单号:</b>123213123</span> <span class="states"></span></div>
+          <p class="order-ads"><span><i class="iconfont icon-qiandao1"></i> 啊打发士大夫</span><span class="addtime">123213123</span></p>
+          <scroller lock-y :scrollbar-x=false height="100px" class="goods">
             <div class="box1" :style=" { width: 5*100 + 'px' }">
               <a href="#">
                 <img src="https://ss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/2f9fafc888421d8b1771e66c990a6b03_121_121.jpg" alt="">
@@ -83,15 +83,20 @@ export default{
         font-size: 0.3rem;
         color: #666;
         padding-top: 5px;
+        background: #f5f5f5;
+        display: flex;
+        justify-content: space-between;
       }
       .goods{
         padding: 0 0.3rem;
         background: #f5f5f5;
+        box-sizing: border-box;
         .box1{
+          height: 100px;
           a{
             float: left;
             padding: 0.2rem;
-            padding-top: 0.1rem;
+            /*padding-top: 0.1rem;*/
             box-sizing: border-box;
             width: 100px;
             img{
@@ -112,6 +117,9 @@ export default{
         color: #333;
         b{
           font-weight: 300;
+        }
+        .states{
+          color: #f44;
         }
       }
       .title{
