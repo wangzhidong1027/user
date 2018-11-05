@@ -62,11 +62,15 @@
         if (this.time != 60) {
           return false;
         } else {
-          // this.$axios.post(this.$baseUrl + '/per/login', this.$qs.stringify({
-          // 	data: this.phone
-          // })).then(result => {
-          // 	var res = JSON.parse(this.$base64.decode(result.data))
-          // 	if (res.code == 10000) {
+          var data = {
+            mobile: this.phone,
+            type: 1
+          }
+          this.$axios.post(this.$baseUrl + '/toolcate/sendSmsLogin', this.$qs.stringify({
+          	data: this.$base64.encode(JSON.stringify(data))
+          })).then(result => {
+          	var res = JSON.parse(this.$base64.decode(result.data))
+          	if (res.code == 10000) {
           this.$vux.toast.show({
             type: 'text',
             text: '发送成功',
@@ -75,16 +79,16 @@
             isShowMask: true
           });
           this.count();
-          // 	} else {
-          // 		this.$vux.toast.show({
-          // 			type: 'cancel',
-          // 			text: res.message,
-          // 			width: '3em',
-          // 			position: 'middle',
-          // 			isShowMask: true
-          // 		})
-          // 	}
-          // })
+          	} else {
+          		this.$vux.toast.show({
+          			type: 'cancel',
+          			text: res.message,
+          			width: '3em',
+          			position: 'middle',
+          			isShowMask: true
+          		})
+          	}
+          })
         }
       },
       count() {

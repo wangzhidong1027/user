@@ -25,12 +25,14 @@ export default {
       })
     },
     getOpenid (state, myurl) {
-      if(!localStorage.getItem("openid") && !location.href.split("?openid=")[1]){
-        var url = 'http://api.zhenxiangfuwu.com/weixin/userUnionId?responseurl='+ myurl
-        var all =  encodeURIComponent(url)
-        window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9b41df99e3460b72&redirect_uri='+ all + '&response_type=code&scope=snsapi_base&state=base#wechat_redirect'
-      }else{
-        localStorage.setItem("openid",location.href.split("?openid=")[1])
+      if( !localStorage.getItem("openid") ){
+        if(!location.href.split("?openid=")[1]){
+          var url = 'http://api.zhenxiangfuwu.com/weixin/userUnionId?responseurl='+ myurl
+          var all =  encodeURIComponent(url)
+          window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx9b41df99e3460b72&redirect_uri='+ all + '&response_type=code&scope=snsapi_base&state=base#wechat_redirect'
+        }else {
+          localStorage.setItem("openid",location.href.split("?openid=")[1])
+        }
       }
     },
     getUserInfo (state, info) {

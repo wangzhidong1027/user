@@ -6,7 +6,7 @@
       <grid style="background: #fff; margin-top: 15px">
         <grid-item label="会员特权" link="vip">
         </grid-item>
-          <grid-item label="积分兑换" link="goodslist">
+          <grid-item label="会员商城" link="nearby">
         </grid-item>
           <grid-item label="邀请拿礼" link="https://zzfw.haibaobaoxian.com/activity/insr-taikang.html?pcode=lifjr-h5-zengx">
         </grid-item>

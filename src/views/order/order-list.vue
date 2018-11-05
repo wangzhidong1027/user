@@ -1,57 +1,80 @@
 <template>
   <div class="myorder">
     <div class="serch-box">
-      <search v-model="orderid" @on-submit="onSubmit" @onFocus="onFocus"></search>
+      <search v-model="orderid" @on-submit="onSubmit" @on-cancel="getOrderLst"></search>
     </div>
     <div class="order-box">
-        <div class="oredr-item" >
-          <div class="count"><span class="orderid"><b>订单号:</b>123213123</span> <span class="states"></span></div>
-          <p class="order-ads"><span><i class="iconfont icon-qiandao1"></i> 啊打发士大夫</span><span class="addtime">123213123</span></p>
+        <div class="oredr-item" v-for="item in orders">
+          <div class="count"><span class="orderid"><b>订单号:</b>{{item.billno}}</span> <span class="states">{{item.payStatus_cn}}</span></div>
+          <p class="order-ads"><span><i class="iconfont icon-qiandao1"></i> {{item.oil_name}}</span><span class="addtime">{{item.createdate}}</span></p>
           <scroller lock-y :scrollbar-x=false height="100px" class="goods">
-            <div class="box1" :style=" { width: 5*100 + 'px' }">
-              <a href="#">
-                <img src="https://ss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/2f9fafc888421d8b1771e66c990a6b03_121_121.jpg" alt="">
-              </a>
-              <a href="#">
-                <img src="https://ss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/2f9fafc888421d8b1771e66c990a6b03_121_121.jpg" alt="">
-              </a>
-              <a href="#">
-                <img src="https://ss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/2f9fafc888421d8b1771e66c990a6b03_121_121.jpg" alt="">
-              </a>
-              <a href="#">
-                <img src="https://ss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/2f9fafc888421d8b1771e66c990a6b03_121_121.jpg" alt="">
-              </a>
-              <a href="#">
-                <img src="https://ss0.bdstatic.com/-0U0bnSm1A5BphGlnYG/tam-ogel/2f9fafc888421d8b1771e66c990a6b03_121_121.jpg" alt="">
+            <div class="box1" :style=" { width: item.goodslist.length * 100 + 'px' }">
+              <a :href="'#/detail/'+gooditem.oilmxId"  v-for="gooditem in item.goodslist">
+                <img :src="gooditem.images" alt="">
               </a>
             </div>
           </scroller>
-          <div class="title">共7件商品&nbsp实付款：<b>￥23.33</b></div>
+          <!--<div class="title vux-1px-b">优惠券减免：<b>￥23.33</b></div>-->
+          <div class="title" v-if="item.payStatus == 1">共{{item.goodslist.length}}件商品&nbsp总金额：<b>￥{{item.billAmt | formatMoney}}</b></div>
+          <div class="title" v-if="item.payStatus != 1">共{{item.goodslist.length}}件商品&nbsp实付款：<b>￥{{ item.payMoney | formatMoney}}</b></div>
+          <div class="gopay vux-1px-t" v-if="item.payStatus == 1"><a class="vux-1px" :href="'#/pay/'+ item.billno">去支付</a></div>
         </div>
+      <divider v-if="!orders.length">没有订单信息</divider>
     </div>
   </div>
 </template>
 
 <script>
-  import { Search, Scroller  } from "vux"
+  import { Search, Scroller, Divider } from "vux"
 export default{
   name: "orderList",
   components: {
     Search,
-    Scroller
+    Scroller,
+    Divider
   },
   data () {
     return {
-      orderid: ''
+      orderid: '',
+      orders: []
     }
   },
   methods: {
     onSubmit () {
-
+      if(!this.orderid){
+        this.$vux.toast.show({
+          type: 'cancel',
+          text: '请输入订单号',
+          width: '3em',
+          position: 'middle',
+          isShowMask: true
+        })
+        return false
+      }
+      var data = {
+        orderno: this.orderid
+      }
+      var formdata = this.$base64.encode(JSON.stringify(data))
+      this.getOrderLst(formdata)
     },
-    onFocus () {
-
-    },
+    getOrderLst (data) {
+      this.$axios.post(this.$baseUrl + '/per/getgorderlist',this.$qs.stringify({
+        data:data
+      })).then(result => {
+        var res = JSON.parse(this.$base64.decode(result.data))
+        if( res.code == 10000) {
+          if (res.data == '暂无订单信息') {
+            this.orders = []
+          }else{
+            this.orders = res.data
+          }
+        }
+      })
+    }
+  },
+  mounted () {
+    this.getOrderLst()
+    // this.onSubmit()
   }
 }
 </script>
@@ -75,9 +98,11 @@ export default{
     -webkit-overflow-scrolling: touch;
     padding-top: 0.2rem;
     box-sizing: border-box;
+    font-size: 0.3rem;
     .oredr-item{
       background: #fff;
       box-sizing: border-box;
+      margin-bottom: 0.2rem;
       .order-ads{
         padding: 0 0.3rem;
         font-size: 0.3rem;
@@ -124,10 +149,10 @@ export default{
       }
       .title{
         background: #fff;
-        height: 1rem;
+        height: 0.8rem;
         text-align: right;
         font-size: 0.3rem;
-        line-height: 1rem;
+        line-height: 0.8rem;
         padding: 0 0.3rem;
         font-weight: 600;
         color: #555;
@@ -135,6 +160,23 @@ export default{
           color: #333;
           font-weight: bold;
           font-size: 0.35rem;
+        }
+      }
+      .gopay{
+        height: 0.8rem;
+        font-size: 0.3rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 0.3rem;
+        a{
+          border-radius: 4px;
+          padding: 0 0.3rem;
+          display: block;
+          line-height: 0.6rem;
+          background: #f5f5f5;
+          color: #333;
+          font-weight: bold;
         }
       }
     }

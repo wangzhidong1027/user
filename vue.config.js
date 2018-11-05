@@ -9,14 +9,14 @@ module.exports = {
 	productionSourceMap: false,
 	devServer: {
 		proxy: {
-			// "/per": {
-			//   type: 'proxy',
-			//   target: 'http://172.20.129.46:8082/',
-			// },
 			"/per": {
 			  type: 'proxy',
-			  target: 'http://api.zhenxiangfuwu.com/',
-			}
+			  target: 'http://172.20.129.46:8082/',
+			},
+			// "/per": {
+			//   type: 'proxy',
+			//   target: 'http://api.zhenxiangfuwu.com/',
+			// }
 		}
 	}
 };

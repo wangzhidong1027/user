@@ -10,77 +10,88 @@
 </template>
 
 <script>
-import {XButton} from "vux"
+  import {XButton} from "vux"
+  import {mapMutations} from "vuex"
 
-export default {
-  name: "dredgeVIP",
-  components: {
-    XButton
-  },
-  data () {
-  	return {
-      goodinfo: {}
-    }
-  },
-  methods: {
-    dredge() {
-    	if(!localStorage.getItem("Token")){
-    		this.$vux.confirm.show({
-          content: '您还未登录',
-          showCancelButton: false,
-          onConfirm: () => {
-            this.$router.push({
-              path: '/login'
-            })
+  export default {
+    name: "dredgeVIP",
+    components: {
+      XButton
+    },
+    data() {
+      return {
+        goodinfo: {}
+      }
+    },
+    methods: {
+      ...mapMutations([
+        "getOpenid"
+      ]),
+      dredge() {
+        if (!localStorage.getItem("Token")) {
+          this.$vux.confirm.show({
+            content: '您还未登录',
+            showCancelButton: false,
+            onConfirm: () => {
+              this.$router.push({
+                path: '/login'
+              })
+            }
+          })
+          return
+        }
+        var data = {
+          gid: this.$route.params.id,
+          openid: localStorage.getItem("openid")
+        }
+        data = this.$base64.encode(JSON.stringify(data))
+        this.$axios.post(this.$baseUrl + '/per/createorder', this.$qs.stringify({
+          data: data
+        })).then(result => {
+          var res = JSON.parse(this.$base64.decode(result.data))
+          if (res.code == 10000) {
+            WeixinJSBridge.invoke(
+              'getBrandWCPayRequest', res.data,
+              function (res) {
+                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                  this.$vux.confirm.show({
+                    content: '恭喜您，已成为会员，赶快登录享受优惠吧！',
+                    showCancelButton: false,
+                    onConfirm: () => {
+                      this.$router.push({
+                        path: '/me'
+                      })
+                    }
+                  })
+                }
+              })
           }
         })
-        return
       }
-    	var data = {
-    		gid: this.$route.params.id
+    },
+    created() {
+      this.getOpenid(this.$base64.encode(location.href + "?openid="))
+      var data = {
+        id: this.$route.params.id
       }
-      data = this.$base64.encode(JSON.stringify(data))
-      this.$axios.post(this.$baseUrl + '/per/createorder', this.$qs.stringify({
-        data: data
+      this.$axios.post(this.$baseUrl + '/per/goodinfo', this.$qs.stringify({
+        data: this.$base64.encode(JSON.stringify(data))
       })).then(result => {
-      	var res = JSON.parse(this.$base64.decode(result.data))
-        if(res.code == 10000){
-      		this.$vux.confirm.show({
-			      content: '恭喜您，已成为会员，赶快享受优惠吧！',
-			      showCancelButton: false,
-			      onConfirm: () => {
-				      this.$router.push({
-					      path: '/me'
-				      })
-			      }
-		      })
-        }
-      })
-    }
-  },
-  created () {
-    var data = {
-    	id: this.$route.params.id
-    }
-  	this.$axios.post(this.$baseUrl + '/per/goodinfo',this.$qs.stringify({
-      data: this.$base64.encode(JSON.stringify(data))
-    })).then(result => {
-    	var res = JSON.parse(this.$base64.decode(result.data))
-      if(res.code == 10000){
-        this.goodinfo = res.data
-      }else{
-    		this.$vux.toast.show({
+        var res = JSON.parse(this.$base64.decode(result.data))
+        if (res.code == 10000) {
+          this.goodinfo = res.data
+        } else {
+          this.$vux.toast.show({
             type: "cancel",
             text: res.message,
             width: "3em",
             position: "middle",
             isShowMask: true
           });
-      }
-      console.log(res)
-    })
+        }
+      })
+    }
   }
-}
 </script>
 
 <style lang="less" scoped>

@@ -1,21 +1,21 @@
 <template>
-  <div class="coupon-item" id="useed">
+  <div class="coupon-item" :id="info.isExpired ==1? 'useed':''">
     <div class="amount">
       <div class="count">
-        <b>￥ </b> <span> 1.33</span>
+        <b>￥ </b> <span> {{info.facevalue}}</span>
       </div>
       <div class="lowest">
-        <span>满1.33元可用</span>
+        <span>满{{info.rule}}元可用</span>
       </div>
     </div>
     <div class="coupon-container">
-      <div class="name">但是看了附件是打击啊啊</div>
-      <div class="time">有效期：2017.03.10 - 2017.12.30</div>
+      <div class="name">{{info.facevalue}}元优惠券</div>
+      <div class="time">有效期：{{info.expireTime}}</div>
     </div>
-    <div class="state" v-if="1">
-      消费
-    </div>
-    <div class="state"  v-if="0">
+    <!--<div class="state" v-if="info.Expired ==3">-->
+      <!--消费-->
+    <!--</div>-->
+    <div class="state" v-if="info.isExpired ==1">
       过期
     </div>
   </div>
@@ -25,9 +25,12 @@
   export default {
     name: "coupon-card",
     props: {
-      data: {
+      info: {
         type: Object,
       }
+    },
+    mounted() {
+      console.log(this.info)
     }
   }
 </script>

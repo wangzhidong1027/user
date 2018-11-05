@@ -6,6 +6,9 @@ import util from "./util/util";
 import axios from './axios/index'
 import qs from 'qs';
 import {Base64} from 'js-base64';
+import formatMoney  from './components/filters/filters';
+
+Vue.filter('formatMoney', formatMoney);
 
 util.getFontSize(750);
 import ToastPlugin from 'vux/src/plugins/toast';
@@ -24,8 +27,7 @@ Vue.prototype.$axios = axios;
 Vue.prototype.$base64 = Base64;
 Vue.prototype.$qs = qs;
 Vue.prototype.$methods = util;
-Vue.prototype.$baseUrl = 'http://api.zhenxiangfuwu.com'; //'http://172.20.129.46:8082' //
-
+Vue.prototype.$baseUrl = 'http://api.zhenxiangfuwu.com' //'http://172.20.129.46:8081' // //http://172.20.129.46:8082
 new Vue({
   router,
   store,

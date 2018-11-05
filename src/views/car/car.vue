@@ -10,12 +10,12 @@
               <checklist  :options="[{key: item.id,id:item.id, }]" v-model="checklist"  class="car-check"></checklist>
             </div>
             <router-link tag="a" class="right" :to="'/detail/'+ item.id" >
-              <img src="//img13.360buyimg.com/n2/s240x240_jfs/t10675/253/1344769770/66891/92d54ca4/59df2e7fN86c99a27.jpg!q70.jpg" alt="">
+              <img :src="item.images" alt="">
               <div class="text-box">
-                <div class="name">打开了分厘卡圣诞节灯笼阿斯顿撒旦asdsadsaasasdasdsaasdas撒旦撒旦撒旦裤洒家发</div>
+                <div class="name">{{item.name}}</div>
                 <div class="price">
-                  <p>￥<span>9.00</span></p>
-                  <p>￥<span>9.00</span><b class="iconfont icon-huiyuan" ></b></p>
+                  <p>￥<span>{{item.price | formatMoney}}</span></p>
+                  <p>￥<span>{{item.vipPrice | formatMoney}}</span><b class="iconfont icon-huiyuan" ></b></p>
                 </div>
               </div>
             </router-link>
@@ -71,19 +71,19 @@ export default {
       for (let i = 0; i < this.checklist.length; i++) {
         for (let k = 0;k < this.goodsinfo.length; k++) {
           if (this.checklist[i]=== this.goodsinfo[k].id) {
-            vip += this.goodsinfo[k].vipprice;
-            all += this.goodsinfo[k].price;
+            vip += this.goodsinfo[k].vipPrice * 100 * this.goodsinfo[k].number;
+            all += this.goodsinfo[k].price * 100  * this.goodsinfo[k].number;
             count += this.goodsinfo[k].number;
             break
           }
         }
       }
       this.allcount = count
-      this.vipmoney = vip
-      return all
+      this.vipmoney = vip/100
+      return all/100
     },
     isALL () {
-      return this.carlist.length === this.checklist.length
+      return this.carlist.length === this.checklist.length &&this.checklist.length !== 0
     }
   },
   methods: {
@@ -94,7 +94,7 @@ export default {
     getgoodsInfo () {
       var ids = ""
       for(var i = 0; i < this.carlist.length; i++){
-        ids = ids + "," + this.carlist[i].id
+        ids = ids + this.carlist[i].id  + ","
       }
       var data = {
         merchNo: JSON.parse(localStorage.getItem("station")).merchNo,
@@ -103,8 +103,7 @@ export default {
       this.$axios.post(this.$baseUrl + '/per/getbatchgoodsinfo',this.$qs.stringify({
         data: this.$base64.encode(JSON.stringify(data))
       })).then( result => {
-        var res = JSON.parse(this.$base64.decode(result))
-        console.log(res)
+        var res = JSON.parse(this.$base64.decode(result.data))
         if(res.code == 10000 ){
           this.goodsinfo = res.data
           for (var i = 0; i < this.carlist.length; i++){
@@ -129,11 +128,23 @@ export default {
         });
         return
       }
+      console.log(this.checklist)
       this.batch_DEL( this.checklist);
+      // this.goodsinfo = this.carlist
+
+      for(let i = 0;i <  this.checklist.length; i++){
+        for(let k = 0;k <  this.goodsinfo.length; k++){
+          if (this.goodsinfo[k].id === this.checklist[i] ) {
+            this.goodsinfo.splice( k, 1);
+            break
+          }
+        }
+      }
     },
     // 左滑删除
     onButtonClick (index){
-      this.batch_DEL([this.carlist[index].id])
+      this.batch_DEL([this.goodsinfo[index].id])
+      this.goodsinfo.splice(index,1)
     },
     // 选中
     change () {
@@ -144,7 +155,7 @@ export default {
       if(this.goodsinfo[index].number === 1) {
         return
       }
-      this.ADD_CAR({id: this.carlist[index].id, number: this.goodsinfo[index].number})
+      this.ADD_CAR({id: this.carlist[index].id, number: this.goodsinfo[index].number+1})
     },
     goHome () {
       this.$router.push({
@@ -193,17 +204,15 @@ export default {
         totalAmt: this.allmoney,
         totalVipAmt: this.vipmoney
       }
-      this.$axios.post(this.$baseUrl + "",this.$qs.stringify({
+      this.$axios.post(this.$baseUrl + "/per/orderdown",this.$qs.stringify({
         data: this.$base64.encode(JSON.stringify(datafrom))
       })).then(result => {
-        var res = JSON.parse(this.$base64.decode(result))
+        var res = JSON.parse(this.$base64.decode(result.data))
+        console.log(res)
         if(res.code == 10000){
-
-
-
           this.batch_DEL( this.checklist);
           this.$router.push({
-            path: ''
+            path: '/pay/'+res.data
           })
         }else{
           this.$vux.toast.show({

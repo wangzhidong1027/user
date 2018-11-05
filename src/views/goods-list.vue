@@ -18,8 +18,8 @@
           <div class="name">{{item.name}}</div>
           <div class="buy">
             <div class="price">
-              <p class="vip"><span>会员价￥</span><b>{{item.vipPrice}}</b></p>
-              <p class="ordinary"><span>零售价￥</span><b>{{item.price}}</b></p>
+              <p class="vip"><span>会员价￥</span><b>{{item.vipPrice | formatMoney}}</b></p>
+              <p class="ordinary"><span>零售价￥</span><b>{{item.price | formatMoney }}</b></p>
             </div>
             <div class="car-number">
               <b class="iconfont icon-gouwuchekong" @click="add(index)">

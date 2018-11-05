@@ -2,11 +2,11 @@
   <div id="map-list">
     <div id="container" ></div>
     <div class="map-title">
-      <div class="item">
+      <div class="item" v-for="item in store">
         <div class="name">
-          北京加油机
+          {{item.merchName}}
         </div>
-        <p class="addres">北京市朝阳区山水广场</p>
+        <p class="addres">{{item.address}}</p>
       </div>
       <divider>没有更多数据了</divider>
     </div>
@@ -17,6 +17,11 @@
   import { Divider  } from "vux"
   export default {
     name: "mapList",
+    data () {
+      return {
+        store: []
+      }
+    },
     components: {
       Divider
     },
@@ -61,6 +66,24 @@
         position: [116.415357, 39.907761]
       });
       map.add(marker);
+    },
+    created () {
+      this.$axios.post(this.$baseUrl + "/per/stationlist", this.$qs.stringify({
+        cityName: "新乡市"// this.address.city
+      })).then(result => {
+        var res = JSON.parse(this.$base64.decode(result.data))
+        if (res.code == 10000) {
+          this.store = res.data
+        } else {
+          this.$vux.toast.show({
+            type: "cancel",
+            text: res.message,
+            width: "3em",
+            position: "middle",
+            isShowMask: true
+          });
+        }
+      })
     }
   }
 </script>
@@ -80,6 +103,7 @@
     flex: 1;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
+    font-size: 0.3rem;
     .item{
       padding: 0.2rem 0rem;
       border-bottom: 1px solid #eee;

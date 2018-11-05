@@ -7,7 +7,7 @@
                  ref="mobile"></x-input>
       </group>
       <group>
-        <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="test">购买会员</x-button>
+        <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="buy">购买会员</x-button>
       </group>
     </div>
   </div>
@@ -44,37 +44,12 @@
                 showCancelButton: false,
                 onConfirm: () => {
                   this.$router.push({
-                    path: '/login'
+                    path: '/me'
                   })
                 }
               })
             }
           });
-      },
-      test() {
-        this.$axios.post(this.$baseUrl + '/wxpay/dowxpay',this.$qs.stringify({
-          openid: "oV6ZZ0nEucjZgN7ZXPONMcyKk-kY" //localStorage.getItem("openid")
-        })).then( result => {
-          var res = JSON.parse(this.$base64.decode(result.data))
-          console.log(res.data)
-          if ( res.code == 10000 ){
-            WeixinJSBridge.invoke(
-              'getBrandWCPayRequest', res.data,
-              function (res) {
-                if (res.err_msg == "get_brand_wcpay_request:ok") {
-                  this.$vux.confirm.show({
-                    content: '恭喜您，已成为会员，赶快登录享受优惠吧！',
-                    showCancelButton: false,
-                    onConfirm: () => {
-                      this.$router.push({
-                        path: '/login'
-                      })
-                    }
-                  })
-                }
-              });
-          }
-        })
       },
       buy() {
         if (!this.$refs.mobile.valid) {
@@ -85,25 +60,15 @@
           gid: this.$route.params.gid,
           type: this.$route.params.type,
           no: this.$route.params.no,
-          openid: ''
+          openid: localStorage.getItem("openid")
         }
         data = this.$base64.encode(JSON.stringify(data))
         this.$axios.post(this.$baseUrl + '/per/createordersm', this.$qs.stringify({
           data: data
         })).then(result => {
-          // this.$vux.loading.hide()
           var res = JSON.parse(this.$base64.decode(result.data))
           if (res.code == 10000) {
-            // this.wxpay()
-            this.$vux.confirm.show({
-              content: '恭喜您，已成为会员，赶快登录享受优惠吧！',
-              showCancelButton: false,
-              onConfirm: () => {
-                this.$router.push({
-                  path: '/login'
-                })
-              }
-            })
+            this.wxpay()
           } else {
             this.$vux.confirm.show({
               content: res.message,

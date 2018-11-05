@@ -2,17 +2,21 @@
   <div id="coupon">
     <tab>
       <tab-item selected @on-item-click="onItemClick">未使用</tab-item>
-      <tab-item @on-item-click="onItemClick">已使用</tab-item>
+      <!--<tab-item @on-item-click="onItemClick">已使用</tab-item>-->
       <tab-item @on-item-click="onItemClick">已过期</tab-item>
     </tab>
     <div v-if="index===0" class="tab-item-container">
-      <coupon-card></coupon-card>
+      <div v-for="itemnoUse in noUse ">
+        <coupon-card :info="itemnoUse"></coupon-card>
+      </div>
     </div>
+    <!--<div v-if="index===1" class="tab-item-container">-->
+      <!--<coupon-card></coupon-card>-->
+    <!--</div>-->
     <div v-if="index===1" class="tab-item-container">
-      <coupon-card></coupon-card>
-    </div>
-    <div v-if="index===2" class="tab-item-container">
-      <coupon-card></coupon-card>
+      <div v-for="itemExpired in Expired">
+        <coupon-card :info="itemExpired"></coupon-card>
+      </div>
     </div>
   </div>
 </template>
@@ -38,7 +42,31 @@ export default {
   methods: {
     onItemClick (index) {
       this.index = index
+    },
+    couponList (index) {
+      var data= {
+        page: 1,
+        isExpired: index,
+      }
+      this.$axios.post(this.$baseUrl + '/per/couponlist', this.$qs.stringify({
+        data: this.$base64.encode(JSON.stringify(data))
+      })).then(result => {
+        var res = JSON.parse(this.$base64.decode(result.data))
+        console.log(res)
+        if(res.code == 10000){
+          if(index == 0){
+            this.noUse = res.data
+          }
+          if(index == 1){
+            this.Expired = res.data
+          }
+        }
+      })
     }
+  },
+  mounted () {
+    this.couponList(0);
+    this.couponList(1)
   }
 }
 </script>

@@ -114,7 +114,7 @@ const router = new Router({
       component: () => import("../views/goods/detail.vue")
     },
     {
-      path: "/pay",
+      path: "/pay/:orderid",
       name: "pay",
       meta: {
         title: "订单支付"
@@ -158,7 +158,75 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title;
-  next()
+  var token = localStorage.getItem('Token');
+  var station = localStorage.getItem("station")
+  if(!token ){
+    if( to.name == "pay" ||  to.name == "order"  ||  to.name == "coupon"){
+      next({
+        name: 'login' // 跳转到登录页
+      })
+    }else{
+      next()
+    }
+  }else{
+    next()
+  }
+  // 未选择服务站
+  if(!station && (to.name == "car" || to.name == "goodslist" || to.name == "detail") ){
+    localStorage.setItem("car","")
+    next({
+      name: 'nearby' // 选择油站
+    })
+  }
 });
+router.afterEach((to, from) => {
+  // ...
+  var token = localStorage.getItem('Token')
+  if(token){
+    var memberNo = localStorage.getItem("memberNo")
+    Vue.prototype.$axios.post(Vue.prototype.$baseUrl + '/weixin/wxshare',Vue.prototype.$qs.stringify({
+      url:location.href
+    })).then(
+      result => {
+        var res = JSON.parse(Vue.prototype.$base64.decode(result.data))
+        if (res.code == 10000) {
+          var b = res.data
+          wx.config({
+            debug: false,////生产环境需要关闭debug模式
+            appId: b.appId,//appId通过微信服务号后台查看
+            timestamp: b.timestamp,//生成签名的时间戳
+            nonceStr: b.nonceStr,//生成签名的随机字符串
+            signature: b.signature,//签名
+            jsApiList: [//需要调用的JS接口列表
+              'onMenuShareTimeline',//分享给好友
+              'onMenuShareAppMessage'//分享到朋友圈
+            ]
+          });
+          wx.ready(function () {      //需在用户可能点击分享按钮前就先调用
+            wx.onMenuShareTimeline({
+              title: '购买会员拿大礼包', // 分享标题
+              desc: '购买会员拿大礼包', // 分享描述
+              link: location.href.split("#")[0] + '/#/invite/1/'+ memberNo +'/2', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+              imgUrl: 'http://wechat.zhenxiangfuwu.com/shar.jpg', // 分享图标
+              success: function () {
+                // 设置成功
+              }
+            })
+            wx.onMenuShareAppMessage({
+              title: '购买会员拿大礼包', // 分享标题
+              link: location.href.split("#")[0] + '/#/invite/1/'+ memberNo +'/2', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+              imgUrl: 'http://wechat.zhenxiangfuwu.com/shar.jpg', // 分享图标
+              success: function () {
+                // 用户点击了分享后执行的回调函数
+              },
+            })
+          })
+          wx.error(function (res) {
+          });
+        }
+      }
+    )
+  }
+})
 
 export default router;
