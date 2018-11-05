@@ -68,12 +68,15 @@
         })).then(result => {
           var res = JSON.parse(this.$base64.decode(result.data))
           if (res.code == 10000) {
-            this.wxpay()
+            this.wxpay(res.data)
           } else {
-            this.$vux.confirm.show({
-              content: res.message,
-              showCancelButton: false,
-            })
+            this.$vux.toast.show({
+              type: "cancel",
+              text: res.message,
+              width: "3em",
+              position: "middle",
+              isShowMask: true
+            });
           }
         })
       }
