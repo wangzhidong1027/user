@@ -122,7 +122,6 @@ export default {
         this.$vux.toast.show({
           type: 'cancel',
           text: "请选择商品",
-          width: "3em",
           position: "middle",
           isShowMask: true
         });
@@ -192,7 +191,6 @@ export default {
         this.$vux.toast.show({
           type: 'cancel',
           text: "请选择商品",
-          width: "3em",
           position: "middle",
           isShowMask: true
         });
@@ -208,7 +206,6 @@ export default {
         data: this.$base64.encode(JSON.stringify(datafrom))
       })).then(result => {
         var res = JSON.parse(this.$base64.decode(result.data))
-        console.log(res)
         if(res.code == 10000){
           this.batch_DEL( this.checklist);
           this.$router.push({
@@ -218,7 +215,6 @@ export default {
           this.$vux.toast.show({
             type: "cancel",
             text: res.message,
-            width: "3em",
             position: "middle",
             isShowMask: true
           });

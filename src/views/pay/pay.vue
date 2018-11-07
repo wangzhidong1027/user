@@ -59,9 +59,9 @@
       <div class="coupon" v-if="!main">
         <div class="title">请选择优惠券</div>
         <div class="content vux-1px" v-for='(item,index) in datas' @click="select(item)" :key='index'
-             v-if="item.rule<=orderinfo.billAmt">
+             v-if="item.rule<=orderinfo.billAmt && item.couponType == 2" >
           <div class="coupon-info">
-            <p class="describe">{{item.facevalue}}元优惠券</p>
+            <p class="describe">{{item.facevalue}}元优惠券（非油品券）</p>
             <p class="info">
               <span>满{{item.rule}}元可用</span>
             </p>
@@ -87,7 +87,7 @@
     <div class="payover" v-if="!payStatus">
       <msg title="支付成功" description="订单已支付成功，请您尽快提取您的当但商品">
         <template slot="buttons">
-        <x-button plain type="primary" @click.native="gopath('oreder')">订单信息</x-button>
+        <x-button plain type="primary" @click.native="gopath('order')">订单信息</x-button>
         <x-button type="primary" @click.native="gopath('me')">个人中心</x-button>
       </template></msg>
     </div>
@@ -148,8 +148,6 @@
           this.selects = {}
           return false
         }
-        console.log(obj.couponNo)
-        console.log(this.selects)
         this.selects = obj
       },
       determines() {
@@ -162,7 +160,7 @@
       getcoupon() {
         var data = {
           page: 1,
-          isExpired: 1,
+          isExpired: 0,
         }
         this.$axios.post(this.$baseUrl + '/per/couponlist', this.$qs.stringify({
           data: this.$base64.encode(JSON.stringify(data))
@@ -174,6 +172,16 @@
         })
       },
       pay() {
+        if(!localStorage.getItem("openid")){
+          this.$vux.toast.show({
+            type: 'cancel',
+            text: '签名错误，请点击右上角刷新页面',
+            position: 'middle',
+            isShowMask: true
+          })
+          return
+        }
+        this.$vux.loading.show()
         var data = {
           openid: localStorage.getItem("openid"),
           orderno: this.$route.params.orderid,
@@ -185,26 +193,19 @@
         })).then(result => {
           var res = JSON.parse(this.$base64.decode(result.data))
           if (res.code == 10000) {
+            var that = this
+            this.$vux.loading.hide()
             WeixinJSBridge.invoke(
               'getBrandWCPayRequest', res.data,
               function (res) {
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
-                  this.payStatus = false
-                }else{
-                  this.$vux.toast.show({
-                    type: "cancel",
-                    text: "支付失败请联系工作人员",
-                    width: "3em",
-                    position: "middle",
-                    isShowMask: true
-                  });
+                  that.payStatus = false
                 }
               })
           } else {
             this.$vux.toast.show({
               type: 'cancel',
               text: res.message,
-              width: '3em',
               position: 'middle',
               isShowMask: true
             })
@@ -226,7 +227,6 @@
           this.$vux.toast.show({
             type: 'cancel',
             text: res.message,
-            width: '3em',
             position: 'middle',
             isShowMask: true
           })

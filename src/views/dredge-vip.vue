@@ -4,7 +4,7 @@
       <img :src="goodinfo.images" alt="">
     </div>
     <div class="bottom">
-      <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="dredge">开通</x-button>
+      <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="dredge">支付{{goodinfo.price | formatMoney}}元开通会员</x-button>
     </div>
   </div>
 </template>
@@ -40,6 +40,17 @@
           })
           return
         }
+        if(!localStorage.getItem("openid")){
+          this.$vux.toast.show({
+            type: 'cancel',
+            text: '签名错误，请点击右上角刷新页面',
+            position: 'middle',
+            isShowMask: true
+          })
+          return
+        }
+        this.$vux.loading.show()
+        var that = this
         var data = {
           gid: this.$route.params.id,
           openid: localStorage.getItem("openid")
@@ -50,11 +61,12 @@
         })).then(result => {
           var res = JSON.parse(this.$base64.decode(result.data))
           if (res.code == 10000) {
+            this.$vux.loading.hide()
             WeixinJSBridge.invoke(
               'getBrandWCPayRequest', res.data,
               function (res) {
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
-                  this.$vux.confirm.show({
+                  that.$vux.confirm.show({
                     content: '恭喜您，已成为会员，赶快登录享受优惠吧！',
                     showCancelButton: false,
                     onConfirm: () => {
@@ -69,7 +81,6 @@
             this.$vux.toast.show({
               type: "cancel",
               text: res.message,
-              width: "3em",
               position: "middle",
               isShowMask: true
             });
@@ -92,7 +103,6 @@
           this.$vux.toast.show({
             type: "cancel",
             text: res.message,
-            width: "3em",
             position: "middle",
             isShowMask: true
           });
@@ -109,7 +119,7 @@
     background: #f5f5f5;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 45px;
+    padding-bottom: 30px;
     box-sizing: border-box;
     .imgbox {
       width: 100%;

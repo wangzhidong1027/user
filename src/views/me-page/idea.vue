@@ -29,7 +29,6 @@ export default {
           this.$vux.toast.show({
             type: "cancel",
             text: "不能为空！",
-            width: '3em',
             position: 'middle',
             isShowMask: true
           })
@@ -37,7 +36,6 @@ export default {
         }
         this.$vux.toast.show({
           text: "感谢您的建议，我们会努力做到最好",
-          width: '3em',
           position: 'middle',
           isShowMask: true
         })

@@ -22,7 +22,6 @@ export default {
         this.$vux.toast.show({
           type: "cancel",
           text: res.message,
-          width: "3em",
           position: "middle",
           isShowMask: true
         });

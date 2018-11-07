@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="coupon-container">
-      <div class="name">{{info.facevalue}}元优惠券</div>
+      <div class="name">{{info.facevalue}}元优惠券（<span v-if="info.couponType == 1">限油品使用</span><span v-if="info.couponType == 2">限非油品使用</span>）</div>
       <div class="time">有效期：{{info.expireTime}}</div>
     </div>
     <!--<div class="state" v-if="info.Expired ==3">-->
@@ -30,7 +30,6 @@
       }
     },
     mounted() {
-      console.log(this.info)
     }
   }
 </script>

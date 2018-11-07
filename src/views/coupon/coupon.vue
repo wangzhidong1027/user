@@ -52,7 +52,6 @@ export default {
         data: this.$base64.encode(JSON.stringify(data))
       })).then(result => {
         var res = JSON.parse(this.$base64.decode(result.data))
-        console.log(res)
         if(res.code == 10000){
           if(index == 0){
             this.noUse = res.data

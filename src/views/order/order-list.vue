@@ -3,13 +3,13 @@
     <div class="serch-box">
       <search v-model="orderid" @on-submit="onSubmit" @on-cancel="getOrderLst"></search>
     </div>
-    <div class="order-box">
+    <div class="order-box" v-if="showPage">
         <div class="oredr-item" v-for="item in orders">
           <div class="count"><span class="orderid"><b>订单号:</b>{{item.billno}}</span> <span class="states">{{item.payStatus_cn}}</span></div>
           <p class="order-ads"><span><i class="iconfont icon-qiandao1"></i> {{item.oil_name}}</span><span class="addtime">{{item.createdate}}</span></p>
           <scroller lock-y :scrollbar-x=false height="100px" class="goods">
             <div class="box1" :style=" { width: item.goodslist.length * 100 + 'px' }">
-              <a :href="'#/detail/'+gooditem.oilmxId"  v-for="gooditem in item.goodslist">
+             <a   v-for="gooditem in item.goodslist">  <!--:href="'#/detail/'+gooditem.oilmxId"-->
                 <img :src="gooditem.images" alt="">
               </a>
             </div>
@@ -17,7 +17,7 @@
           <!--<div class="title vux-1px-b">优惠券减免：<b>￥23.33</b></div>-->
           <div class="title" v-if="item.payStatus == 1">共{{item.goodslist.length}}件商品&nbsp总金额：<b>￥{{item.billAmt | formatMoney}}</b></div>
           <div class="title" v-if="item.payStatus != 1">共{{item.goodslist.length}}件商品&nbsp实付款：<b>￥{{ item.payMoney | formatMoney}}</b></div>
-          <div class="gopay vux-1px-t" v-if="item.payStatus == 1"><a class="vux-1px" :href="'#/pay/'+ item.billno">去支付</a></div>
+          <div class="gopay vux-1px-t" v-if="item.payStatus == 1"><a :href="'#/pay/'+ item.billno">去支付</a></div>
         </div>
       <divider v-if="!orders.length">没有订单信息</divider>
     </div>
@@ -36,7 +36,8 @@ export default{
   data () {
     return {
       orderid: '',
-      orders: []
+      orders: [],
+      showPage: ''
     }
   },
   methods: {
@@ -61,6 +62,7 @@ export default{
       this.$axios.post(this.$baseUrl + '/per/getgorderlist',this.$qs.stringify({
         data:data
       })).then(result => {
+        this.showPage = true
         var res = JSON.parse(this.$base64.decode(result.data))
         if( res.code == 10000) {
           if (res.data == '暂无订单信息') {
@@ -145,6 +147,7 @@ export default{
         }
         .states{
           color: #f44;
+          font-weight: 400;
         }
       }
       .title{
@@ -163,20 +166,22 @@ export default{
         }
       }
       .gopay{
-        height: 0.8rem;
+        height: 1rem;
         font-size: 0.3rem;
         display: flex;
         align-items: center;
         justify-content: flex-end;
         padding-right: 0.3rem;
+        overflow: hidden;
         a{
-          border-radius: 4px;
+          border-radius: 0.5rem;
           padding: 0 0.3rem;
           display: block;
           line-height: 0.6rem;
-          background: #f5f5f5;
-          color: #333;
+          background: #fff;
+          color: #f44;
           font-weight: bold;
+          border:  1px solid #f44;
         }
       }
     }

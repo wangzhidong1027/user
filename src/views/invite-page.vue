@@ -1,13 +1,13 @@
 <template>
-  <div class="invite">
-    <img :src="goodinfo.images" alt="">
+  <div class="invite" >
+    <img :src="goodinfo.images" alt="" >
     <div class="box">
       <group>
         <x-input v-model="mobile" placeholder="请输入手机号或会员账号" type="tel" is-type="china-mobile" required
                  ref="mobile"></x-input>
       </group>
       <group>
-        <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="buy">购买会员</x-button>
+        <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="buy">{{goodinfo.price}}元购买会员</x-button>
       </group>
     </div>
   </div>
@@ -27,7 +27,7 @@
     data() {
       return {
         mobile: '',
-        goodinfo: ''
+        goodinfo: '',
       }
     },
     methods: {
@@ -35,11 +35,12 @@
         "getOpenid"
       ]),
       wxpay(b) {
+        var that = this
         WeixinJSBridge.invoke(
           'getBrandWCPayRequest', b,
           function (res) {
             if (res.err_msg == "get_brand_wcpay_request:ok") {
-              this.$vux.confirm.show({
+              that.$vux.confirm.show({
                 content: '恭喜您，已成为会员，赶快登录享受优惠吧！',
                 showCancelButton: false,
                 onConfirm: () => {
@@ -55,6 +56,16 @@
         if (!this.$refs.mobile.valid) {
           return false
         }
+        if(!localStorage.getItem("openid")){
+          this.$vux.toast.show({
+            type: 'cancel',
+            text: '签名错误，请点击右上角刷新页面',
+            position: 'middle',
+            isShowMask: true
+          })
+          return
+        }
+        this.$vux.loading.show()
         var data = {
           mobile: this.mobile,
           gid: this.$route.params.gid,
@@ -68,12 +79,12 @@
         })).then(result => {
           var res = JSON.parse(this.$base64.decode(result.data))
           if (res.code == 10000) {
+            this.$vux.loading.hide()
             this.wxpay(res.data)
           } else {
             this.$vux.toast.show({
               type: "cancel",
               text: res.message,
-              width: "3em",
               position: "middle",
               isShowMask: true
             });
@@ -96,7 +107,6 @@
           this.$vux.toast.show({
             type: "cancel",
             text: res.message,
-            width: "3em",
             position: "middle",
             isShowMask: true
           });
@@ -125,8 +135,8 @@
       box-sizing: border-box;
       width: 100%;
       padding: 0 0.75rem;
-      background: #f8e51c;
-      padding-bottom: 20px;
+      background: #333333;
+      padding-bottom:50px;
     }
   }
 </style>

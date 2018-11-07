@@ -69,7 +69,6 @@
         this.detailadd(data)
         this.$vux.toast.show({
           text: "添加成功",
-          width: "3em",
           position: "middle",
           isShowMask: true
         });
@@ -85,7 +84,6 @@
         data: formData
       })).then(result => {
         var res = JSON.parse(this.$base64.decode(result.data))
-        console.log(res)
         if (res.code == 10000) {
           this.goodinfo = res.data[0]
         } else {
@@ -208,14 +206,14 @@
         flex: 1;
         height: 1rem;
         color: #fff;
-        font-size: 0.8rem;
+        font-size: 0.5rem;
         display: flex;
         justify-content: space-between;
         a {
           flex: 1;
           line-height: 1rem;
           display: block;
-          font-size: 0.45rem;
+          font-size: 0.3rem;
           background: #fff;
           color: #333;
         }
@@ -228,7 +226,7 @@
           text-decoration: none;
           cursor: pointer;
           outline: none;
-          font-size: 0.45rem;
+          font-size: 0.3rem;
         }
       }
     }

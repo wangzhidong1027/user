@@ -84,11 +84,9 @@ export default {
         result => {
           var res = JSON.parse(this.$base64.decode(result.data))
           if(res.code == 10000) {
-            console.log(res.data)
             this.goods = res.data.filter(item => {
               for (let i = 0; i < this.carlist.length; i++) {
                 if( this.carlist[i].id === item.id) {
-                  console.log(1)
                   item.number = this.carlist[i].number
                   return item
                 }
@@ -102,7 +100,6 @@ export default {
             this.$vux.toast.show({
               type: "cancel",
               text: res.message,
-              width: "3em",
               position: "middle",
               isShowMask: true
             });

@@ -1,30 +1,35 @@
 <template>
   <div class="home">
-      <div>
-          <swiper :list="demo01_index" :auto="true" :loop="true"></swiper>
+      <div style="font-size: 0.3rem">
+          <swiper :list="demo01_index" :auto="true" :loop="true" :show-desc-mask="false"></swiper>
       </div>
       <grid style="background: #fff; margin-top: 15px">
-        <grid-item label="会员特权" link="vip">
+        <grid-item label="会员特权" link="dredgevip/1">
         </grid-item>
           <grid-item label="会员商城" link="nearby">
         </grid-item>
-          <grid-item label="邀请拿礼" link="https://zzfw.haibaobaoxian.com/activity/insr-taikang.html?pcode=lifjr-h5-zengx">
+          <grid-item label="邀请拿礼" link="https://zzfw.haibaobaoxian.com/activity/insr-accident.html?pcode=lifjr-h5-zengx">
         </grid-item>
-          <grid-item label="限时领券" >
+          <grid-item label="一键加油"  @click.native="alertNow">
         </grid-item>
       </grid>
       <div style="width: 100%;margin-top: 10px">
-        <a href="#/vip">
+        <a href="#/dredgevip/1">
            <img style="width: 100%; display: block" src="../assets/images/jbanner.jpg" alt="">
         </a>
       </div>
-      <group title="今日油价" style="background: #fff;line-height: 30px; padding-left:20px; padding-right: 20px; ">
-          <v-chart :data="data" prevent-default>
-              <v-scale x :tick-count="3"/>
-              <v-tooltip :show-item-marker="false" show-x-value/>
-              <v-line/>
-          </v-chart>
-      </group>
+    <div style="width: 100%;margin-top: 10px">
+      <a href="#/invite/1/OS1541057568072831/1">
+        <img style="width: 100%; display: block" src="../assets/images/jianyang.jpg" alt="">
+      </a>
+    </div>
+      <!--<group title="今日油价" style="background: #fff;line-height: 30px; padding-left:20px; padding-right: 20px; ">-->
+          <!--<v-chart :data="data" prevent-default>-->
+              <!--<v-scale x :tick-count="3"/>-->
+              <!--<v-tooltip :show-item-marker="false" show-x-value/>-->
+              <!--<v-line/>-->
+          <!--</v-chart>-->
+      <!--</group>-->
       <tabbar>
           <tabbar-item selected link="home">
               <span slot="icon" class="icon-shouye1 iconfont" style=" color: #ff9900;font-size: 22px;"></span>
@@ -40,6 +45,8 @@
 
 <script>
 import { Tabbar, TabbarItem, Swiper, Group, VChart, VTooltip, VLine, VScale, Grid, GridItem } from "vux"
+import banner1 from '../assets/images/vipbanner.jpg'
+import banner2 from '../assets/images/baoxian.jpg'
 export default {
   name: "home",
   components: {
@@ -58,26 +65,14 @@ export default {
     return {
       demo01_index: [
         {
-          url: "/vip",
-          img: "http://pic.qiantucdn.com/58pic/28/25/77/60A58PICdx5_1024.jpg!/fw/1024/watermark/url/L2ltYWdlcy93YXRlcm1hcmsveGlhb3R1LnBuZw==/align/center",
-          title: "开通个会员吧"
+          url: "/dredgevip/1",
+          img: banner1,
+          title: ""
         },
         {
-          url: "javascript:",
-          img: "https://ww1.sinaimg.cn/large/663d3650gy1fq66vvsr72j20p00gogo2.jpg",
-          title: "送你一朵fua"
+          url: "https://zzfw.haibaobaoxian.com/activity/insr-accident.html?pcode=lifjr-h5-zengx",
+          img: banner2,
         },
-        {
-          url: "javascript:",
-          img: "https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg",
-          title: "送你一辆车"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg: "https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg"
-        }
       ],
       data: [
         { date: "2017-06-05", value: 116 },
@@ -131,7 +126,16 @@ export default {
         { date: "2017-07-23", value: 55 },
         { date: "2017-07-24", value: 60 }
       ]
-    };
+    }
+  },
+  methods: {
+    alertNow () {
+      this.$vux.confirm.show({
+        content: '敬请期待！',
+        showCancelButton: false,
+        onConfirm: () => {}
+      })
+    }
   }
 };
 </script>

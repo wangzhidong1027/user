@@ -1,5 +1,6 @@
 <template>
-  <div id="me">
+  <div id="me" >
+    <div class="container" v-if="isshowpage">
     <header>
       <div class="header-left">
         <div class="user-img">
@@ -29,13 +30,13 @@
     <div class="nav">
       <grid>
         <grid-item label="订单" link="order">
-          <b slot="icon" class="iconfont icon-dingdan" style="display: block;font-size: 26px;color: #999"></b>
+          <b slot="icon" class="iconfont icon-dingdan" style="display: block;font-size: 26px;color: #FF7500"></b>
         </grid-item>
         <grid-item label="已购" link="car">
-          <b slot="icon" class="iconfont icon-gouwuchekong" style="display: block;font-size: 26px;color: #999"></b>
+          <b slot="icon" class="iconfont icon-gouwuchekong" style="display: block;font-size: 26px;color: #FF7500"></b>
         </grid-item>
         <grid-item label="优惠券" link="coupon">
-          <b slot="icon" class="iconfont icon-youhuiquan" style="display: block;font-size: 24px;color: #999"></b>
+          <b slot="icon" class="iconfont icon-youhuiquan" style="display: block;font-size: 24px;color: #FF7500"></b>
         </grid-item>
       </grid>
     </div>
@@ -76,16 +77,20 @@
     </div>
     <!--<actionsheet v-model="showShare" :menus="menus1" theme="ios" :show-cancel="true"-->
                  <!--@on-click-menu="ShareData"></actionsheet>-->
-    <tabbar>
-      <tabbar-item link="home">
-        <span slot="icon" class="icon-shouye1 iconfont" style="font-size: 22px;"></span>
-        <span slot="label">首页</span>
-      </tabbar-item>
-      <tabbar-item link="me" selected>
-        <span slot="icon" class="icon-wode iconfont" style="color: #ff9900;font-size: 20px;"></span>
-        <span slot="label">我的</span>
-      </tabbar-item>
-    </tabbar>
+    </div>
+    <div class="bot">
+      <tabbar>
+        <tabbar-item link="home">
+          <span slot="icon" class="icon-shouye1 iconfont" style="font-size: 22px;"></span>
+          <span slot="label">首页</span>
+        </tabbar-item>
+        <tabbar-item link="me" selected>
+          <span slot="icon" class="icon-wode iconfont" style="color: #ff9900;font-size: 20px;"></span>
+          <span slot="label">我的</span>
+        </tabbar-item>
+      </tabbar>
+    </div>
+
   </div>
 </template>
 
@@ -125,13 +130,15 @@
         userinfo: '',
         realname: '',
         email: '',
-        car: ''
+        car: '',
+        isLogin: false,
+        isshowpage: false
       };
     },
     computed: {
-      isLogin: () => {
-        return localStorage.getItem('Token') ? true : false;
-      },
+      // isLogin: () => {
+      //   return localStorage.getItem('Token') ? true : false;
+      // },
     },
     methods: {
       getsign() {
@@ -167,7 +174,6 @@
         this.isSign = true
         this.$vux.toast.show({
           text: "签到成功 积分+1",
-          width: "3em",
           position: "middle",
           isShowMask: true
         });
@@ -184,8 +190,10 @@
       getinfo() {
         this.$axios.post(this.$baseUrl + "/per/getuser", this.$qs.stringify({})).then(
           result => {
+            this.isshowpage = true
             var res = JSON.parse(this.$base64.decode(result.data));
             if (res.code == 10000) {
+              this.isLogin = true
               this.userinfo = res.data
               localStorage.setItem("memberNo",res.data.memberNo)
               if (res.data.username) {
@@ -194,6 +202,7 @@
                 this.name = res.data.mobile
               }
             } else {
+              this.isLogin = false
               localStorage.clear()
             }
           });
@@ -216,25 +225,29 @@
       }
     }
   }
-
   .cell-icon {
     padding-right: 10px;
     color: #0bb2e0;
   }
-
   .cell2-icon {
     padding-right: 10px;
     color: #ff9900;
   }
-
   #me {
     height: 100%;
     width: 100%;
     background: #f5f5f5;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 1.2rem;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    .container{
+      flex: 1;
+      overflow: scroll;
+      -webkit-overflow-scrolling: touch;
+    }
+    .bot{
+      height: 53px;
+    }
     header {
       height: 2rem;
       background: #fff;

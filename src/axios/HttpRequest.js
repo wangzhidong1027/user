@@ -1,5 +1,8 @@
 import axios from "axios";
-// import router from "../router/router.js"
+import Vue from "vue";
+import LoadingPlugin from 'vux/src/plugins/loading';
+Vue.use(LoadingPlugin)
+
 const HttpRequest = axios.create({
 	timeout: 20000,
 });
@@ -7,6 +10,7 @@ const HttpRequest = axios.create({
 
 HttpRequest.interceptors.request.use(
 	config => {
+    Vue.$vux.loading.show()
 		// 请求发送前
 		var token = localStorage.getItem('Token')
 		if (token) {
@@ -18,6 +22,7 @@ HttpRequest.interceptors.request.use(
 // 相应拦截器
 HttpRequest.interceptors.response.use(
 	response => {
+    Vue.$vux.loading.hide()
 		if (response) {
 			// switch (response.status){
 			//   case 401 :  sessionStorage.clear();

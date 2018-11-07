@@ -53,7 +53,6 @@
           this.$vux.toast.show({
             type: 'cancel',
             text: '请填写手机号',
-            width: '3em',
             position: 'middle',
             isShowMask: true
           });
@@ -74,7 +73,6 @@
           this.$vux.toast.show({
             type: 'text',
             text: '发送成功',
-            width: '3em',
             position: 'top',
             isShowMask: true
           });
@@ -83,7 +81,6 @@
           		this.$vux.toast.show({
           			type: 'cancel',
           			text: res.message,
-          			width: '3em',
           			position: 'middle',
           			isShowMask: true
           		})
@@ -114,7 +111,6 @@
             localStorage.setItem('Token', res.data)
             this.$vux.toast.show({
               text: "登录成功",
-              width: "3em",
               position: "middle",
               isShowMask: true
             });
@@ -128,7 +124,6 @@
             this.$vux.toast.show({
               type: "cancel",
               text: res.message,
-              width: "3em",
               position: "middle",
               isShowMask: true
             });
@@ -143,7 +138,6 @@
           this.$vux.toast.show({
             type: "cancel",
             text: "请填写正确信息",
-            width: "3em",
             position: "middle",
             isShowMask: true
           });

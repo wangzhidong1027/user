@@ -32,7 +32,6 @@ export default {
   	clear () {
       this.$vux.toast.show({
         text: '缓存已清除',
-        width: '3em',
         position: 'top',
         isShowMask: true
       })
@@ -41,7 +40,6 @@ export default {
      localStorage.clear();
       this.$vux.toast.show({
         text: '已退出',
-        width: '3em',
         position: 'top',
         isShowMask: true
       })

@@ -45,7 +45,6 @@
           this.$vux.toast.show({
             type: 'cancel',
             text: '请填写手机号',
-            width: '3em',
             position: 'middle',
             isShowMask: true
           })
@@ -66,7 +65,6 @@
               this.$vux.toast.show({
                 type: 'text',
                 text: '发送成功',
-                width: '3em',
                 position: 'top',
                 isShowMask: true
               })
@@ -75,7 +73,6 @@
               this.$vux.toast.show({
                 type: 'cancel',
                 text: res.message,
-                width: '3em',
                 position: 'middle',
                 isShowMask: true
               })
@@ -110,20 +107,19 @@
             if (res.code == 10000) {
               this.$vux.toast.show({
                 text: '注册成功',
-                width: '3em',
                 position: 'middle',
                 isShowMask: true
               })
+              localStorage.setItem('Token',res.data)
               setTimeout(() => {
                 this.$router.push({
-                  path: 'login'
+                  path: 'me'
                 })
               }, 3000)
             } else {
               this.$vux.toast.show({
                 type: 'cancel',
                 text: res.message,
-                width: '3em',
                 position: 'middle',
                 isShowMask: true
               })
@@ -133,7 +129,6 @@
           this.$vux.toast.show({
             type: 'cancel',
             text: "请填写正确信息",
-            width: '3em',
             position: 'middle',
             isShowMask: true
           })
