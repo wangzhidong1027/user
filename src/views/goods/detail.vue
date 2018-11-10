@@ -28,11 +28,17 @@
       <!--<span>库存:</span>-->
       <!--<b>{{goodinfo.inventory}}</b>-->
       <!--</div>-->
+      <div class="stock">
+      <span>重量:</span>
+      <b>{{goodinfo.weight}}g </b>
+
+      <span> 单位:</span>
+      <b>{{goodinfo.unit}}</b>
+      </div>
       <div class="shop_content">
         <p>商品简介:</p>
-        {{goodinfo.content}}<br/>
-        <div class="content_img">
-          {{goodinfo.intro}}
+        <div class="content_img" v-html="goodinfo.content">
+
         </div>
       </div>
     </div>
@@ -77,7 +83,8 @@
     created() {
       var formData = {
         ids: this.$route.params.id,
-        merchNo: JSON.parse(localStorage.getItem("station")).merchNo
+        // merchNo: JSON.parse(localStorage.getItem("station")).merchNo
+        merchNo: this.$merchNo
       }
       formData = this.$base64.encode(JSON.stringify(formData));
       this.$axios.post(this.$baseUrl + "/per/getbatchgoodsinfo", this.$qs.stringify({
@@ -86,6 +93,7 @@
         var res = JSON.parse(this.$base64.decode(result.data))
         if (res.code == 10000) {
           this.goodinfo = res.data[0]
+          console.log(this.goodinfo)
         } else {
           // this.$router.go(-1)
         }
@@ -160,19 +168,21 @@
     }
     .shop_content {
       border-bottom: 1px solid #eee;
-      margin-bottom: 1rem;
       padding: 0.25rem 0.25rem;
       font-size: 0.3rem;
       background-color: #fff;
       p {
-        padding-bottom: 0.25rem;
+        padding-bottom: 0.1rem;
       }
       .content_img {
-        margin-top: 0.25rem;
+        margin-top: 0.1rem;
         display: block;
         /*background-image: url(http://img30.360buyimg.com/sku/jfs/t26089/173/526748692/403827/24d1a078/5b73bf0dN65a82d82.jpg);*/
         background-size: 100% auto;
         background-repeat: no-repeat;
+        img{
+          width: 100%;
+        }
       }
     }
     #cartab {

@@ -97,7 +97,8 @@ export default {
         ids = ids + this.carlist[i].id  + ","
       }
       var data = {
-        merchNo: JSON.parse(localStorage.getItem("station")).merchNo,
+        // merchNo: JSON.parse(localStorage.getItem("station")).merchNo,
+        merchNo: this.$merchNo,
         ids: ids
       };
       this.$axios.post(this.$baseUrl + '/per/getbatchgoodsinfo',this.$qs.stringify({
@@ -127,10 +128,8 @@ export default {
         });
         return
       }
-      console.log(this.checklist)
       this.batch_DEL( this.checklist);
       // this.goodsinfo = this.carlist
-
       for(let i = 0;i <  this.checklist.length; i++){
         for(let k = 0;k <  this.goodsinfo.length; k++){
           if (this.goodsinfo[k].id === this.checklist[i] ) {
@@ -197,7 +196,8 @@ export default {
         return false
       }
       var datafrom = {
-        merchNo: JSON.parse(localStorage.getItem("station")).merchNo,
+        // merchNo: JSON.parse(localStorage.getItem("station")).merchNo,
+        merchNo: this.prototype.$merchNo,
         goods: this.carlist,
         totalAmt: this.allmoney,
         totalVipAmt: this.vipmoney

@@ -66,18 +66,19 @@ export default {
     }
   },
   created () {
-	  if(!localStorage.getItem("station")) {
-      this.$vux.confirm.show({
-        content: '您还未选择油站',
-        showCancelButton: false,
-        onConfirm: () => {
-          this.$router.push({
-            path: '/nearby'
-          })
-        }
-      })
-    }else{
-      var data = {merchNo: JSON.parse(localStorage.getItem("station")).merchNo}
+	  // if(!localStorage.getItem("station")) {
+    //   this.$vux.confirm.show({
+    //     content: '您还未选择油站',
+    //     showCancelButton: false,
+    //     onConfirm: () => {
+    //       this.$router.push({
+    //         path: '/nearby'
+    //       })
+    //     }
+    //   })
+    // }else{
+      var data = {merchNo: this.$merchNo}
+      // var data = {merchNo: JSON.parse(localStorage.getItem("station")).merchNo}
       this.$axios.post(this.$baseUrl + "/per/oilgoodslist",this.$qs.stringify({
         data: this.$base64.encode(JSON.stringify(data))
       })).then(
@@ -106,7 +107,7 @@ export default {
           }
         }
       )
-    }
+    // }
 
   },
 }

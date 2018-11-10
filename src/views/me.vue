@@ -18,13 +18,13 @@
                                                                          style="font-size:0.3rem "></b>{{userinfo.level_name}}</a>
         </div>
       </a>
-      <div class="sign-box" @click="sign" v-if="isLogin">
-        <div class="sign active">
-          <div class="sign-icon"><i class="iconfont icon-qiandao"></i></div>
-          <div class="sign-title" v-if="isSign">已签到</div>
-          <div class="sign-title" v-else>点击签到</div>
-        </div>
-      </div>
+      <!--<div class="sign-box" @click="sign" v-if="isLogin">-->
+        <!--<div class="sign active">-->
+          <!--<div class="sign-icon"><i class="iconfont icon-qiandao"></i></div>-->
+          <!--<div class="sign-title" v-if="isSign">已签到</div>-->
+          <!--<div class="sign-title" v-else>点击签到</div>-->
+        <!--</div>-->
+      <!--</div>-->
     </header>
 
     <div class="nav">

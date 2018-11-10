@@ -6,7 +6,7 @@
       <grid style="background: #fff; margin-top: 15px">
         <grid-item label="会员特权" link="dredgevip/1">
         </grid-item>
-          <grid-item label="会员商城" link="nearby">
+          <grid-item label="会员商城" link="goodslist">
         </grid-item>
           <grid-item label="邀请拿礼" link="https://zzfw.haibaobaoxian.com/activity/insr-accident.html?pcode=lifjr-h5-zengx">
         </grid-item>
@@ -22,6 +22,10 @@
       <a href="#/invite/1/OS1541057568072831/1">
         <img style="width: 100%; display: block" src="../assets/images/jianyang.jpg" alt="">
       </a>
+    </div>
+    <h5 class="active">热卖商品</h5>
+    <div class="hot">
+      <goodscard v-for="item in goods" :info="item"></goodscard>
     </div>
       <!--<group title="今日油价" style="background: #fff;line-height: 30px; padding-left:20px; padding-right: 20px; ">-->
           <!--<v-chart :data="data" prevent-default>-->
@@ -45,6 +49,7 @@
 
 <script>
 import { Tabbar, TabbarItem, Swiper, Group, VChart, VTooltip, VLine, VScale, Grid, GridItem } from "vux"
+import Goodscard from  '../components/good-card/good-card'
 import banner1 from '../assets/images/vipbanner.jpg'
 import banner2 from '../assets/images/baoxian.jpg'
 export default {
@@ -59,7 +64,8 @@ export default {
     VLine,
     VScale,
     Grid,
-    GridItem
+    GridItem,
+    Goodscard
   },
   data() {
     return {
@@ -74,6 +80,7 @@ export default {
           img: banner2,
         },
       ],
+      goods: [],
       data: [
         { date: "2017-06-05", value: 116 },
         { date: "2017-06-06", value: 129 },
@@ -135,7 +142,32 @@ export default {
         showCancelButton: false,
         onConfirm: () => {}
       })
+    },
+    getgoods () {
+      var data = {merchNo: this.$merchNo}
+      // var data = {merchNo: JSON.parse(localStorage.getItem("station")).merchNo}
+      this.$axios.post(this.$baseUrl + "/per/oilgoodslist",this.$qs.stringify({
+        data: this.$base64.encode(JSON.stringify(data))
+      })).then(
+        result => {
+          var res = JSON.parse(this.$base64.decode(result.data))
+          if(res.code == 10000) {
+            this.goods = res.data
+            console.log(this.goods)
+          }else{
+            this.$vux.toast.show({
+              type: "cancel",
+              text: res.message,
+              position: "middle",
+              isShowMask: true
+            });
+          }
+        }
+      )
     }
+  },
+  mounted () {
+    this.getgoods()
   }
 };
 </script>
@@ -154,7 +186,16 @@ export default {
   background: #f5f5f5;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 1.2rem;
+  padding-bottom: 1rem;
   box-sizing: border-box;
+  .active{
+    font-size: 0.3rem;
+    line-height: 1rem;
+    padding: 0 0.2rem;
+  }
+  .hot{
+    padding: 0 0.2rem;
+    background: #fff;
+  }
 }
 </style>

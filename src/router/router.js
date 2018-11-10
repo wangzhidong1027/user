@@ -7,7 +7,7 @@ const router = new Router({
   routes: [
     {
       path: "/",
-      redirect: '/me'
+      redirect: '/home'
     },
     {
       path: "/home",
@@ -152,6 +152,14 @@ const router = new Router({
         title: "油站地图"
       },
       component: () => import("../views/maplist/maplist.vue")
+    },
+    {
+      path: "/oil",
+      name: "oil",
+      meta: {
+        title: "一键加油"
+      },
+      component: () => import("../views/oil/oil.vue")
     }
   ]
 });
@@ -172,12 +180,12 @@ router.beforeEach((to, from, next) => {
     next()
   }
   // 未选择服务站
-  if(!station && (to.name == "car" || to.name == "goodslist" || to.name == "detail") ){
-    localStorage.setItem("car","")
-    next({
-      name: 'nearby' // 选择油站
-    })
-  }
+  // if(!station && (to.name == "car" || to.name == "goodslist" || to.name == "detail") ){
+  //   localStorage.setItem("car","")
+  //   next({
+  //     name: 'nearby' // 选择油站
+  //   })
+  // }
 });
 router.afterEach((to, from) => {
   // ...
@@ -207,7 +215,7 @@ router.afterEach((to, from) => {
               title: '购买会员拿大礼包', // 分享标题
               desc: '购买会员拿大礼包', // 分享描述
               link: location.href.split("#")[0] + '/#/invite/1/'+ memberNo +'/2', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-              imgUrl: 'http://wechat.zhenxiangfuwu.com/shar.jpg', // 分享图标
+              imgUrl: location.href.split("#")[0] + '/ciec.png', // 分享图标
               success: function () {
                 // 设置成功
               }
@@ -215,7 +223,7 @@ router.afterEach((to, from) => {
             wx.onMenuShareAppMessage({
               title: '购买会员拿大礼包', // 分享标题
               link: location.href.split("#")[0] + '/#/invite/1/'+ memberNo +'/2', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-              imgUrl: 'http://wechat.zhenxiangfuwu.com/shar.jpg', // 分享图标
+              imgUrl: location.href.split("#")[0] + '/ciec.png', // 分享图标
               success: function () {
                 // 用户点击了分享后执行的回调函数
               },
