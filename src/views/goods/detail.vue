@@ -7,9 +7,6 @@
       <div class="name">
         商品名称:{{goodinfo.name}}
       </div>
-      <div>
-
-      </div>
       <div class="twoprice">
         <div class="price">
           <span>价格:</span>
@@ -113,6 +110,7 @@
       flex: 1;
       overflow: scroll;
       -webkit-overflow-scrolling: touch;
+      width: 100%;
     }
     .goods-img {
       width: 100%;
@@ -171,6 +169,7 @@
       padding: 0.25rem 0.25rem;
       font-size: 0.3rem;
       background-color: #fff;
+      width: 100%;
       p {
         padding-bottom: 0.1rem;
       }
@@ -180,7 +179,19 @@
         /*background-image: url(http://img30.360buyimg.com/sku/jfs/t26089/173/526748692/403827/24d1a078/5b73bf0dN65a82d82.jpg);*/
         background-size: 100% auto;
         background-repeat: no-repeat;
+        width: 100%;
+        box-sizing: border-box;
+        p{
+          width: 100%;
+          display: block;
+          box-sizing: border-box;
+          img{
+            display: block;
+            width: 100%;
+          }
+        }
         img{
+          display: block;
           width: 100%;
         }
       }

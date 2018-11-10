@@ -4,10 +4,10 @@ switch (process.env.NODE_ENV) {
   //   baseUrl = "http://localhost:57156/"  //这里是本地的请求url
   //   break
   case 'formal':
-    baseUrl = "http://api.ciecinfo.com"  //这里是测试环境中的url
+    baseUrl = "http://api.ciecinfo.com";  //这里是生产环境中的url
     break
   case 'production':
-    baseUrl = "http://apitest.ciecinfo.com"   //生产环境url
+    baseUrl = "http://api.ciecinfo.com";  //测试环境url
     break
 }
 export default baseUrl;

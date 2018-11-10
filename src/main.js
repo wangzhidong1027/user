@@ -31,14 +31,13 @@ Vue.prototype.$axios = axios;
 Vue.prototype.$base64 = Base64;
 Vue.prototype.$qs = qs;
 Vue.prototype.$methods = util;
-Vue.prototype.$merchNo = '85581201A417C0D947765184821A9CE7B4220C35AE914C411396276455EB1F8E';
+Vue.prototype.$merchNo = '7C2CE88961FA5DBA21EBCD9598854424381842876DC36EABF8A69891B2C7D8D7'; //'85581201A417C0D947765184821A9CE7B4220C35AE914C411396276455EB1F8E';
 
-if (process.env.NODE_ENV == 'production'){
-  Vue.prototype.$baseUrl = baseUrl
+if (process.env.NODE_ENV === 'production'){
+  Vue.prototype.$baseUrl = baseUrl;
 }else{
-  Vue.prototype.$baseUrl =  'http://apitest.ciecinfo.com'  //'http://172.20.129.46:8081' // //http://172.20.129.46:8082
+  Vue.prototype.$baseUrl =  '';  //'http://172.20.129.46:8081' // //http://172.20.129.46:8082
 }
-
 
 new Vue({
   router,

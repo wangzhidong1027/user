@@ -11,7 +11,7 @@ module.exports = {
 		proxy: {
 			"/per": {
 			  type: 'proxy',
-			  target: 'http://172.20.129.46:8082/',
+			  target: 'http://apit.ciecinfo.com',
 			},
 			// "/per": {
 			//   type: 'proxy',

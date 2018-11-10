@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <div class="outside">
       <div style="font-size: 0.3rem">
           <swiper :list="demo01_index" :auto="true" :loop="true" :show-desc-mask="false"></swiper>
       </div>
@@ -26,6 +27,7 @@
     <h5 class="active">热卖商品</h5>
     <div class="hot">
       <goodscard v-for="item in goods" :info="item"></goodscard>
+    </div>
     </div>
       <!--<group title="今日油价" style="background: #fff;line-height: 30px; padding-left:20px; padding-right: 20px; ">-->
           <!--<v-chart :data="data" prevent-default>-->
@@ -184,10 +186,20 @@ export default {
   height: 100%;
   width: 100%;
   background: #f5f5f5;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
   padding-bottom: 1rem;
   box-sizing: border-box;
+  position: relative;
+  box-sizing: border-box;
+  .outside{
+    height: 100%;
+    width: 100%;
+    background: #f5f5f5;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
+    box-sizing: border-box;
+    position: relative;
+  }
   .active{
     font-size: 0.3rem;
     line-height: 1rem;

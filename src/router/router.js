@@ -191,7 +191,8 @@ router.afterEach((to, from) => {
   // ...
   var token = localStorage.getItem('Token')
   if(token){
-    var memberNo = localStorage.getItem("memberNo")
+    var memberNo = Vue.prototype.$memberNo;
+    // var memberNo = localStorage.getItem("memberNo")
     Vue.prototype.$axios.post(Vue.prototype.$baseUrl + '/weixin/wxshare',Vue.prototype.$qs.stringify({
       url:location.href
     })).then(

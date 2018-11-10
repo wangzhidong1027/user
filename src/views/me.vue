@@ -14,7 +14,7 @@
           <a href="#/login" v-else><span>未登录</span></a>
         </div>
         <div class="vip">
-          <a href="#/vip" :class="userinfo.level_name ? 'isVIP' : ''"><b class="iconfont icon-huiyuan"
+          <a href="#/dredgevip/1" :class="userinfo.level_name ? 'isVIP' : ''"><b class="iconfont icon-huiyuan"
                                                                          style="font-size:0.3rem "></b>{{userinfo.level_name}}</a>
         </div>
       </a>
