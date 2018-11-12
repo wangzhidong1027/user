@@ -169,7 +169,7 @@ router.beforeEach((to, from, next) => {
   var token = localStorage.getItem('Token');
   var station = localStorage.getItem("station")
   if(!token ){
-    if( to.name == "pay" ||  to.name == "order"  ||  to.name == "coupon"){
+    if( to.name == "pay" ||  to.name == "order"  ||  to.name == "coupon" || to.name == "oil"){
       next({
         name: 'login' // 跳转到登录页
       })

@@ -1,13 +1,15 @@
 let baseUrl = "";   //这里是一个默认的url，可以没有
-switch (process.env.NODE_ENV) {
-  // case 'development':
-  //   baseUrl = "http://localhost:57156/"  //这里是本地的请求url
-  //   break
-  case 'formal':
-    baseUrl = "http://api.ciecinfo.com";  //这里是生产环境中的url
-    break
-  case 'production':
-    baseUrl = "http://apitest.ciecinfo.com";  //测试环境url
-    break
+
+if (process.env.NODE_ENV === 'development'){
+  baseUrl = "http://apitest.ciecinfo.com";
 }
+
+if (process.env.VUE_APP_CURRENTMOD === 'formal') {
+  baseUrl = "http://api.ciecinfo.com"; // 正式地址
+}
+
+if (process.env.NODE_ENV === 'production'){
+  baseUrl = "http://apitest.ciecinfo.com"; //测试地址
+}
+
 export default baseUrl;

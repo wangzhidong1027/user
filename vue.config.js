@@ -5,6 +5,7 @@ module.exports = {
 			plugins: ["vux-ui"]
 		});
 	},
+  outputDir: process.env.outputDir,
 	// 打包时不生成.map文件
 	productionSourceMap: false,
 	devServer: {
