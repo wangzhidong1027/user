@@ -148,7 +148,6 @@
                   	  this.$vux.toast.show({
                         type: "cancel",
                         text: "身份识别失败，请重新上传",
-                        width: "3em",
                         position: "middle",
                         isShowMask: true
                       });
@@ -158,7 +157,6 @@
 									this.$vux.toast.show({
                     type: "cancel",
                     text: "身份识别失败，请重新上传",
-                    width: "3em",
                     position: "middle",
                     isShowMask: true
                   });
@@ -185,7 +183,6 @@
                       this.$vux.toast.show({
                         type: "cancel",
                         text: "身份识别失败，请重新上传",
-                        width: "3em",
                         position: "middle",
                         isShowMask: true
                       });
@@ -195,7 +192,6 @@
                    this.$vux.toast.show({
                     type: "cancel",
                     text: "身份识别失败，请重新上传",
-                    width: "3em",
                     position: "middle",
                     isShowMask: true
                   });
@@ -222,7 +218,6 @@
 						if (res.code == 10000) {
 							this.$vux.toast.show({
 								text: "设置成功",
-								width: "3em",
 								position: "middle",
 								isShowMask: true
 							});
@@ -233,7 +228,6 @@
 							this.$vux.toast.show({
 								type: "cancel",
 								text: res.message,
-								width: "3em",
 								position: "middle",
 								isShowMask: true
 							});
@@ -252,7 +246,6 @@
           	if( res.code == 10000) {
               this.$vux.toast.show({
 								text: "设置成功",
-								width: "3em",
 								position: "middle",
 								isShowMask: true
 							});
@@ -263,7 +256,6 @@
           		this.$vux.toast.show({
 								type: "cancel",
 								text: res.message,
-								width: "3em",
 								position: "middle",
 								isShowMask: true
 							});

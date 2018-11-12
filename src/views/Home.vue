@@ -11,7 +11,7 @@
         </grid-item>
           <grid-item label="邀请拿礼" link="https://zzfw.haibaobaoxian.com/activity/insr-accident.html?pcode=lifjr-h5-zengx">
         </grid-item>
-          <grid-item label="一键加油"  @click.native="alertNow">
+          <grid-item label="一键加油"  link="oil">
         </grid-item>
       </grid>
       <div style="width: 100%;margin-top: 10px">
@@ -20,7 +20,7 @@
         </a>
       </div>
     <div style="width: 100%;margin-top: 10px">
-      <a href="#/invite/1/OS1541057568072831/1">
+      <a href="#/invite/1/7C2CE88961FA5DBA21EBCD9598854424381842876DC36EABF8A69891B2C7D8D7/1">
         <img style="width: 100%; display: block" src="../assets/images/jianyang.jpg" alt="">
       </a>
     </div>

@@ -81,12 +81,12 @@ export default {
         return
       }
       var data = {
-        merchNo: this.prototype.$merchNo,
-        totalAmt: this.allmoney,
+        merchNo: this.$merchNo,
+        totalAmt: this.money,
         couponNo: this.selectinfo.couponNo,
-        total_fee: this.total_fee
+        totalFee: this.total_fee
       }
-      this.$axios.post( this.$baseUrl + '',this.$qs.stringify({
+      this.$axios.post( this.$baseUrl + '/per/peronekeyorderdown',this.$qs.stringify({
           data: this.$base64.encode(JSON.stringify(data))
       })).then(res => {
         var result = JSON.parse(this.$base64.decode(res.data))
@@ -98,7 +98,7 @@ export default {
         }else{
           this.$vux.alert.show({
             title: '提示',
-            content: res.message,
+            content: result.message,
           })
         }
       })

@@ -7,7 +7,7 @@ switch (process.env.NODE_ENV) {
     baseUrl = "http://api.ciecinfo.com";  //这里是生产环境中的url
     break
   case 'production':
-    baseUrl = "http://api.ciecinfo.com";  //测试环境url
+    baseUrl = "http://apitest.ciecinfo.com";  //测试环境url
     break
 }
 export default baseUrl;

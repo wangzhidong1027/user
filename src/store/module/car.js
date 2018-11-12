@@ -5,8 +5,8 @@ export default {
   getters: {
     carNum:  state => {
       var number = 0
-      for( let i of state.car){
-        number += i.number
+      for( let i = 0; i <  state.car.length; i++){
+        number +=  state.car[i].number
       }
       return number
     }

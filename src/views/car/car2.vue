@@ -4,29 +4,7 @@
       <b slot="right" style="font-weight: normal" @click="alldel">删除选中</b>
     </x-header>
     <swipeout>
-      <swipeout-item  ref="swipeoutItem" :right-menu-width="210" :sensitivity="15" v-for="item,index in goodsinfo" class="car-cunt">
-        <div slot="content" class="car-item  vux-1px-b">
-            <div class="left"  >
-              <checklist  :options="[{key: item.id,id:item.id, }]" v-model="checklist"  class="car-check"></checklist>
-            </div>
-            <router-link tag="a" class="right" :to="'/detail/'+ item.id" >
-              <img :src="item.images" alt="">
-              <div class="text-box">
-                <div class="name">{{item.name}}</div>
-                <div class="price">
-                  <p>￥<span>{{item.price | formatMoney}}</span></p>
-                  <p>￥<span>{{item.vipPrice | formatMoney}}</span><b class="iconfont icon-huiyuan" ></b></p>
-                </div>
-              </div>
-            </router-link>
-            <div class="number-input" style="text-align:center;">
-              <x-number width="30px" :min="1" v-model="item.number" @click.native="changerNumber(index)"></x-number>
-            </div>
-        </div>
-        <div slot="right-menu">
-          <swipeout-button @click.native="onButtonClick(index)" type="primary" :width="70">删除</swipeout-button>
-        </div>
-      </swipeout-item>
+        <cardgood v-for="item in goodsinfo" :info="item"></cardgood>
     </swipeout>
     <car-tab :allmoney="allmoney" :vipmoney="vipmoney" :allcount="allcount" :isALL="isALL" @selectallChange="selectallChange" @submitFrom="submitFrom"></car-tab>
   </div>
@@ -36,6 +14,7 @@
   import { Swipeout, SwipeoutItem, SwipeoutButton, XHeader, Checklist, InlineXNumber, XNumber } from 'vux'
   import { mapMutations, mapGetters  } from "vuex";
   import CarTab from "./components/car--tab"
+  import cardgood from "./components/cargood"
 export default {
   name: "car",
   components: {
@@ -46,7 +25,8 @@ export default {
     Checklist,
     InlineXNumber,
     CarTab,
-    XNumber
+    XNumber,
+    cargood
   },
   data () {
     return {
@@ -54,6 +34,8 @@ export default {
       vipmoney: '0.00',
       allcount: 0,
       goodsinfo: [],
+      numbera: 0,
+      arr: []
     }
   },
   computed: {
@@ -64,6 +46,7 @@ export default {
       return this.$store.state.car.car
     },
     allmoney () {
+      var num = this.numbera
       var all = 0
       var count = 0
       var vip = 0
@@ -118,6 +101,7 @@ export default {
             for (var k = 0; k < this.goodsinfo.length; k++){
               if(this.carlist[i].id == this.goodsinfo[k].id ){
                 this.goodsinfo[k].number = this.carlist[i].number
+                this.arr[k] = this.carlist[i].number
               }
             }
           }
@@ -147,13 +131,14 @@ export default {
     },
     // 左滑删除
     onButtonClick (index){
+      console.log([this.goodsinfo[index].id * 1 ])
       this.batch_DEL([this.goodsinfo[index].id * 1 ])
       this.goodsinfo.splice(index,1)
     },
     // 修改购物车
     changerNumber (index) {
-      this.checklist = []
-      this.ADD_CAR({id: this.carlist[index].id, number: this.goodsinfo[index].number+1})
+      this.numbera++
+      this.ADD_CAR({id: this.carlist[index].id, number: this.goodsinfo[index].number})
     },
     goHome () {
       this.$router.push({

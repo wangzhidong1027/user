@@ -9,14 +9,14 @@ module.exports = {
 	productionSourceMap: false,
 	devServer: {
 		proxy: {
-			"/per": {
-			  type: 'proxy',
-			  target: 'http://apit.ciecinfo.com',
-			},
 			// "/per": {
 			//   type: 'proxy',
-			//   target: 'http://api.zhenxiangfuwu.com/',
-			// }
+			//   target: 'http://api.ciecinfo.com/',
+			// },
+			"/per": {
+			  type: 'proxy',
+			  target: 'http://apitest.ciecinfo.com/',
+			}
 		}
 	}
 };

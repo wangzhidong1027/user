@@ -7,8 +7,8 @@
       <div class="goodtitle">
         <div class="name">{{info.name}}</div>
         <div class="price">
-          零售价：￥{{info.price | formatMoney}}</br>
-          会员价：￥{{info.vipPrice | formatMoney}}
+          <p>零售价：￥{{info.price | formatMoney}}</p>
+          <p class="vip">会员价：￥{{info.vipPrice | formatMoney}}</p>
         </div>
       </div>
   </a>
@@ -78,11 +78,15 @@
     .name{
       font-size: 0.3rem;
       flex: 1;
+      color: #333;
     }
     .price{
-      color: #f44;
+      color: #333;
       font-size: 0.25rem;
       padding: 0.1rem;
+      .vip{
+        color: #f44;
+      }
     }
   }
 }

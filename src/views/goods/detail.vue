@@ -99,7 +99,7 @@
   }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
   #detail {
     width: 100%;
     height: 100%;
@@ -134,7 +134,7 @@
         padding: 0 0.25rem;
         background: #FFF;
         b {
-          color: #ff3737;
+          color: #333333;
         }
       }
       .economize {
@@ -170,6 +170,7 @@
       font-size: 0.3rem;
       background-color: #fff;
       width: 100%;
+      box-sizing: border-box;
       p {
         padding-bottom: 0.1rem;
       }

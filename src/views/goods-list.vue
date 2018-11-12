@@ -108,7 +108,6 @@ export default {
         }
       )
     // }
-
   },
 }
 </script>
@@ -197,6 +196,17 @@ export default {
           b{
             font-size: 0.25rem;
             color: #ff3737;
+          }
+          .vip{
+            font-weight: 600;
+          }
+          .ordinary{
+            color: #666;
+            b{
+              font-size: 0.25rem;
+              color: #666;
+              font-weight: normal;
+            }
           }
         }
         .car-number{
