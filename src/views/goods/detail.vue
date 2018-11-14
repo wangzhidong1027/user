@@ -68,7 +68,7 @@
         "detailadd"
       ]),
       addcar() {
-        var data = {id: this.$route.params.id, number: this.number}
+        var data = {id: this.$route.params.id * 1, number: this.number}
         this.detailadd(data)
         this.$vux.toast.show({
           text: "添加成功",
@@ -90,9 +90,8 @@
         var res = JSON.parse(this.$base64.decode(result.data))
         if (res.code == 10000) {
           this.goodinfo = res.data[0]
-          console.log(this.goodinfo)
         } else {
-          // this.$router.go(-1)
+          this.$router.go(-1)
         }
       })
     }

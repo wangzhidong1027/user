@@ -127,7 +127,7 @@ const router = new Router({
       meta: {
         title: "购物车"
       },
-      component: () => import("../views/car/car.vue")
+      component: () => import("../views/car/car2.vue")
     },
     {
       path: "/coupon",
@@ -160,6 +160,22 @@ const router = new Router({
         title: "一键加油"
       },
       component: () => import("../views/oil/oil.vue")
+    },
+    {
+      path: "/protcol",
+      name: "protcol",
+      meta: {
+        title: "注册协议"
+      },
+      component: () => import("../views/protcol.vue")
+    },
+    {
+      path: "/membership",
+      name: "membership",
+      meta: {
+        title: "会员协议"
+      },
+      component: () => import("../views/membership.vue")
     }
   ]
 });

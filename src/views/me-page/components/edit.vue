@@ -8,15 +8,15 @@
       <div class="upload">
         <p>请上传身份证正面照片</p>
         <div class="dimg just" @click="clickInput('faceIdcard')">
-          <a v-if='!faceIdcard'></a>
-          <img v-if='faceIdcard' :src="faceIdcard" alt="">
+          <a v-if='!faceIdcard' style="display: block;text-align: center;line-height:4rem" @click="clickInput('faceIdcard')"><b class="iconfont icon-shangchuan" style="font-size: 1rem;text-align: center;color: #333"></b></a>
+          <img v-if='faceIdcard' :src="faceIdcard" alt="" @click="clickInput('faceIdcard')">
           <input type="file" id="faceIdcard" ref="faceIdcard" accept="image/*"
                  @change="ImgBase64($event,'faceIdcard')" name="bslicense">
         </div>
         <p>请上传身份证反面照片</p>
         <div class="dimg just" @click="clickInput('backIdcard')">
-          <a v-if='!backIdcard'></a>
-          <img v-if='backIdcard' :src="backIdcard" alt="">
+            <a v-if='!backIdcard' style="display: block;text-align: center;line-height:4rem" @click="clickInput('backIdcard')"><b class="iconfont icon-shangchuan" style="font-size: 1rem;text-align: center;color: #333"></b></a>
+          <img v-if='backIdcard' :src="backIdcard" alt=""  @click="clickInput('backIdcard')">
           <input type="file" id="backIdcard" ref="backIdcard" accept="image/*"
                  @change="ImgBase64($event,'backIdcard')" ImgBase64 name="bslicense">
         </div>

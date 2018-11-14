@@ -1,14 +1,14 @@
 <template>
   <a class="goods vux-1px-b" :href="'#/detail/'+ info.id">
     <!--<panel header="热卖商品"  :list="list" type="1"  ></panel>-->
-      <div class="goodimg">
+      <div class="goodimg" style="border:1px solid #f44">
         <img :src="info.images" alt="">
       </div>
       <div class="goodtitle">
         <div class="name">{{info.name}}</div>
         <div class="price">
           <p>零售价：￥{{info.price | formatMoney}}</p>
-          <p class="vip">会员价：￥{{info.vipPrice | formatMoney}}</p>
+          <p class="vip">超级会员价：￥{{info.vipPrice | formatMoney}}</p>
         </div>
       </div>
   </a>
@@ -66,8 +66,10 @@
   width: 100%;
   height: 2rem;
   .goodimg{
+    box-sizing: border-box;
+    width: 2rem;
     img{
-      width: 2rem;
+      width:100%;
     }
   }
   .goodtitle{
@@ -78,7 +80,7 @@
     .name{
       font-size: 0.3rem;
       flex: 1;
-      color: #333;
+      color: #666;
     }
     .price{
       color: #333;

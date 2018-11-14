@@ -12,6 +12,9 @@
         <x-button slot="right" type="primary" mini :plain="true" @click.native="getcode">{{msg}}</x-button>
       </x-input>
     </group>
+    <div class="protcol-box">
+      <check-icon :value.sync="demo1"> 请阅读并同意注册协议 <router-link tag="li" to="protcol" class="protcol">《注册协议》</router-link></check-icon>
+    </div>
     <div class="button-box">
       <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="register">完成</x-button>
     </div>
@@ -19,14 +22,15 @@
 </template>
 
 <script>
-  import {Group, XInput, XButton} from 'vux'
+  import {Group, XInput, XButton, CheckIcon } from 'vux'
 
   export default {
     name: "reigster",
     components: {
       Group,
       XInput,
-      XButton
+      XButton,
+      CheckIcon
     },
     data() {
       return {
@@ -36,7 +40,8 @@
           return this.$methods.checkType.check(value, 'code') ? {valid: true} : {valid: false, msg: '验证码为6位纯数字'}
         },
         time: 60,
-        msg: '发送验证码'
+        msg: '发送验证码',
+        demo1: true
       }
     },
     methods: {
@@ -95,6 +100,14 @@
         }, 1000)
       },
       register() {
+        if(!this.demo1){
+          this.$vux.toast.show({
+            text: '请勾选注册协议',
+            position: 'middle',
+            isShowMask: true
+          })
+          return false
+        }
         if (this.$refs.phone.valid && this.$refs.code.valid) {
           var formdata = this.$base64.encode(JSON.stringify({
             mobile: this.phone,
@@ -139,6 +152,16 @@
 </script>
 
 <style scoped lang="less">
+  .protcol{
+    text-align: center;
+    list-style:none;
+    display: inline-block;
+    color: #ff3737;
+  }
+  .protcol-box{
+    line-height: 1rem;
+    color: #333;
+  }
   .weui-btn_plain-primary {
     border-color: #ff9900;
     color: #ff9900;

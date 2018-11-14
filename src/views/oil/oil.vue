@@ -6,12 +6,13 @@
       <cell title="需实付金额" @click.native="onClick"  :value="total_fee"></cell>
     </group>
     <div class="btn-box" @click="submit">一键加油</div>
-    <popup v-model="show1" height="70%" class="cou-pop">
-          <popup-header  right-text="确定" title="请选择优惠券"  @on-click-right="selCupon"></popup-header>
-          <div class="cuoponlist">
-            <select-cou v-for="item in noUse" :info="item" v-if="item.couponType === 1" :selectinfo="selectinfo" @on-select="select" :rule="money"></select-cou>
-          </div>
+    <popup v-model="show1" height="70%" class="cou-pop" :popup-style="{ zIndex: 888 }" :show-mask="false">
+      <popup-header  right-text="确定" title="请选择优惠券"  @on-click-right="selCupon"></popup-header>
+      <div class="cuoponlist">
+        <select-cou v-for="item in noUse" :info="item" v-if="item.couponType === 1" :selectinfo="selectinfo" @on-select="select" :rule="money"></select-cou>
+      </div>
     </popup>
+    <div class="my-mask" v-if="show1" @click="show1 = !show1"></div>
   </div>
 </template>
 
@@ -90,10 +91,15 @@ export default {
           data: this.$base64.encode(JSON.stringify(data))
       })).then(res => {
         var result = JSON.parse(this.$base64.decode(res.data))
-        if(result.code == 10000) {
-          this.$vux.alert.show({
-            title: '提示',
-            content: '下单成功，可以在油站使用手机号完成订单',
+        if(result.code === 10000) {
+          this.$vux.confirm.show({
+            content: '下单成功，您可以再选择油站使用手机号完成此订单！',
+            showCancelButton: false,
+            onConfirm: () => {
+              this.$router.push({
+                path: '/home'
+              })
+            }
           })
         }else{
           this.$vux.alert.show({
@@ -134,6 +140,16 @@ export default {
   background: #fbf9fe;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
+  .my-mask{
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background: #000;
+    opacity: 0.6;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
   .money{
     background: #fff;
   }

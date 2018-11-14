@@ -9,7 +9,8 @@
       </div>
     </div>
     <div class="coupon-container">
-      <div class="name">{{info.facevalue}}元优惠券（<span>限油品使用</span>）</div>
+      <div class="name" v-if="info.couponType === 1">{{info.facevalue}}元优惠券（<span>限油品使用</span>）</div>
+      <div class="name" v-if="info.couponType === 3">{{info.facevalue}}元优惠券（<span>全品类使用</span>）</div>
       <div class="time">有效期：{{info.expireTime}}</div>
     </div>
     <div class="raido-box">
@@ -70,6 +71,7 @@ import { CheckIcon } from 'vux'
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
+  z-index: 500;
   .amount {
     display: flex;
     flex-direction: column;

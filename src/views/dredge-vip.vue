@@ -1,7 +1,12 @@
 <template>
   <div class="vip">
-    <div class="imgbox">
-      <img :src="goodinfo.images" alt="">
+    <div class="outside">
+      <div class="imgbox">
+        <img :src="goodinfo.images" alt="">
+        <div class="membership">
+          <router-link to="/membership" tag="a" class="toa">开通即视为同意<span>《会员升级服务协议》</span></router-link>
+        </div>
+      </div>
     </div>
     <div class="bottom">
       <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="dredge">支付{{goodinfo.price | formatMoney}}元开通会员</x-button>
@@ -117,22 +122,37 @@
     height: 100%;
     width: 100%;
     background: #f5f5f5;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 30px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    .outside{
+      flex: 1;
+      overflow: scroll;
+      -webkit-overflow-scrolling: touch;
+    }
     .imgbox {
       width: 100%;
+      position: relative;
       img {
         display: block;
         width: 100%;
       }
     }
     .bottom {
-      position: fixed;
-      bottom: 0;
-      left: 0;
       width: 100%;
+    }
+    .membership{
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      text-align: center;
+      width: 100%;
+      .toa{
+        color: #d0cac0;
+        span{
+          color: rgb(255, 149, 0);
+        }
+      }
     }
   }
 </style>

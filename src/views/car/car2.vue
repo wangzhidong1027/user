@@ -4,14 +4,26 @@
       <b slot="right" style="font-weight: normal" @click="alldel">删除选中</b>
     </x-header>
     <swipeout>
-        <cardgood v-for="item in goodsinfo" :info="item"></cardgood>
+      <swipeout-item  ref="swipeoutItem" :right-menu-width="210" :sensitivity="15" v-for="item,index in goodsinfo" class="car-cunt">
+        <div slot="content" class="car-item  vux-1px-b">
+          <div class="left">
+            <checklist  :options="[{key: item.id,id:item.id, }]" v-model="checklist"  class="car-check"></checklist>
+          </div>
+          <div class="reight">
+            <cardgood :info="item" :indexItem="index" @on-changenum="changerNumber"></cardgood>
+          </div>
+        </div>
+        <div slot="right-menu">
+          <swipeout-button @click.native="onButtonClick(index)" type="primary" :width="70">删除</swipeout-button>
+        </div>
+      </swipeout-item>
     </swipeout>
     <car-tab :allmoney="allmoney" :vipmoney="vipmoney" :allcount="allcount" :isALL="isALL" @selectallChange="selectallChange" @submitFrom="submitFrom"></car-tab>
   </div>
 </template>
 
 <script>
-  import { Swipeout, SwipeoutItem, SwipeoutButton, XHeader, Checklist, InlineXNumber, XNumber } from 'vux'
+import { Swipeout, SwipeoutItem, SwipeoutButton, XHeader, Checklist, InlineXNumber, XNumber } from 'vux'
   import { mapMutations, mapGetters  } from "vuex";
   import CarTab from "./components/car--tab"
   import cardgood from "./components/cargood"
@@ -26,7 +38,7 @@ export default {
     InlineXNumber,
     CarTab,
     XNumber,
-    cargood
+    cardgood
   },
   data () {
     return {
@@ -34,8 +46,7 @@ export default {
       vipmoney: '0.00',
       allcount: 0,
       goodsinfo: [],
-      numbera: 0,
-      arr: []
+      numbera: 0
     }
   },
   computed: {
@@ -65,6 +76,7 @@ export default {
           }
         }
       }
+      console.log(all)
       this.allcount = count
       this.vipmoney = vip/100
       return all/100
@@ -101,7 +113,6 @@ export default {
             for (var k = 0; k < this.goodsinfo.length; k++){
               if(this.carlist[i].id == this.goodsinfo[k].id ){
                 this.goodsinfo[k].number = this.carlist[i].number
-                this.arr[k] = this.carlist[i].number
               }
             }
           }
@@ -128,17 +139,18 @@ export default {
           }
         }
       }
+      this.checklist = []
     },
     // 左滑删除
     onButtonClick (index){
-      console.log([this.goodsinfo[index].id * 1 ])
       this.batch_DEL([this.goodsinfo[index].id * 1 ])
       this.goodsinfo.splice(index,1)
     },
     // 修改购物车
-    changerNumber (index) {
+    changerNumber (val,index) {
+      this.goodsinfo[index].number = val
+      this.ADD_CAR({id: this.carlist[index].id, number: val})
       this.numbera++
-      this.ADD_CAR({id: this.carlist[index].id, number: this.goodsinfo[index].number})
     },
     goHome () {
       this.$router.push({
@@ -239,6 +251,9 @@ export default {
     justify-content: space-between;
     overflow: hidden;
     position: relative;
+    .reight{
+      flex: 1;
+    }
     .left{
       display: flex;
       align-items: center;
@@ -284,10 +299,15 @@ export default {
         }
         .price{
           font-size: 0.3rem;
-          color: #e4393c;
           b{
             color: #ff9900;
             margin-left: 0.1rem;
+          }
+          p{
+            color: #333;
+          }
+          .vipprice{
+            color: #e4393c;
           }
         }
       }

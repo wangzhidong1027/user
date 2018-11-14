@@ -1,6 +1,9 @@
 <template>
   <div class="invite" >
     <img :src="goodinfo.images" alt="" >
+    <div class="membership">
+      <router-link to="/membership" tag="a" class="toa">开通即视为同意<span>《会员升级服务协议》</span></router-link>
+    </div>
     <div class="box">
       <group>
         <x-input v-model="mobile" placeholder="请输入手机号或会员账号" type="tel" is-type="china-mobile" required
@@ -120,12 +123,26 @@
   .weui-loading_toast weui-toast {
     width: 100px;
   }
+
   .invite {
     width: 100%;
     height: 100%;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
     position: relative;
+    .membership{
+      position: absolute;
+      bottom: 50px;
+      left: 0;
+      text-align: center;
+      width: 100%;
+      .toa{
+        color: #d0cac0;
+        span{
+          color: rgb(255, 149, 0);
+        }
+      }
+    }
     img {
       width: 100%;
       display: block;

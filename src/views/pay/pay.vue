@@ -59,9 +59,10 @@
       <div class="coupon" v-if="!main">
         <div class="title">请选择优惠券</div>
         <div class="content vux-1px" v-for='(item,index) in datas' @click="select(item)" :key='index'
-             v-if="item.rule<=orderinfo.billAmt && item.couponType == 2" >
+             v-if="item.rule<=orderinfo.billAmt && item.couponType !== 1" >
           <div class="coupon-info">
-            <p class="describe">{{item.facevalue}}元优惠券（非油品券）</p>
+            <p class="describe" item.couponType === 2>{{item.facevalue}}元优惠券（非油品券）</p>
+            <p class="describe" item.couponType === 3>{{item.facevalue}}元优惠券（全品类券）</p>
             <p class="info">
               <span>满{{item.rule}}元可用</span>
             </p>

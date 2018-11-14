@@ -16,14 +16,14 @@
       </grid>
       <div style="width: 100%;margin-top: 10px">
         <a href="#/dredgevip/1">
-           <img style="width: 100%; display: block" src="../assets/images/jbanner.jpg" alt="">
+           <img style="width: 100%; display: block" src="../assets/images/jbanner.png" alt="">
         </a>
       </div>
-    <div style="width: 100%;margin-top: 10px">
-      <a href="#/invite/1/7C2CE88961FA5DBA21EBCD9598854424381842876DC36EABF8A69891B2C7D8D7/1">
-        <img style="width: 100%; display: block" src="../assets/images/jianyang.jpg" alt="">
-      </a>
-    </div>
+    <!--<div style="width: 100%;margin-top: 10px">-->
+      <!--<a href="#/invite/1/7C2CE88961FA5DBA21EBCD9598854424381842876DC36EABF8A69891B2C7D8D7/1">-->
+        <!--<img style="width: 100%; display: block" src="../assets/images/jianyang.jpg" alt="">-->
+      <!--</a>-->
+    <!--</div>-->
     <h5 class="active">热卖商品</h5>
     <div class="hot">
       <goodscard v-for="item in goods" :info="item"></goodscard>
@@ -155,7 +155,6 @@ export default {
           var res = JSON.parse(this.$base64.decode(result.data))
           if(res.code == 10000) {
             this.goods = res.data
-            console.log(this.goods)
           }else{
             this.$vux.toast.show({
               type: "cancel",
@@ -186,10 +185,8 @@ export default {
   height: 100%;
   width: 100%;
   background: #f5f5f5;
-  padding-bottom: 1rem;
   box-sizing: border-box;
   position: relative;
-  box-sizing: border-box;
   .outside{
     height: 100%;
     width: 100%;

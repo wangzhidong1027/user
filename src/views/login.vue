@@ -12,10 +12,10 @@
       </x-input>
     </group>
     <div class="button-box">
-      <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="login">登录</x-button>
       <div class="link">
-        <router-link name="li" to="/reigster">注册</router-link>
+        <router-link name="li" to="/reigster">去注册</router-link>
       </div>
+      <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="login">登录</x-button>
     </div>
   </div>
 </template>
@@ -143,6 +143,18 @@
           });
         }
       }
+    },
+    mounted () {
+      // console.log(this.$route.matched[1])
+      // if(this.$route.matched[1] || this.$route.matched[1].name !== 'reigster'){
+      //   console.log(1)
+      //   this.$router.go(-1)
+      // }else{
+      //   console.log(2)
+      //   this.$router.push({
+      //     path: 'me'
+      //   });
+      // }
     }
   };
 </script>
@@ -156,7 +168,7 @@
   }
 
   .link {
-    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
     display: flex;
     justify-content: space-between;
     font-size: 16px;
