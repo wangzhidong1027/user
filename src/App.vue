@@ -32,4 +32,15 @@ html,body,#app {
 .weui-toast{
   min-height: 0;
 }
+img {
+  position: relative;
+}
+img::after {
+  content: "";
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
 </style>

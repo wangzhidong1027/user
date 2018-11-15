@@ -18,8 +18,8 @@
           <div class="name">{{item.name}}</div>
           <div class="buy">
             <div class="price">
-              <p class="vip"><span>会员价￥</span><b>{{item.vipPrice | formatMoney}}</b></p>
               <p class="ordinary"><span>零售价￥</span><b>{{item.price | formatMoney }}</b></p>
+              <p class="vip"><span>会员价</span><b>￥{{item.vipPrice | formatMoney}}</b></p>
             </div>
             <div class="car-number">
               <b class="iconfont icon-gouwuchekong" @click="add(index)">
@@ -29,6 +29,7 @@
           </div>
         </div>
       </div>
+      <divider v-if="goods.length">我是有底线的！</divider>
     </div>
   </div>
 </template>
@@ -124,6 +125,7 @@ export default {
     position: fixed;
     bottom: 1rem;
     right:  0.3rem;
+    z-index: 200;
   }
   .caricon{
     position: relative;
@@ -136,8 +138,9 @@ export default {
     line-height: 0.9rem;
     color: #999;
     display: flex;
-    opacity: 0.5;
+    opacity: 0.7;
     justify-content: center;
+    z-index: 200;
     .total{
       position:absolute;
       top: 0;
@@ -169,11 +172,19 @@ export default {
     .goods-item{
       width: 50%;
       margin-bottom: 0.3rem;
-      border: 1px solid #eee;
+      /*border: 1px solid #eee;*/
       box-sizing: border-box;
-      img{
-        width: 100%;
-        display: block;
+      padding: 0 0.1rem;
+      a{
+        height: 3.4rem;
+        overflow: hidden;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        img{
+          display: block;
+          width: 100%;
+        }
       }
       .text{
         background: #fff;
@@ -199,6 +210,13 @@ export default {
           }
           .vip{
             font-weight: 600;
+            span{
+              display: inline-block;
+              line-height: 0.4rem;
+              border-radius: 2px;
+              background: linear-gradient(90deg, rgb(254, 252, 249), rgb(245, 235, 216));
+              color: #ae8d4c;
+            }
           }
           .ordinary{
             color: #666;

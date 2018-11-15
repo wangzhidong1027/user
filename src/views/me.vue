@@ -4,7 +4,7 @@
     <header>
       <div class="header-left">
         <div class="user-img">
-          <img src="https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png" alt="">
+          <img src="../assets/images/pic.jpg" alt="">
         </div>
       </div>
       <a class="header-right">
@@ -32,7 +32,7 @@
         <grid-item label="订单" link="order">
           <b slot="icon" class="iconfont icon-dingdan" style="display: block;font-size: 26px;color: #FF7500"></b>
         </grid-item>
-        <grid-item label="已购" link="car">
+        <grid-item label="购物车" link="car">
           <b slot="icon" class="iconfont icon-gouwuchekong" style="display: block;font-size: 26px;color: #FF7500"></b>
         </grid-item>
         <grid-item label="优惠券" link="coupon">

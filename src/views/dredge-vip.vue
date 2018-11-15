@@ -4,7 +4,7 @@
       <div class="imgbox">
         <img :src="goodinfo.images" alt="">
         <div class="membership">
-          <router-link to="/membership" tag="a" class="toa">开通即视为同意<span>《会员升级服务协议》</span></router-link>
+          <router-link to="/membership" tag="a" class="toa">开通即视为同意<span>《中能源超级会员服务协议》</span></router-link>
         </div>
       </div>
     </div>

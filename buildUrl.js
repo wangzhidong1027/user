@@ -1,7 +1,7 @@
 let baseUrl = "";   //这里是一个默认的url，可以没有
 
 if (process.env.NODE_ENV === 'development'){
-  baseUrl = "http://apitest.ciecinfo.com";
+  baseUrl = ""; //http://apitest.ciecinfo.com
 }
 
 if (process.env.NODE_ENV === 'production'){

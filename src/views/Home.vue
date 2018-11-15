@@ -4,17 +4,21 @@
       <div style="font-size: 0.3rem">
           <swiper :list="demo01_index" :auto="true" :loop="true" :show-desc-mask="false"></swiper>
       </div>
-      <grid style="background: #fff; margin-top: 15px">
+      <grid style="background: #fff; " :show-vertical-dividers="false">
         <grid-item label="会员特权" link="dredgevip/1">
+          <img style="width: 110%;display: block"  slot="icon"  src="../assets/images/huiyuan.jpg">
         </grid-item>
           <grid-item label="会员商城" link="goodslist">
+            <img style="width: 110%;display: block" slot="icon" src="../assets/images/shangcheng.jpg">
         </grid-item>
-          <grid-item label="邀请拿礼" link="https://zzfw.haibaobaoxian.com/activity/insr-accident.html?pcode=lifjr-h5-zengx">
+          <grid-item label="赠送保险" link="https://zzfw.haibaobaoxian.com/activity/insr-accident.html?pcode=lifjr-h5-zengx">
+            <img style="width: 110%;display: block" slot="icon" src="../assets/images/liwu.jpg">
         </grid-item>
           <grid-item label="一键加油"  link="oil">
+            <img style="width: 110%;display: block" slot="icon" src="../assets/images/jiayou.jpg">
         </grid-item>
       </grid>
-      <div style="width: 100%;margin-top: 10px">
+      <div style="width: 100%;margin-top: 10px" class="Entrance">
         <a href="#/dredgevip/1">
            <img style="width: 100%; display: block" src="../assets/images/jbanner.png" alt="">
         </a>
@@ -24,7 +28,7 @@
         <!--<img style="width: 100%; display: block" src="../assets/images/jianyang.jpg" alt="">-->
       <!--</a>-->
     <!--</div>-->
-    <h5 class="active">热卖商品</h5>
+    <h5 class="active" v-if="goods">热卖商品</h5>
     <div class="hot">
       <goodscard v-for="item in goods" :info="item"></goodscard>
     </div>
@@ -193,14 +197,22 @@ export default {
     background: #f5f5f5;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 1rem;
+    padding-bottom: 1.5rem;
     box-sizing: border-box;
     position: relative;
+  }
+  .Entrance{
+    box-sizing: border-box;
+    /*padding: 0.2rem;*/
+    background: #fff;
   }
   .active{
     font-size: 0.3rem;
     line-height: 1rem;
     padding: 0 0.2rem;
+    text-align: center;
+    font-weight: 600;
+    color: #666;
   }
   .hot{
     padding: 0 0.2rem;

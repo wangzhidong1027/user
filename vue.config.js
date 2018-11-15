@@ -16,7 +16,7 @@ module.exports = {
 			// },
 			"/per": {
 			  type: 'proxy',
-			  target: 'http://apitest.ciecinfo.com/',
+			  target: 'http://api.ciecinfo.com/',
 			}
 		}
 	}

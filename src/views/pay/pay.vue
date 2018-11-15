@@ -19,13 +19,13 @@
             <div class="goods-name">
               <p class="name">{{item.name}}</p>
               <!--<p class="style">类型:加油卡</p>-->
-              <h5>
+              <h5 style="color: #8c8c8c">
                 <b>¥ <span>{{item.price | formatMoney}}</span></b>
                 <span class="number">x{{item.num}}</span>
               </h5>
               <h4>
                 <b>¥ {{item.vip_price | formatMoney}}</b>
-                <span class="number">会员价<b class="iconfont icon-huiyuan" style="color:#ff9900"></b></span>
+                <span class="number">超级会员价<b class="iconfont icon-huiyuan" style="color:#ff9900"></b></span>
               </h4>
             </div>
           </div>

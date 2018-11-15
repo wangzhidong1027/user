@@ -13,7 +13,7 @@
       </x-input>
     </group>
     <div class="protcol-box">
-      <check-icon :value.sync="demo1"> 请阅读并同意注册协议 <router-link tag="li" to="protcol" class="protcol">《注册协议》</router-link></check-icon>
+      <check-icon :value.sync="demo1"> 请阅读并同意<router-link tag="li" to="protcol" class="protcol">《注册协议》</router-link></check-icon>
     </div>
     <div class="button-box">
       <x-button :gradients="[ '#FF7500', '#FF9500']" @click.native="register">完成</x-button>

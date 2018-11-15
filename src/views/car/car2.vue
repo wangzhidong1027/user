@@ -17,13 +17,14 @@
           <swipeout-button @click.native="onButtonClick(index)" type="primary" :width="70">删除</swipeout-button>
         </div>
       </swipeout-item>
+      <divider v-if="!goodsinfo.length">购物车空空，快去选择商品吧！</divider>
     </swipeout>
     <car-tab :allmoney="allmoney" :vipmoney="vipmoney" :allcount="allcount" :isALL="isALL" @selectallChange="selectallChange" @submitFrom="submitFrom"></car-tab>
   </div>
 </template>
 
 <script>
-import { Swipeout, SwipeoutItem, SwipeoutButton, XHeader, Checklist, InlineXNumber, XNumber } from 'vux'
+import { Swipeout, SwipeoutItem, SwipeoutButton, XHeader, Checklist, InlineXNumber, XNumber, Divider } from 'vux'
   import { mapMutations, mapGetters  } from "vuex";
   import CarTab from "./components/car--tab"
   import cardgood from "./components/cargood"
@@ -38,7 +39,8 @@ export default {
     InlineXNumber,
     CarTab,
     XNumber,
-    cardgood
+    cardgood,
+    Divider
   },
   data () {
     return {
@@ -304,7 +306,7 @@ export default {
             margin-left: 0.1rem;
           }
           p{
-            color: #333;
+            color: #8c8c8c;
           }
           .vipprice{
             color: #e4393c;

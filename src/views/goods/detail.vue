@@ -26,16 +26,14 @@
       <!--<b>{{goodinfo.inventory}}</b>-->
       <!--</div>-->
       <div class="stock">
-      <span>重量:</span>
-      <b>{{goodinfo.weight}}g </b>
-
+      <span>总量:</span>
+        <b>{{goodinfo.weight}}</b>
       <span> 单位:</span>
       <b>{{goodinfo.unit}}</b>
       </div>
       <div class="shop_content">
         <p>商品简介:</p>
         <div class="content_img" v-html="goodinfo.content">
-
         </div>
       </div>
     </div>
