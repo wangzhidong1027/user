@@ -41,14 +41,14 @@
           <!--</v-chart>-->
       <!--</group>-->
       <tabbar>
-          <tabbar-item selected link="home">
-              <span slot="icon" class="icon-shouye1 iconfont" style=" color: #ff9900;font-size: 22px;"></span>
-              <span slot="label">首页</span>
-          </tabbar-item>
-          <tabbar-item link="me">
-              <span slot="icon" class="icon-wode iconfont" style=" font-size: 20px;"></span>
-              <span slot="label">我的</span>
-          </tabbar-item>
+        <tabbar-item selected link="home">
+            <span slot="icon" class="icon-shouye1 iconfont" style=" color: #ff9900;font-size: 22px;"></span>
+            <span slot="label">首页</span>
+        </tabbar-item>
+        <tabbar-item link="me">
+            <span slot="icon" class="icon-wode iconfont" style=" font-size: 20px;"></span>
+            <span slot="label">我的</span>
+        </tabbar-item>
       </tabbar>
   </div>
 </template>

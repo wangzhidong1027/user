@@ -6,36 +6,28 @@
     <swipeout>
       <swipeout-item  ref="swipeoutItem" :right-menu-width="210" :sensitivity="15" v-for="item,index in goodsinfo" class="car-cunt">
         <div slot="content" class="car-item  vux-1px-b">
-            <div class="left"  >
-              <checklist  :options="[{key: item.id,id:item.id, }]" v-model="checklist"  class="car-check"></checklist>
-            </div>
-            <router-link tag="a" class="right" :to="'/detail/'+ item.id" >
-              <img :src="item.images" alt="">
-              <div class="text-box">
-                <div class="name">{{item.name}}</div>
-                <div class="price">
-                  <p>￥<span>{{item.price | formatMoney}}</span></p>
-                  <p>￥<span>{{item.vipPrice | formatMoney}}</span><b class="iconfont icon-huiyuan" ></b></p>
-                </div>
-              </div>
-            </router-link>
-            <div class="number-input" style="text-align:center;">
-              <x-number width="30px" :min="1" v-model="item.number" @click.native="changerNumber(index)"></x-number>
-            </div>
+          <div class="left">
+            <checklist  :options="[{key: item.id,id:item.id, }]" v-model="checklist"  class="car-check"></checklist>
+          </div>
+          <div class="reight">
+            <cardgood :info="item" :indexItem="index" @on-changenum="changerNumber"></cardgood>
+          </div>
         </div>
         <div slot="right-menu">
           <swipeout-button @click.native="onButtonClick(index)" type="primary" :width="70">删除</swipeout-button>
         </div>
       </swipeout-item>
+      <divider v-if="!goodsinfo.length">购物车空空，快去选择商品吧！</divider>
     </swipeout>
     <car-tab :allmoney="allmoney" :vipmoney="vipmoney" :allcount="allcount" :isALL="isALL" @selectallChange="selectallChange" @submitFrom="submitFrom"></car-tab>
   </div>
 </template>
 
 <script>
-  import { Swipeout, SwipeoutItem, SwipeoutButton, XHeader, Checklist, InlineXNumber, XNumber } from 'vux'
+import { Swipeout, SwipeoutItem, SwipeoutButton, XHeader, Checklist, InlineXNumber, XNumber, Divider } from 'vux'
   import { mapMutations, mapGetters  } from "vuex";
   import CarTab from "./components/car--tab"
+  import cardgood from "./components/cargood"
 export default {
   name: "car",
   components: {
@@ -46,7 +38,9 @@ export default {
     Checklist,
     InlineXNumber,
     CarTab,
-    XNumber
+    XNumber,
+    cardgood,
+    Divider
   },
   data () {
     return {
@@ -54,6 +48,7 @@ export default {
       vipmoney: '0.00',
       allcount: 0,
       goodsinfo: [],
+      numbera: 0
     }
   },
   computed: {
@@ -64,6 +59,7 @@ export default {
       return this.$store.state.car.car
     },
     allmoney () {
+      var num = this.numbera
       var all = 0
       var count = 0
       var vip = 0
@@ -82,6 +78,7 @@ export default {
           }
         }
       }
+      console.log(all)
       this.allcount = count
       this.vipmoney = vip/100
       return all/100
@@ -144,6 +141,7 @@ export default {
           }
         }
       }
+      this.checklist = []
     },
     // 左滑删除
     onButtonClick (index){
@@ -151,9 +149,10 @@ export default {
       this.goodsinfo.splice(index,1)
     },
     // 修改购物车
-    changerNumber (index) {
-      this.checklist = []
-      this.ADD_CAR({id: this.carlist[index].id, number: this.goodsinfo[index].number+1})
+    changerNumber (val,index) {
+      this.goodsinfo[index].number = val
+      this.ADD_CAR({id: this.carlist[index].id, number: val})
+      this.numbera++
     },
     goHome () {
       this.$router.push({
@@ -254,6 +253,9 @@ export default {
     justify-content: space-between;
     overflow: hidden;
     position: relative;
+    .reight{
+      flex: 1;
+    }
     .left{
       display: flex;
       align-items: center;
@@ -299,10 +301,15 @@ export default {
         }
         .price{
           font-size: 0.3rem;
-          color: #e4393c;
           b{
             color: #ff9900;
             margin-left: 0.1rem;
+          }
+          p{
+            color: #8c8c8c;
+          }
+          .vipprice{
+            color: #e4393c;
           }
         }
       }

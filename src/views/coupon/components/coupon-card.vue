@@ -10,7 +10,7 @@
     </div>
     <div class="coupon-container">
       <div class="name">{{info.facevalue}}元优惠券（<span v-if="info.couponType == 1">限油品使用</span><span v-if="info.couponType == 2">限非油品使用</span><span v-if="info.couponType == 3">全品类使用</span>）</div>
-      <div class="time">有效期：{{info.expireTime}}</div>
+      <div class="time">有效期：{{datetime(info.useStart)}} 至 {{datetime(info.expireTime)}} </div>
     </div>
     <!--<div class="state" v-if="info.Expired ==3">-->
       <!--消费-->
@@ -27,6 +27,11 @@
     props: {
       info: {
         type: Object,
+      }
+    },
+    methods: {
+      datetime (time) {
+        return time.substr(0,10)
       }
     },
     mounted() {

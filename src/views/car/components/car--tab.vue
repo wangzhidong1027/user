@@ -2,8 +2,8 @@
   <div class="car-tab">
     <checklist  :options="[{key: true, value: '全选'}]"   v-model="selectall" @click.native="change" class="all"></checklist>
     <div class="allmoney">
-      <div>总计 <span>￥{{allmoney | formatMoney}}</span></div>
-      <div class="vip">会员价 <span>￥{{vipmoney | formatMoney}}</span></div>
+      <div>总计 <span>¥{{allmoney | formatMoney}}</span></div>
+      <div class="vip">会员价 <span>¥{{vipmoney | formatMoney}}</span></div>
     </div>
     <div class="submit" @click="submit">
      <b>去结算</b><span>({{allcount}})件</span>

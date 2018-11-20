@@ -15,8 +15,8 @@
             </div>
           </scroller>
           <!--<div class="title vux-1px-b">优惠券减免：<b>￥23.33</b></div>-->
-          <div class="title" v-if="item.payStatus == 1">共{{item.goodslist.length}}件商品&nbsp总金额：<b>￥{{item.billAmt | formatMoney}}</b></div>
-          <div class="title" v-if="item.payStatus != 1">共{{item.goodslist.length}}件商品&nbsp实付款：<b>￥{{ item.payMoney | formatMoney}}</b></div>
+          <div class="title" v-if="item.payStatus == 1">共{{item.goodslist.length}}件商品&nbsp总金额：<b>¥{{item.billAmt | formatMoney}}</b></div>
+          <div class="title" v-if="item.payStatus != 1">共{{item.goodslist.length}}件商品&nbsp实付款：<b>¥{{ item.payMoney | formatMoney}}</b></div>
           <div class="gopay vux-1px-t" v-if="item.payStatus == 1"><a :href="'#/pay/'+ item.billno">去支付</a></div>
         </div>
       <divider v-if="!orders.length">没有订单信息</divider>

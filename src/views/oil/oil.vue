@@ -2,14 +2,15 @@
   <div class="oil">
     <group title="此订单暂时为油品优惠券使用订单，您可以再此生成优惠券订单。支付方式为油站支付。">
       <x-input title="加油金额" placeholder="请输入加油金额" placeholder-align="right" class="money" text-align="right" v-model="money" @on-change="clear"></x-input>
-      <cell title="优惠券减免"  is-link @click.native="selCupon" :value="facevalue"></cell>
-      <cell title="需实付金额" @click.native="onClick"  :value="total_fee"></cell>
+      <cell title="优惠券减免"  is-link @click.native="selCupon" :value="coupon_total"></cell>
+      <cell title="需实付金额"  :value="total_fee"></cell>
     </group>
     <div class="btn-box" @click="submit">一键加油</div>
     <popup v-model="show1" height="70%" class="cou-pop" :popup-style="{ zIndex: 888 }" :show-mask="false">
       <popup-header  right-text="确定" title="请选择优惠券"  @on-click-right="selCupon"></popup-header>
+      <!--<p style="padding-left: 20px;background: #fff9e6;color: #333">提示：此单最多同时使用优惠券{{Math.floor(money / 100)}}张已选{{selectArr.length}}张</p>-->
       <div class="cuoponlist">
-        <select-cou v-for="item in noUse" :info="item" v-if="item.couponType === 1" :selectinfo="selectinfo" @on-select="select" :rule="money"></select-cou>
+        <select-cou v-for="item in noUse" :info="item" v-if="item.couponType === 1" :selectArr="selectArr" @on-select="selected" :rule="money" :count="count"></select-cou>
       </div>
     </popup>
     <div class="my-mask" v-if="show1" @click="show1 = !show1"></div>
@@ -34,37 +35,51 @@ export default {
       money: '',
       show1: false,
       noUse: [],
-      selectinfo: {}
+      selectinfo: [],
+      selectArr: [],
+      count: 0
     }
   },
   computed: {
+    coupon_total () {
+      var all = 0
+      var ruleall = 0
+      if(!this.selectArr.length){
+        this.count = 0
+        return ''
+      }else{
+        for(var i = 0; i < this.selectArr.length; i++){
+          all += this.selectinfo[i].facevalue
+          ruleall += Number(this.selectinfo[i].rule)
+        }
+        this.count = ruleall
+        return  0 - all
+      }
+
+    },
     total_fee () {
       if (!this.money) {
         return ''
       }
-      if(!this.selectinfo.facevalue){
+      if(!this.coupon_total){
         return ''
       }
-      return (this.money * 100 - this.selectinfo.facevalue*100)/100
+      return (this.money * 100 + this.coupon_total*100)/100
     },
-    facevalue () {
-      if(this.selectinfo.facevalue){
-        var str = '-' + this.selectinfo.facevalue
-        return str
-      }else{
-        return ''
-      }
-    }
   },
   methods: {
-    select (info) {
-      this.selectinfo = info
+    selected (info) {
+      var index = this.selectArr.indexOf(info.couponNo)
+      if( index === -1){
+        this.selectArr.push(info.couponNo)
+        this.selectinfo.push(info)
+      }else{
+        this.selectArr.splice(index, 1)
+        this.selectinfo.splice(index, 1)
+      }
     },
     selCupon () {
       this.show1 = !this.show1
-    },
-    onClick () {
-
     },
     submit () {
       if (!this.money) {
@@ -74,17 +89,21 @@ export default {
         })
         return
       }
-      if (!this.selectinfo.facevalue) {
+      if (!this.selectArr.length) {
         this.$vux.alert.show({
           title: '提示',
           content: '请使用优惠券',
         })
         return
       }
+      var ids = ''
+      for(var i = 0; i < this.selectArr.length; i++){
+        ids = ids + this.selectArr[i]  + ","
+      }
       var data = {
         merchNo: this.$merchNo,
         totalAmt: this.money,
-        couponNo: this.selectinfo.couponNo,
+        couponNo: ids,
         totalFee: this.total_fee
       }
       this.$axios.post( this.$baseUrl + '/per/peronekeyorderdown',this.$qs.stringify({
@@ -124,7 +143,8 @@ export default {
       })
     },
     clear () {
-      this.selectinfo = {}
+      this.selectinfo = []
+      this.selectArr = []
     }
   },
   mounted () {

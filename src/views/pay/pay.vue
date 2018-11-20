@@ -35,10 +35,10 @@
             <b class="">></b>
           </span>
           </div>
-          <div class="amoney" v-if="paycoupon.facevalue">
+          <div class="amoney" v-if="couponMoney">
             <div class="zongjia">
               <p>优惠券金额</p>
-              <span>¥ <b>-{{paycoupon.facevalue | formatMoney}}</b>
+              <span>¥ <b>{{couponMoney | formatMoney}}</b>
             </span>
             </div>
           </div>
@@ -55,28 +55,9 @@
             </div>
           </div>
         </div>
-      <!--优惠券-->
-      <div class="coupon" v-if="!main">
-        <div class="title">请选择优惠券</div>
-        <div class="content vux-1px" v-for='(item,index) in datas' @click="select(item)" :key='index'
-             v-if="item.rule<=orderinfo.billAmt && item.couponType !== 1" >
-          <div class="coupon-info">
-            <p class="describe" item.couponType === 2>{{item.facevalue}}元优惠券（非油品券）</p>
-            <p class="describe" item.couponType === 3>{{item.facevalue}}元优惠券（全品类券）</p>
-            <p class="info">
-              <span>满{{item.rule}}元可用</span>
-            </p>
-          </div>
-          <a :class=" selects.couponNo && selects.couponNo == item.couponNo ? 'choicey' : ''"></a>
-        </div>
-        <div class="dern">
-          <button class="determine" @click="determines">确定</button>
-          <button class="return" @click="returns">返回</button>
-        </div>
-      </div>
       <div id="cartab" v-if="main">
         <div class="money">
-          <a><span>支付金额:<b>{{paymoney | formatMoney}}</b></span></a>
+          <a><span>支付金额:<b>¥{{paymoney | formatMoney}}</b></span></a>
         </div>
         <div class="addcard">
           <a>
@@ -88,75 +69,96 @@
     <div class="payover" v-if="!payStatus">
       <msg title="支付成功" description="订单已支付成功，请您尽快提取您的当但商品">
         <template slot="buttons">
-        <x-button plain type="primary" @click.native="gopath('order')">订单信息</x-button>
-        <x-button type="primary" @click.native="gopath('me')">个人中心</x-button>
-      </template></msg>
+          <x-button plain type="primary" @click.native="gopath('order')">订单信息</x-button>
+          <x-button type="primary" @click.native="gopath('me')">个人中心</x-button>
+        </template>
+      </msg>
     </div>
+    <popup v-model="show1" height="70%" class="cou-pop" :popup-style="{ zIndex: 999 }" :show-mask="false">
+      <popup-header  right-text="确定" title="请选择优惠券"  @on-click-right="voucher"></popup-header>
+      <!--<p style="padding-left: 20px;background: #fff9e6;color: #333">提示：此单最多同时使用优惠券{{Math.floor(orderinfo.billAmt / 100)}}张已选{{selectArr.length}}张</p>-->
+      <div class="cuoponlist">
+        <select-cou v-for="item in datas" :info="item" v-if="item.couponType === 2" :selectArr="selectArr" @on-select="selected" :rule="orderinfo.billAmt" :count="count"></select-cou>
+      </div>
+    </popup>
+    <div class="my-mask" v-if="show1" @click="show1 = !show1"></div>
   </div>
 </template>
 
 <script>
   import { mapMutations } from "vuex"
-  import { Msg, XButton } from 'vux'
+  import { Msg, XButton, Popup, PopupHeader } from 'vux'
+  import SelectCou from '../oil/select-coupon'
+
   export default {
     data() {
       return {
+        show1: false,
         main: true,
-        selects: {},//选中
         datas: [],
         orderinfo: {},
         goods: [],
-        paycoupon: {},
+        paycoupon: [],
+        selectArr: [],
+        count: 0,
         payStatus: true
       }
     },
     components: {
       Msg,
-      XButton
+      XButton,
+      Popup,
+      PopupHeader,
+      SelectCou
     },
     computed: {
-      paymoney() {
-        if (this.orderinfo.isMember == 1) {
-          if (this.paycoupon.facevalue) {
-            return this.orderinfo.billVipAmt * 100 - this.paycoupon.facevalue * 100 < 0 ? '0' : (this.orderinfo.billVipAmt * 100 - this.paycoupon.facevalue * 100) / 100
-          } else {
-            return this.orderinfo.billVipAmt
+      couponMoney () {
+        var all = 0
+        var ruleall = 0
+        if(!this.selectArr.length){
+          this.count = 0
+          return 0
+        }else{
+          for(var i = 0; i < this.selectArr.length; i++){
+            all += this.paycoupon[i].facevalue
+            ruleall += Number(this.paycoupon[i].rule)
           }
-        } else {
-          if (this.paycoupon.facevalue) {
-            return this.orderinfo.billAmt * 100 - this.paycoupon.facevalue * 100 < 0 ? '0' : (this.orderinfo.billAmt * 100 - this.paycoupon.facevalue * 100) / 100
-          } else {
-            return this.orderinfo.billAmt
-          }
+          this.count = ruleall
+          return  0 - all
         }
+      },
+      paymoney() {
+        var payY = 0
+        if (this.orderinfo.isMember == 1) {
+          payY = this.orderinfo.billVipAmt
+        } else {
+          payY = this.orderinfo.billAmt
+        }
+        return payY * 100 + this.couponMoney * 100 < 0 ? '0' : (payY * 100 + this.couponMoney * 100) / 100
       }
     },
     methods: {
       ...mapMutations([
         "getOpenid"
       ]),
+      selected (info) {
+        var index = this.selectArr.indexOf(info.couponNo)
+        if( index === -1){
+          this.selectArr.push(info.couponNo)
+          this.paycoupon.push(info)
+        }else{
+          this.selectArr.splice(index, 1)
+          this.paycoupon.splice(index, 1)
+        }
+      },
       gopath(path) {
         this.$router.push({
           path: '/'+ path,
         })
       },
       voucher() {
-        this.main = false;
-        this.paycoupon = this.selects
-      },
-      select(obj) {
-        if (this.selects.couponNo == obj.couponNo) {
-          this.selects = {}
-          return false
-        }
-        this.selects = obj
-      },
-      determines() {
-        this.main = true;
-        this.paycoupon = this.selects
-      },
-      returns() {
-        this.main = true;
+        // 显示优惠券
+        this.show1 = !this.show1
       },
       getcoupon() {
         var data = {
@@ -183,10 +185,14 @@
           return
         }
         this.$vux.loading.show()
+        var ids = ''
+        for(var i = 0; i < this.selectArr.length; i++){
+          ids = ids + this.selectArr[i]  + ","
+        }
         var data = {
           openid: localStorage.getItem("openid"),
           orderno: this.$route.params.orderid,
-          couponNo: this.paycoupon.couponNo,
+          couponNo: ids,
           total_fee: this.paymoney
         }
         this.$axios.post(this.$baseUrl + "/wxpay/dowxpay", this.$qs.stringify({
@@ -387,7 +393,7 @@
       color: #999;
       font-size: 0.5rem;
       text-align: center;
-      z-index: 3333;
+      z-index: 200;
       .cancel {
         flex: 1;
         background: #A9A9A9;
@@ -529,5 +535,25 @@
       }
     }
   }
-  /*优惠券*/
+  .cuoponlist{
+    padding: 0.2rem;
+    box-sizing: border-box;
+    background: #fbf9fe;
+    overflow: scroll;
+    flex: 1;
+  }
+  .cou-pop{
+    display: flex;
+    flex-direction: column;
+  }
+  .my-mask{
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background: #000;
+    opacity: 0.6;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
 </style>

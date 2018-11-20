@@ -5,8 +5,8 @@
       <div class="text-box">
         <div class="name">{{info.name}}</div>
         <div class="price">
-          <p class="">￥<span>{{info.price | formatMoney}}</span></p>
-          <p class="vipprice">￥<span>{{info.vipPrice | formatMoney}}</span><b class="iconfont icon-huiyuan" ></b></p>
+          <p class="">¥<span>{{info.price | formatMoney}}</span></p>
+          <p class="vipprice">¥<span>{{info.vipPrice | formatMoney}}</span><b class="iconfont icon-huiyuan" ></b></p>
         </div>
       </div>
     </router-link>

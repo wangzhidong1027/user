@@ -7,8 +7,8 @@
       <div class="goodtitle">
         <div class="name">{{info.name}}</div>
         <div class="price">
-          <p>零售价：￥{{info.price | formatMoney}}</p>
-          <p class="vip"><span>超级会员价</span>￥{{info.vipPrice | formatMoney}}</p>
+          <p>零售价：¥{{info.price | formatMoney}}</p>
+          <p class="vip"><span>超级会员价</span>¥{{info.vipPrice | formatMoney}}</p>
         </div>
       </div>
   </a>

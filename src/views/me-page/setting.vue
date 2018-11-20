@@ -16,6 +16,7 @@
 
 <script>
 import { Group, CellBox, XButton } from  "vux";
+import { mapMutations  } from "vuex";
 export default {
   name: "setting",
   components: {
@@ -29,7 +30,13 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      "clearCar",
+    ]),
   	clear () {
+  	  localStorage.setItem('car', [])
+  	  localStorage.setItem('openid', '')
+      this.clearCar()
       this.$vux.toast.show({
         text: '缓存已清除',
         position: 'top',

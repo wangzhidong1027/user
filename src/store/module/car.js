@@ -28,7 +28,6 @@ export default {
         if ( state.car[i].id == Obj.id ) {
           state.car[i].number += Obj.number;
           localStorage.setItem("car",JSON.stringify( state.car));
-          console.log(2)
           return
         }
       }
@@ -50,6 +49,9 @@ export default {
       if ( localStorage.getItem('car') ) {
         state.car = JSON.parse(localStorage.getItem('car'))
       }
+    },
+    clearCar (state) {
+      state.car = []
     }
   },
   action: {

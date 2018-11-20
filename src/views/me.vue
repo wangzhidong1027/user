@@ -9,13 +9,16 @@
       </div>
       <a class="header-right">
         <div class='name'>
-          <a href="#/edit/username" v-if="isLogin"><span>{{name}}</span><b class="iconfont icon-bianji"
-                                                                           style="margin-left: 30px;"></b></a>
+          <a href="#/edit/username" v-if="isLogin"><span>{{name}}</span><b class="iconfont icon-bianji" style="margin-left: 30px;"></b></a>
           <a href="#/login" v-else><span>未登录</span></a>
         </div>
         <div class="vip">
-          <a href="#/dredgevip/1" :class="userinfo.level_name ? 'isVIP' : ''"><b class="iconfont icon-huiyuan"
-                                                                         style="font-size:0.3rem "></b>{{userinfo.level_name}}</a>
+          <a href="#/dredgevip/1" :class="userinfo.level_name ? 'isVIP' : ''"><b class="iconfont icon-huiyuan" style="font-size:0.3rem "></b>{{userinfo.level_name}}</a>
+          <!--<span v-if="userinfo.level_name">{{datetime(userinfo.failure_time)}} 会员到期</span>-->
+        </div>
+        <div class="viptime" v-if="userinfo.level_name">
+          <p>会员到期</p>
+          <p>{{datetime(userinfo.failure_time)}}</p>
         </div>
       </a>
       <!--<div class="sign-box" @click="sign" v-if="isLogin">-->
@@ -63,6 +66,9 @@
       </group>
     </div>
     <div class="center">
+      <cell-box is-link @click.native="show" v-if="!userinfo.level_name">
+        <b class="iconfont icon-huiyuan cell-icon" ></b>体验会员
+      </cell-box>
       <group :gutter="0">
         <cell-box is-link link="setting">
           <b class="iconfont icon-shezhi cell-icon"></b>设置
@@ -73,6 +79,7 @@
         <cell-box is-link link="idea">
           <b class="iconfont icon-yijianfankui cell-icon"></b>意见反馈
         </cell-box>
+
       </group>
     </div>
     <!--<actionsheet v-model="showShare" :menus="menus1" theme="ios" :show-cancel="true"-->
@@ -90,7 +97,6 @@
         </tabbar-item>
       </tabbar>
     </div>
-
   </div>
 </template>
 
@@ -141,6 +147,9 @@
       // },
     },
     methods: {
+      datetime (time) {
+        return time.substr(0,10)
+      },
       getsign() {
         let signTime = localStorage.getItem("sign");
         if (signTime) {
@@ -179,13 +188,40 @@
         });
       },
       show() {
-        if (this.isLogin) {
-          this.showShare = true;
-        } else {
-          this.$router.push({
-            path: 'login'
+        if(!this.isLogin){
+          this.$vux.alert.show({
+            title: '提示',
+            content: '请先登录',
           })
+          return
         }
+        this.$axios.post(this.$baseUrl + "/per/applymembertest", this.$qs.stringify({})).then(
+          result => {
+            var res = JSON.parse(this.$base64.decode(result.data));
+            if (res.code == 10000) {
+              this.$vux.alert.show({
+                title: '恭喜',
+                content: '您已成功申请为体验会员，明日生效后可享受会员权益',
+              })
+            } else if(res.code == 30001){
+              if(this.userinfo.level_name){
+                this.$vux.alert.show({
+                  title: '提示',
+                  content: '你已经是会员',
+                })
+              } else {
+                this.$vux.alert.show({
+                  title: '提示',
+                  content: '体验会员每给账号只能一次',
+                })
+              }
+            }else{
+              this.$vux.alert.show({
+                title: '提示',
+                content: res.message,
+              })
+            }
+          })
       },
       getinfo() {
         this.$axios.post(this.$baseUrl + "/per/getuser", this.$qs.stringify({})).then(
@@ -275,6 +311,27 @@
         flex: 1;
         display: flex;
         flex-direction: column;
+        position: relative;
+        .viptime{
+          position: absolute;
+          right: 0;
+          top: 50%;
+          font-size: 0.25rem;
+          height: 0.8rem;
+          margin-top: -0.4rem;
+          display: flex;
+          flex-direction: column;
+          background: #e9c285;
+          width: 2rem;
+          border-top-left-radius: 0.5rem;
+          border-bottom-left-radius: 0.5rem;
+          p{
+            flex: 1;
+            text-align: center;
+            color: #b27a5c;
+            line-height: 0.4rem;
+          }
+        }
         div {
           flex: 1;
           font-size: 20px;
@@ -297,6 +354,13 @@
         }
         .vip {
           position: relative;
+          span{
+            position: absolute;
+            top:  0.5rem;
+            left: 0;
+            font-size: 0.22rem;
+            color: #999;
+          }
           a {
             position: absolute;
             top: 0;
@@ -308,7 +372,7 @@
             color: #fff;
           }
           .isVIP {
-            background: #000;
+            background: #333;
             color: #f8e51c;
           }
         }

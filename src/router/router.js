@@ -127,7 +127,7 @@ const router = new Router({
       meta: {
         title: "购物车"
       },
-      component: () => import("../views/car/car2.vue")
+      component: () => import("../views/car/car.vue")
     },
     {
       path: "/coupon",
