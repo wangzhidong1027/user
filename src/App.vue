@@ -10,12 +10,34 @@
     methods: {
       ...mapMutations([
         "carInit",
-        "getAddress"
-      ])
+        "getAddress",
+        "getUserInfo"
+      ]),
+      getinfo() {
+        this.$axios.post(this.$baseUrl + "/per/getuser", this.$qs.stringify({})).then(
+          result => {
+            var res = JSON.parse(this.$base64.decode(result.data));
+            if (res.code === 10000) {
+              localStorage.setItem("memberNo",res.data.memberNo)
+              this.getUserInfo(res.data)
+            } else {
+              localStorage.clear()
+              this.$vux.toast.show({
+                type: "cancel",
+                text: res.message,
+                position: "middle",
+                isShowMask: true
+              })
+            }
+          });
+      },
     },
     created () {
       this.getAddress();
       this.carInit();
+      if(localStorage.getItem("Token")){
+        this.getinfo()
+      }
     }
   }
 </script>

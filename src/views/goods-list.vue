@@ -18,8 +18,8 @@
           <div class="name">{{item.name}}</div>
           <div class="buy">
             <div class="price">
-              <p class="ordinary"><span>零售价¥</span><b>{{item.price | formatMoney }}</b></p>
-              <p class="vip"><span>会员价</span><b>¥{{item.vipPrice | formatMoney}}</b></p>
+              <p class="ordinary"><span>零售价 ¥</span><b>{{item.price | formatMoney }}</b></p>
+              <p class="vip"><span>会员价</span><b> ¥{{item.vipPrice | formatMoney}}</b></p>
             </div>
             <div class="car-number">
               <b class="iconfont icon-gouwuchekong" @click="add(index)">
@@ -189,6 +189,7 @@ export default {
       .text{
         background: #fff;
         padding: 0 0.2rem;
+        padding-bottom: 0.2rem;
       }
       .name{
         border-top: 1px solid #eee;
@@ -212,7 +213,7 @@ export default {
             font-weight: 600;
             span{
               display: inline-block;
-              line-height: 0.4rem;
+              line-height: 0.5rem;
               border-radius: 2px;
               background: linear-gradient(90deg, rgb(254, 252, 249), rgb(245, 235, 216));
               color: #ae8d4c;

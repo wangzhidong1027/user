@@ -7,11 +7,11 @@
           <img src="../assets/images/pic.jpg" alt="">
         </div>
       </div>
-      <a class="header-right">
+      <a class="header-right"> 
         <div class='name'>
-          <a href="#/edit/username" v-if="isLogin"><span>{{name}}</span><b class="iconfont icon-bianji" style="margin-left: 30px;"></b></a>
-          <a href="#/login" v-else><span>未登录</span></a>
-        </div>
+          <div  v-if="isLogin"><a href="#/edit/username">{{name}}</a><b class="iconfont icon-bianji" style="margin-left: 30px;"></b></div>
+          <div  v-else><a href="#/login">未登录</a></div>
+        </div>s
         <div class="vip">
           <a href="#/dredgevip/1" :class="userinfo.level_name ? 'isVIP' : ''"><b class="iconfont icon-huiyuan" style="font-size:0.3rem "></b>{{userinfo.level_name}}</a>
           <!--<span v-if="userinfo.level_name">{{datetime(userinfo.failure_time)}} 会员到期</span>-->

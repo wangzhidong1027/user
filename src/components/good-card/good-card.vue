@@ -7,8 +7,8 @@
       <div class="goodtitle">
         <div class="name">{{info.name}}</div>
         <div class="price">
-          <p>零售价：¥{{info.price | formatMoney}}</p>
-          <p class="vip"><span>超级会员价</span>¥{{info.vipPrice | formatMoney}}</p>
+          <p>零售价 ¥{{info.price | formatMoney}}</p>
+          <p class="vip"><span>超级会员价 </span>¥{{info.vipPrice | formatMoney}}</p>
         </div>
       </div>
   </a>
@@ -68,6 +68,8 @@
   .goodimg{
     box-sizing: border-box;
     width: 2rem;
+    height: 2rem;
+    overflow: hidden;
     img{
       width:100%;
     }
@@ -81,6 +83,7 @@
       font-size: 0.3rem;
       flex: 1;
       color: #504b4e;
+      overflow: hidden;
     }
     .price{
       font-size: 0.22rem;

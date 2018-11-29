@@ -30,7 +30,7 @@
     <!--</div>-->
     <h5 class="active" v-if="goods">热卖商品</h5>
     <div class="hot">
-      <goodscard v-for="item in goods" :info="item"></goodscard>
+      <goodscard v-for="item in goods" :info="item" :key="item.id"></goodscard>
     </div>
     </div>
       <!--<group title="今日油价" style="background: #fff;line-height: 30px; padding-left:20px; padding-right: 20px; ">-->
@@ -42,8 +42,8 @@
       <!--</group>-->
       <tabbar>
         <tabbar-item selected link="home">
-            <span slot="icon" class="icon-shouye1 iconfont" style=" color: #ff9900;font-size: 22px;"></span>
-            <span slot="label">首页</span>
+            <span slot="icon" class="icon-shouye1 iconfont" style=" color: #dfb875;font-size: 22px;"></span>
+            <span slot="label" style="color: #dfb875">首页</span>
         </tabbar-item>
         <tabbar-item link="me">
             <span slot="icon" class="icon-wode iconfont" style=" font-size: 20px;"></span>

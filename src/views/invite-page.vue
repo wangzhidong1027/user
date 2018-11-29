@@ -34,7 +34,7 @@
     data() {
       return {
         mobile: '',
-        goodinfo: '',
+        goodinfo: ''
       }
     },
     methods: {
@@ -81,22 +81,41 @@
           openid: localStorage.getItem("openid")
         }
         data = this.$base64.encode(JSON.stringify(data))
-        this.$axios.post(this.$baseUrl + '/per/createordersm', this.$qs.stringify({
-          data: data
-        })).then(result => {
-          var res = JSON.parse(this.$base64.decode(result.data))
-          if (res.code == 10000) {
-            this.$vux.loading.hide()
-            this.wxpay(res.data)
-          } else {
-            this.$vux.toast.show({
-              type: "cancel",
-              text: res.message,
-              position: "middle",
-              isShowMask: true
-            });
-          }
-        })
+        if (this.$route.params.type == 3) {
+          this.$axios.post(this.$baseUrl + '/per/createorderesm', this.$qs.stringify({
+            data: data
+          })).then(result => {
+            var res = JSON.parse(this.$base64.decode(result.data))
+            if (res.code == 10000) {
+              this.$vux.loading.hide()
+              this.wxpay(res.data)
+            } else {
+              this.$vux.toast.show({
+                type: "cancel",
+                text: res.message,
+                position: "middle",
+                isShowMask: true
+              });
+            }
+          })
+        }else{
+          this.$axios.post(this.$baseUrl + '/per/createordersm', this.$qs.stringify({
+            data: data
+          })).then(result => {
+            var res = JSON.parse(this.$base64.decode(result.data))
+            if (res.code == 10000) {
+              this.$vux.loading.hide()
+              this.wxpay(res.data)
+            } else {
+              this.$vux.toast.show({
+                type: "cancel",
+                text: res.message,
+                position: "middle",
+                isShowMask: true
+              });
+            }
+          })
+        }
       }
     },
     created() {

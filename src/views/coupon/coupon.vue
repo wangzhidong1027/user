@@ -5,16 +5,20 @@
       <!--<tab-item @on-item-click="onItemClick">已使用</tab-item>-->
       <tab-item @on-item-click="onItemClick">已过期</tab-item>
     </tab>
-    <div v-if="index===0" class="tab-item-container">
-      <div v-for="itemnoUse in noUse ">
+    <div v-show="index===0" class="tab-item-container">
+       <load-more tip="正在加载" v-if="!showuse"></load-more>
+      <divider v-if="!noUse.length && showuse">无可用优惠券！</divider>
+      <div v-for="itemnoUse in noUse " :key='itemnoUse.id'>
         <coupon-card :info="itemnoUse"></coupon-card>
       </div>
     </div>
     <!--<div v-if="index===1" class="tab-item-container">-->
       <!--<coupon-card></coupon-card>-->
     <!--</div>-->
-    <div v-if="index===1" class="tab-item-container">
-      <div v-for="itemExpired in Expired">
+    <div v-show="index===1" class="tab-item-container">
+       <load-more tip="正在加载" v-if="!showExpired"></load-more>
+      <divider v-if="!Expired.length && showExpired">无过期优惠券！</divider>
+      <div v-for="itemExpired in Expired" :key='itemExpired.id'>
         <coupon-card :info="itemExpired"></coupon-card>
       </div>
     </div>
@@ -22,21 +26,25 @@
 </template>
 
 <script>
-  import { Tab, TabItem } from 'vux';
+  import { Tab, TabItem, Divider, LoadMore } from 'vux';
   import CouponCard from "./components/coupon-card";
 export default {
   name: 'coupon',
   components: {
     Tab,
     TabItem,
-    CouponCard
+    CouponCard,
+    Divider,
+    LoadMore
   },
   data () {
     return {
       index: 0,
       noUse: [],
       useed: [],
-      Expired: [] // 过期
+      Expired: [], // 过期
+      showuse: false,
+      showExpired: false
     }
   },
   methods: {
@@ -55,9 +63,11 @@ export default {
         if(res.code == 10000){
           if(index == 0){
             this.noUse = res.data
+            this.showuse = true
           }
           if(index == 1){
             this.Expired = res.data
+            this.showExpired = true
           }
         }
       })

@@ -4,7 +4,7 @@
       <b slot="right" style="font-weight: normal" @click="alldel">删除选中</b>
     </x-header>
     <swipeout>
-      <swipeout-item  ref="swipeoutItem" :right-menu-width="210" :sensitivity="15" v-for="item,index in goodsinfo" class="car-cunt">
+      <swipeout-item  ref="swipeoutItem" :right-menu-width="210" :sensitivity="15" v-for="(item,index) in goodsinfo" class="car-cunt" :key="index">
         <div slot="content" class="car-item  vux-1px-b">
           <div class="left">
             <checklist  :options="[{key: item.id,id:item.id, }]" v-model="checklist"  class="car-check"></checklist>
@@ -78,7 +78,6 @@ export default {
           }
         }
       }
-      console.log(all)
       this.allcount = count
       this.vipmoney = vip/100
       return all/100
@@ -118,6 +117,9 @@ export default {
               }
             }
           }
+        }else{
+          localStorage.setItem('car', [])
+          // history.go(0) 
         }
       })
     },

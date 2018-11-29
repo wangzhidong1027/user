@@ -39,7 +39,7 @@ const router = new Router({
       meta: {
         title: "个人中心"
       },
-      component: () => import("../views/me.vue")
+      component: () => import("../views/me/me2.vue")
     },
     {
       path: "/idea",
@@ -185,7 +185,7 @@ router.beforeEach((to, from, next) => {
   var token = localStorage.getItem('Token');
   var station = localStorage.getItem("station")
   if(!token ){
-    if( to.name == "pay" ||  to.name == "order"  ||  to.name == "coupon" || to.name == "oil"){
+    if( to.name == "pay" ||  to.name == "order"  ||  to.name == "coupon" || to.name == "oil" || to.name == 'edit'){
       next({
         name: 'login' // 跳转到登录页
       })
@@ -209,7 +209,7 @@ router.afterEach((to, from) => {
   if(token){
     var memberNo = Vue.prototype.$memberNo;
     // var memberNo = localStorage.getItem("memberNo")
-    Vue.prototype.$axios.post(Vue.prototype.$baseUrl + '/weixin/wxshare',Vue.prototype.$qs.stringify({
+    Vue.prototype.$axios.post( Vue.prototype.$baseUrl + '/weixin/wxshare',Vue.prototype.$qs.stringify({
       url:location.href
     })).then(
       result => {

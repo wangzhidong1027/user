@@ -5,41 +5,38 @@
         <img :src="goodinfo.images" alt="">
       </div>
       <div class="name">
-        商品名称:{{goodinfo.name}}
+       {{goodinfo.name}}
       </div>
       <div class="twoprice">
         <div class="price">
-          <span>价格:</span>
+          <span>零售价</span>
           <b>¥ {{goodinfo.price | formatMoney}}</b>
         </div>
         <p class="economize">
-          <span>会员价:</span>
+          <span>超级会员价</span>
           <b>¥ {{goodinfo.vipPrice | formatMoney}} </b>
         </p>
       </div>
       <div class="number">
-        <span>数量:</span>
-        <span><XNumber v-model="number" :min="1"></XNumber></span>
+        <span>数量</span>
+        <span><x-number v-model="number" :min="1" width="40px" class="number-inp"></x-number></span>
       </div>
       <!--<div class="stock">-->
       <!--<span>库存:</span>-->
       <!--<b>{{goodinfo.inventory}}</b>-->
       <!--</div>-->
       <div class="stock">
-      <span>总量:</span>
-        <b>{{goodinfo.weight}}</b>
-      <span> 单位:</span>
-      <b>{{goodinfo.unit}}</b>
+      <span>总量</span>
+        <b>{{goodinfo.weight}} {{goodinfo.unit}}</b>
       </div>
       <div class="shop_content">
-        <p>商品简介:</p>
         <div class="content_img" v-html="goodinfo.content">
         </div>
       </div>
     </div>
     <div id="cartab">
       <div class="addcard">
-        <a href="#/car">去结算</a>
+        <a href="#/car"><b class="iconfont icon-gouwuchekong"></b></a>
         <span @click="addcar">加入购物车</span>
       </div>
     </div>
@@ -114,51 +111,70 @@
       img {
         display: block;
         width: 100%;
-        border-bottom: 1px solid #eee;
       }
     }
     .name {
       padding: 0.25rem;
-      font-size: 0.3rem;
-      color: #333333;
+      color: #434144;
       line-height: 0.5rem;
       background: #FFF;
+      font-weight: bold;
+      font-size: 0.46rem;
     }
     .twoprice {
-      border-bottom: 1px solid #eee;
+      background: #fff;
+      padding-bottom: 0.2rem;
+      margin-bottom: 0.2rem;
       .price {
-        font-size: 0.3rem;
+        font-size: 0.28rem;
         padding: 0 0.25rem;
         background: #FFF;
-        b {
-          color: #333333;
+        color: #919191;
+        b{
+          font-size: 0.3rem;
+          font-weight: normal;
         }
       }
       .economize {
         background: #fff;
         padding: 0.12rem 0.25rem;
-        font-size: 0.3rem;
+        font-size: 0.28rem;
+        span{
+          display: inline-block;
+          line-height: 0.5rem;
+          color: #ae8d4c;
+          background: linear-gradient(90deg, rgb(254, 252, 249), rgb(245, 235, 216));
+        }
         b {
-          color: #ff3737;
+          font-size: 0.3rem;
+          color: #e5725f;
         }
       }
     }
     .number {
       border-bottom: 1px solid #eee;
-      font-size: 0.3rem;
+      font-size: 0.32rem;
       padding: 0rem 0.25rem;
       background: #FFF;
       align-items: center;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
+      line-height: 1.2rem;
+      span{
+        color: #888888;
+      }
     }
     .stock {
-      border-bottom: 1px solid #eee;
-      font-size: 0.3rem;
-      padding: 0.25rem 0.25rem;
+      line-height: 1.2rem;
+      margin-bottom: 0.2rem;
+      font-size: 0.32rem;
+      padding: 0rem 0.25rem;
       background: #FFF;
+      span{
+        color: #888888;
+      }
       b {
-        color: #ff3737;
+        color: #454344;
       }
     }
     .shop_content {
@@ -229,12 +245,15 @@
         display: flex;
         justify-content: space-between;
         a {
-          flex: 1;
+          width: 1.6rem;
           line-height: 1rem;
           display: block;
-          font-size: 0.3rem;
           background: #fff;
-          color: #333;
+          color: #696969;
+          b{
+            font-size: 0.5rem;
+            font-weight: normal;
+          }
         }
         span {
           flex: 1;
@@ -248,6 +267,20 @@
           font-size: 0.3rem;
         }
       }
+    }
+    .vux-number-selector svg {
+      fill: #4f4f4f;
+    }
+    .vux-number-selector.vux-number-disabled svg {
+      fill: #ccc;
+    }
+    .vux-number-input{
+      height: 0.5rem;
+      line-height: 0.5rem;
+    }
+    .vux-number-selector {
+      height: 0.5rem;
+      line-height: 0.5rem;
     }
 
   }
